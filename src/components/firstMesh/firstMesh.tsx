@@ -1,9 +1,15 @@
 'use client';
-import { useFrame } from '@react-three/fiber';
+
+import { extend, useFrame, useThree } from '@react-three/fiber';
 import { useRef } from 'react';
 import * as THREE from 'three';
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 
+extend({ OrbitControls });
 const FirstMesh = () => {
+  //   Retreive the camera
+  const { camera, gl } = useThree();
+
   const cubeRef = useRef<THREE.Mesh>(null);
   const groupRef = useRef<THREE.Group>(null);
 
@@ -16,6 +22,7 @@ const FirstMesh = () => {
 
   return (
     <>
+      <orbitControls args={[camera, gl.domElement]} />
       <group ref={groupRef}>
         <mesh position-x={-2}>
           <sphereGeometry />

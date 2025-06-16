@@ -17,11 +17,13 @@ const ParticlesMesh = () => {
     for (let i = 0; i < positions.length; i++) {
       const i3 = i * 3;
       positions[i3 + 0] = (Math.random() - 0.5) * 10; // X: random left/right
-      positions[i3 + 1] = 0; // Y: flat on the plane
+      positions[i3 + 1] = (Math.random() - 0.5) * 0.5; // Y: flat on the plane
       positions[i3 + 2] = (Math.random() - 0.5) * 10; // Z: random forward/back
     }
     return positions;
   }, [particlesCount]);
+
+  // useFrame((state, delta) => {});
 
   return (
     <>
@@ -38,7 +40,7 @@ const ParticlesMesh = () => {
           vertexShader={vShader}
           fragmentShader={fShader}
           uniforms={{
-            uSize: { value: 0.02 },
+            uSize: { value: 0.01 },
             uResolution: { value: new THREE.Vector2(size.width, size.height) },
             uProgress: { value: 0 },
           }}

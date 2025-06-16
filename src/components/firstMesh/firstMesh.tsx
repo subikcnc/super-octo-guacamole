@@ -5,6 +5,8 @@ import { useRef } from 'react';
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 
+import CustomObject from '@/components/firstMesh/CustomObject';
+
 extend({ OrbitControls });
 const FirstMesh = () => {
   //   Retreive the camera
@@ -23,10 +25,13 @@ const FirstMesh = () => {
   return (
     <>
       <orbitControls args={[camera, gl.domElement]} />
+      {/* The default light comes from straight above */}
+      <directionalLight position={[1, 2, 3]} intensity={1.5} />
+      <ambientLight intensity={0.5} />
       <group ref={groupRef}>
         <mesh position-x={-2}>
           <sphereGeometry />
-          <meshBasicMaterial color="orange" />
+          <meshStandardMaterial color="orange" />
         </mesh>
         <mesh
           ref={cubeRef}
@@ -35,16 +40,28 @@ const FirstMesh = () => {
           position={[2, 0, 0]}
         >
           <boxGeometry scale={1.5} />
-          <meshBasicMaterial color="mediumpurple" />
+          <meshStandardMaterial color="mediumpurple" />
         </mesh>
       </group>
 
       <mesh position-y={-1.5} rotation-x={-Math.PI * 0.5} scale={10}>
         <planeGeometry />
-        <meshBasicMaterial color="greenyellow" />
+        <meshStandardMaterial color="greenyellow" />
       </mesh>
+      <CustomObject />
     </>
   );
 };
 
 export default FirstMesh;
+
+/* 
+Creating a custom geometry 
+
+Create a mesh with its geometry composed of random triangles,
+Process in native jS
+1. Create a Float32Array
+2. Put a bunch of values in it
+3. Create a BufferAttribute out of this Float32Array
+4. Add it to the attributes of the BufferGeometry
+*/

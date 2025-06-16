@@ -13,11 +13,14 @@ const ParticlesMesh = () => {
   const { camera, gl, size } = useThree();
   const particlesCount = 2700;
   const particlesPositions = useMemo(() => {
-    const arr = new Float32Array(particlesCount * 3);
-    for (let i = 0; i < arr.length; i++) {
-      arr[i] = (Math.random() - 0.5) * 3;
+    const positions = new Float32Array(particlesCount * 3);
+    for (let i = 0; i < positions.length; i++) {
+      const i3 = i * 3;
+      positions[i3 + 0] = (Math.random() - 0.5) * 10; // X: random left/right
+      positions[i3 + 1] = 0; // Y: flat on the plane
+      positions[i3 + 2] = (Math.random() - 0.5) * 10; // Z: random forward/back
     }
-    return arr;
+    return positions;
   }, [particlesCount]);
 
   return (
@@ -30,14 +33,16 @@ const ParticlesMesh = () => {
             args={[particlesPositions, 3]}
           />
         </bufferGeometry>
+        {/* <sphereGeometry /> */}
         <shaderMaterial
           vertexShader={vShader}
           fragmentShader={fShader}
           uniforms={{
-            uSize: { value: 0.2 },
+            uSize: { value: 0.02 },
             uResolution: { value: new THREE.Vector2(size.width, size.height) },
             uProgress: { value: 0 },
           }}
+          transparent
           blending={THREE.AdditiveBlending}
           depthWrite={false}
         />

@@ -1,5 +1,7 @@
-import { extend, useFrame, useThree } from '@react-three/fiber';
-import GUI from 'lil-gui';
+import { extend, useThree } from '@react-three/fiber';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+// import GUI from 'lil-gui';
 import { useEffect, useMemo, useRef } from 'react';
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
@@ -9,10 +11,13 @@ import vertexShader from './vertex.glsl';
 const vShader = vertexShader;
 const fShader = fragmentShader;
 
+gsap.registerPlugin(ScrollTrigger);
+
 extend({ OrbitControls });
 const ParticlesMesh = () => {
   const materialRef = useRef<THREE.ShaderMaterial>(null);
-  const { camera, gl, size } = useThree();
+  // const { camera, gl, size } = useThree();
+  const { size } = useThree();
   const particlesCount = 2700;
   const targetParticlesCount = 2700;
 
@@ -53,31 +58,49 @@ const ParticlesMesh = () => {
   }, [targetParticlesCount]);
 
   // Adding a GUI using useEffect
+  // useEffect(() => {
+  //   const gui = new GUI();
+  //   if (!materialRef.current) return;
+
+  //   const settings = {
+  //     uColor: '#ffaa00', // Initial hex color
+  //   };
+
+  //   gui.addColor(settings, 'uColor').onChange((value) => {
+  //     materialRef.current!.uniforms.uColor.value.set(value);
+  //   });
+
+  //   return () => gui.destroy();
+  // }, []);
+
+  // GSAP scroll animation
   useEffect(() => {
-    const gui = new GUI();
     if (!materialRef.current) return;
 
-    const settings = {
-      uColor: '#ffaa00', // Initial hex color
-    };
-
-    gui.addColor(settings, 'uColor').onChange((value) => {
-      materialRef.current!.uniforms.uColor.value.set(value);
+    gsap.to(materialRef.current.uniforms.uProgress, {
+      value: 1,
+      scrollTrigger: {
+        trigger: '#scroll-container',
+        start: 'top top',
+        markers: true,
+        end: 'bottom bottom',
+        scrub: true,
+      },
     });
 
-    return () => gui.destroy();
+    return () => ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
   }, []);
 
-  useFrame((state) => {
-    if (!materialRef.current) return;
+  // useFrame((state) => {
+  //   if (!materialRef.current) return;
 
-    materialRef.current.uniforms.uProgress.value =
-      Math.sin(state.clock.elapsedTime * 0.5) * 0.5 + 0.5;
-  });
+  //   materialRef.current.uniforms.uProgress.value =
+  //     Math.sin(state.clock.elapsedTime * 0.5) * 0.5 + 0.5;
+  // });
 
   return (
     <>
-      <orbitControls args={[camera, gl.domElement]} />
+      {/* <orbitControls args={[camera, gl.domElement]} /> */}
       <points position={[0, -0.07, 0]}>
         <bufferGeometry>
           <bufferAttribute

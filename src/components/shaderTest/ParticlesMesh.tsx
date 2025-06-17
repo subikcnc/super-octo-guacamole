@@ -14,7 +14,7 @@ const ParticlesMesh = () => {
   const materialRef = useRef<THREE.ShaderMaterial>(null);
   const { camera, gl, size } = useThree();
   const particlesCount = 2700;
-  const targetParticlesCount = 800;
+  const targetParticlesCount = 2700;
 
   // Current particles positions
   const particlesPositions = useMemo(() => {
@@ -70,6 +70,7 @@ const ParticlesMesh = () => {
 
   useFrame((state) => {
     if (!materialRef.current) return;
+
     materialRef.current.uniforms.uProgress.value =
       Math.sin(state.clock.elapsedTime * 0.5) * 0.5 + 0.5;
   });

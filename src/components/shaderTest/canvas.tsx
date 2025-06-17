@@ -2,12 +2,14 @@
 import { Canvas } from '@react-three/fiber';
 import React from 'react';
 
+import CameraSetup from '@/components/shaderTest/CameraSetup';
 import ParticlesMesh from '@/components/shaderTest/ParticlesMesh';
 
 const ShaderCanvas = () => {
   return (
     <Canvas>
-      <color attach="background" args={['#443433']} />
+      <color attach="background" args={['#fff']} />
+      <CameraSetup />
       <ParticlesMesh />
     </Canvas>
   );

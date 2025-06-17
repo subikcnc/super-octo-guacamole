@@ -17,9 +17,10 @@ extend({ OrbitControls });
 const ParticlesMesh = () => {
   const materialRef = useRef<THREE.ShaderMaterial>(null);
   // const { camera, gl, size } = useThree();
-  const { size } = useThree();
-  const particlesCount = 2700;
-  const targetParticlesCount = 2700;
+  const { camera, size } = useThree();
+  console.log('this is the camera', camera);
+  const particlesCount = 3000;
+  const targetParticlesCount = 3000;
 
   // Current particles positions
   const particlesPositions = useMemo(() => {
@@ -84,7 +85,7 @@ const ParticlesMesh = () => {
         start: 'top top',
         markers: true,
         end: 'bottom bottom',
-        scrub: true,
+        scrub: 5,
       },
     });
 
@@ -121,10 +122,11 @@ const ParticlesMesh = () => {
             uSize: { value: 0.01 },
             uResolution: { value: new THREE.Vector2(size.width, size.height) },
             uProgress: { value: 0 },
-            uColor: { value: new THREE.Color('orange') },
+            uColor: { value: new THREE.Color().setRGB(98 / 255, 0, 2 / 255) },
           }}
           transparent
-          blending={THREE.AdditiveBlending}
+          // blending={THREE.AdditiveBlending}
+          blending={THREE.NormalBlending}
           depthWrite={false}
         />
       </points>

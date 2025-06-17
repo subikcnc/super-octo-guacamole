@@ -17,8 +17,8 @@ const circleDataUri =
 
 const PlexusSphere = () => {
   // --- CONFIGURATION ---
-  const PARTICLE_COUNT = 500;
-  const PLEXUS_THRESHOLD = 0.28;
+  const PARTICLE_COUNT = 450;
+  const PLEXUS_THRESHOLD = 0.5;
   const SPHERE_RADIUS = 2;
   // NEW: Define a darker color for contrast on the white background
   const PARTICLE_COLOR = 'rgb(98,0,2)';

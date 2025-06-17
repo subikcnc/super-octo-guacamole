@@ -1,4 +1,4 @@
-import { extend, useThree } from '@react-three/fiber';
+import { extend, useFrame, useThree } from '@react-three/fiber';
 import GUI from 'lil-gui';
 import { useEffect, useMemo, useRef } from 'react';
 import * as THREE from 'three';
@@ -31,7 +31,7 @@ const ParticlesMesh = () => {
   // Target particles positions
   const targetPositions = useMemo(() => {
     const positions = new Float32Array(targetParticlesCount * 3);
-    const radius = 5;
+    const radius = 2;
 
     for (let i = 0; i < targetParticlesCount; i++) {
       const i3 = i * 3;
@@ -67,6 +67,12 @@ const ParticlesMesh = () => {
 
     return () => gui.destroy();
   }, []);
+
+  useFrame((state) => {
+    if (!materialRef.current) return;
+    materialRef.current.uniforms.uProgress.value =
+      Math.sin(state.clock.elapsedTime * 0.5) * 0.5 + 0.5;
+  });
 
   return (
     <>

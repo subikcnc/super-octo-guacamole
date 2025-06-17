@@ -7,7 +7,7 @@ import ParticlesMesh from '@/components/shaderTest/ParticlesMesh';
 const ShaderCanvas = () => {
   return (
     <Canvas>
-      <color attach="background" args={['#000']} />
+      <color attach="background" args={['#443433']} />
       <ParticlesMesh />
     </Canvas>
   );

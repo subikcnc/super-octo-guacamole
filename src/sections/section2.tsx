@@ -12,11 +12,11 @@ const Section2 = () => {
     ScrollTrigger.create({
       trigger: '#particles-canvas',
       pin: true,
-      markers: true,
+      markers: false,
       start: 'top top',
       end: '+=200%', // Pin for 100vh
       pinSpacing: true,
-      scrub: 2.5,
+      scrub: 2,
       onUpdate: (self) => {
         setScrollProgress(self.progress);
       },

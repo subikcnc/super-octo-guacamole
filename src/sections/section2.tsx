@@ -17,7 +17,7 @@ const Section2 = () => {
       start: 'top top',
       end: '+=200%', // Pin for 100vh
       pinSpacing: true,
-      scrub: 2,
+      scrub: 1.5,
       onUpdate: (self) => {
         setScrollProgress(self.progress);
       },
@@ -28,7 +28,7 @@ const Section2 = () => {
       {/* Text Animation using GSAP */}
       <StaggerText
         text="Building an ecosystem of research and innovation in the Global South"
-        otherClasses="h3_medium_64 inline-block w-[920px] overflow-hidden text-center text-primary absolute z-1"
+        otherClasses="h3_medium_64 inline-block w-[920px] overflow-hidden text-center text-primary-900 absolute z-1"
         scrollProgress={scrollProgress}
       />
 

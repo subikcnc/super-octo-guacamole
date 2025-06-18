@@ -2,11 +2,15 @@ import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
 
+import { Button } from '@/components/ui/button';
 import { navbarLinks } from '@/constants';
 
 const RightNavbar = () => {
   return (
-    <div className="flex items-center gap-8 rounded-full bg-white px-6 py-[26px] shadow-(--shadow-nav)">
+    <div
+      className="flex items-center gap-8 rounded-full bg-white px-6 py-2"
+      style={{ boxShadow: '0 2px 8px 0 rgba(0,0,0,0.15)' }}
+    >
       {navbarLinks.map((item) => (
         <Link
           key={item.route}
@@ -22,6 +26,24 @@ const RightNavbar = () => {
           />
         </Link>
       ))}
+      <Button
+        className="flex rounded-full px-2"
+        size="lg"
+        variant="secondary"
+        asChild
+      >
+        <span className="flex">
+          <Link href="/">Get Involved</Link>
+          <span className="bg-primary-500 inline-flex size-10 items-center justify-center rounded-full">
+            <Image
+              src="/icons/arrow-up.svg"
+              height={16}
+              width={16}
+              alt="icon arrow up"
+            />
+          </span>
+        </span>
+      </Button>
     </div>
   );
 };

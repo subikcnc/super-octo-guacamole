@@ -21,17 +21,17 @@ const StaggerText = ({
     if (!textRef.current) return;
 
     const chars = textRef.current.querySelectorAll('.char');
-    if (scrollProgress && scrollProgress >= 0.7 && !hasAnimatedRef.current) {
+    if (scrollProgress && scrollProgress >= 0.85 && !hasAnimatedRef.current) {
       gsap.to(chars, {
         opacity: 1,
-        stagger: 0.05,
+        stagger: 0.03,
         ease: 'power2.out',
-        duration: 0.3,
+        duration: 0.1,
       });
       hasAnimatedRef.current = true;
     } else if (
       scrollProgress &&
-      scrollProgress < 0.7 &&
+      scrollProgress < 0.85 &&
       hasAnimatedRef.current
     ) {
       gsap.to(chars, {
@@ -39,7 +39,7 @@ const StaggerText = ({
         y: 10,
         stagger: 0.03,
         ease: 'power2.in',
-        duration: 0.3,
+        duration: 0.1,
       });
       hasAnimatedRef.current = false;
     }

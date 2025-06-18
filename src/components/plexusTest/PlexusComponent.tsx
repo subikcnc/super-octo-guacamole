@@ -22,7 +22,7 @@ const PlexusSphere = ({ scrollProgress }: Props) => {
   // --- CONFIGURATION ---
   const PARTICLE_COUNT = 500;
   const PLEXUS_THRESHOLD = 0.5;
-  const SPHERE_RADIUS = 2.5;
+  const SPHERE_RADIUS = 2.7;
   // NEW: Define a darker color for contrast on the white background
   const PARTICLE_COLOR = 'rgb(98,0,2)';
   const PARTICLE_OPACITY = 0.9;

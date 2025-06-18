@@ -4,6 +4,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import React, { useEffect, useState } from 'react';
 
 import ShaderCanvas from '@/components/shaderTest/canvas';
+import StaggerText from '@/components/shared/StaggerText';
 
 const Section2 = () => {
   const [scrollProgress, setScrollProgress] = useState<number>(0);
@@ -23,7 +24,14 @@ const Section2 = () => {
     });
   }, []);
   return (
-    <div id="particles-canvas" className="mt-[-70vh] h-screen w-full">
+    <div id="particles-canvas" className="relative mt-[-70vh] h-screen w-full">
+      {/* Text Animation using GSAP */}
+      <StaggerText
+        text="Building an ecosystem of research and innovation in the Global South"
+        otherClasses="h3_medium_64 inline-block w-[920px] overflow-hidden text-center text-primary absolute z-1"
+        scrollProgress={scrollProgress}
+      />
+
       <ShaderCanvas scrollProgress={scrollProgress} />
     </div>
   );

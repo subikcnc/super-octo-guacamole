@@ -2,9 +2,12 @@
 import { useTexture } from '@react-three/drei';
 import { useFrame } from '@react-three/fiber';
 // NEW: Import useTexture from drei
-import { useMemo, useRef, useState } from 'react';
+import { useMemo, useRef } from 'react';
 import * as THREE from 'three';
 
+interface Props {
+  scrollProgress: number;
+}
 interface ParticleData {
   initial: THREE.Vector3;
   sphere: THREE.Vector3;
@@ -15,7 +18,7 @@ interface ParticleData {
 const circleDataUri =
   'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PGNpcmNsZSBjeD0iMTIiIGN5PSIxMiIgcj0iMTEiIGZpbGw9IiNmZmYiLz48L3N2Zz4=';
 
-const PlexusSphere = () => {
+const PlexusSphere = ({ scrollProgress }: Props) => {
   // --- CONFIGURATION ---
   const PARTICLE_COUNT = 500;
   const PLEXUS_THRESHOLD = 0.5;
@@ -28,7 +31,7 @@ const PlexusSphere = () => {
   const particleGeoRef = useRef<THREE.BufferGeometry>(null);
   const lineGeoRef = useRef<THREE.BufferGeometry>(null);
   const particlesData = useRef<ParticleData[]>([]);
-  const [scrollPercent] = useState<number>(0);
+  // const [scrollPercent] = useState<number>(0);
 
   // NEW: Load the circle texture
   const circleTexture = useTexture(circleDataUri);
@@ -77,6 +80,22 @@ const PlexusSphere = () => {
   //   return () => window.removeEventListener('scroll', handleScroll);
   // }, []);
 
+  // useEffect(() => {
+  //   gsap.registerPlugin(ScrollTrigger);
+
+  //   ScrollTrigger.create({
+  //     trigger: '#particles-canvas',
+  //     start: 'top top',
+  //     end: '+=100%',
+  //     pin: true,
+  //     scrub: true,
+  //     markers: true,
+  //     onUpdate: (self) => {
+  //       setScrollProgress(self.progress); // value from 0 to 1
+  //     },
+  //   });
+  // }, []);
+
   // --- ANIMATION LOOP ---
   useFrame((state) => {
     const { clock } = state;
@@ -87,7 +106,8 @@ const PlexusSphere = () => {
       const targetPos = new THREE.Vector3().lerpVectors(
         p.initial,
         p.sphere,
-        scrollPercent
+        // scrollPercent
+        scrollProgress
       );
       const time = clock.elapsedTime;
       targetPos.add(

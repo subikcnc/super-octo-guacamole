@@ -1,25 +1,29 @@
 'use client';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import ShaderCanvas from '@/components/shaderTest/canvas';
 
 const Section2 = () => {
+  const [scrollProgress, setScrollProgress] = useState<number>(0);
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
     ScrollTrigger.create({
       trigger: '#particles-canvas',
       pin: true,
-      markers: true,
+      markers: false,
       start: 'top top',
-      end: '+=100%', // Pin for 100vh
+      end: '+=200%', // Pin for 100vh
       pinSpacing: true,
+      onUpdate: (self) => {
+        setScrollProgress(self.progress);
+      },
     });
   }, []);
   return (
     <div id="particles-canvas" className="h-screen w-full">
-      <ShaderCanvas />
+      <ShaderCanvas scrollProgress={scrollProgress} />
     </div>
   );
 };

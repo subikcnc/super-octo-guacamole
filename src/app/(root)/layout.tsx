@@ -8,7 +8,7 @@ const RootLayout = ({ children }: { children: ReactNode }) => {
       <header className="fixed top-0 left-0 z-50 w-full bg-white">
         <Navbar />
       </header>
-      <div className="flex pt-[63px] md:pt-[126px]">{children}</div>
+      <div className="pt-[63px] md:pt-[156px]">{children}</div>
     </main>
   );
 };

@@ -2,7 +2,7 @@
 import { useTexture } from '@react-three/drei';
 import { useFrame } from '@react-three/fiber';
 // NEW: Import useTexture from drei
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useMemo, useRef, useState } from 'react';
 import * as THREE from 'three';
 
 interface ParticleData {
@@ -28,7 +28,7 @@ const PlexusSphere = () => {
   const particleGeoRef = useRef<THREE.BufferGeometry>(null);
   const lineGeoRef = useRef<THREE.BufferGeometry>(null);
   const particlesData = useRef<ParticleData[]>([]);
-  const [scrollPercent, setScrollPercent] = useState<number>(0);
+  const [scrollPercent] = useState<number>(0);
 
   // NEW: Load the circle texture
   const circleTexture = useTexture(circleDataUri);
@@ -66,16 +66,16 @@ const PlexusSphere = () => {
   }, [PARTICLE_COUNT]);
 
   // --- SCROLL LISTENER ---
-  useEffect(() => {
-    const handleScroll = () => {
-      const scrollableHeight =
-        document.documentElement.scrollHeight - window.innerHeight;
-      const newScrollPercent = window.scrollY / scrollableHeight;
-      setScrollPercent(Math.max(0, Math.min(1, newScrollPercent)));
-    };
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  // useEffect(() => {
+  //   const handleScroll = () => {
+  //     const scrollableHeight =
+  //       document.documentElement.scrollHeight - window.innerHeight;
+  //     const newScrollPercent = window.scrollY / scrollableHeight;
+  //     setScrollPercent(Math.max(0, Math.min(1, newScrollPercent)));
+  //   };
+  //   // window.addEventListener('scroll', handleScroll, { passive: true });
+  //   return () => window.removeEventListener('scroll', handleScroll);
+  // }, []);
 
   // --- ANIMATION LOOP ---
   useFrame((state) => {

@@ -150,7 +150,7 @@ const PlexusSphere = ({ scrollProgress }: Props) => {
 
   // --- RENDER ---
   return (
-    <group position={[0, -0.07, 0]}>
+    <group position={[0, -0.1, 0]}>
       {/* NEW: Set the scene's background color to white */}
       {/* <color attach="background" args={['#ffffff']} /> */}
 

@@ -12,17 +12,18 @@ const Section2 = () => {
     ScrollTrigger.create({
       trigger: '#particles-canvas',
       pin: true,
-      markers: false,
+      markers: true,
       start: 'top top',
       end: '+=200%', // Pin for 100vh
       pinSpacing: true,
+      scrub: 2.5,
       onUpdate: (self) => {
         setScrollProgress(self.progress);
       },
     });
   }, []);
   return (
-    <div id="particles-canvas" className="h-screen w-full">
+    <div id="particles-canvas" className="mt-[-70vh] h-screen w-full">
       <ShaderCanvas scrollProgress={scrollProgress} />
     </div>
   );

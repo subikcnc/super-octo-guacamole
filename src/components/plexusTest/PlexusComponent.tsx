@@ -17,12 +17,12 @@ const circleDataUri =
 
 const PlexusSphere = () => {
   // --- CONFIGURATION ---
-  const PARTICLE_COUNT = 450;
+  const PARTICLE_COUNT = 500;
   const PLEXUS_THRESHOLD = 0.5;
   const SPHERE_RADIUS = 2;
   // NEW: Define a darker color for contrast on the white background
   const PARTICLE_COLOR = 'rgb(98,0,2)';
-  const PARTICLE_OPACITY = 0.8;
+  const PARTICLE_OPACITY = 0.9;
 
   // --- REFS & STATE ---
   const particleGeoRef = useRef<THREE.BufferGeometry>(null);
@@ -94,7 +94,7 @@ const PlexusSphere = () => {
         new THREE.Vector3(
           Math.sin(time * 0.5 + i) * 0.1,
           Math.cos(time * 0.3 + i * 2) * 0.1,
-          Math.sin(time * 0.2 + i * 3) * 0
+          Math.sin(time * 0.2 + i * 3) * 0.09
         )
       );
       p.current.lerp(targetPos, 0.1);

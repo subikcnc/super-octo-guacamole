@@ -85,7 +85,7 @@ const ParticlesMesh = () => {
         start: 'top top',
         markers: true,
         end: 'bottom bottom',
-        scrub: 5,
+        scrub: 1.5,
       },
     });
 

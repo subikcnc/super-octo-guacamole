@@ -20,7 +20,7 @@ const circleDataUri =
 
 const PlexusSphere = ({ scrollProgress }: Props) => {
   // --- CONFIGURATION ---
-  const PARTICLE_COUNT = 500;
+  const PARTICLE_COUNT = 400;
   const PLEXUS_THRESHOLD = 0.5;
   const SPHERE_RADIUS = 2.7;
   // NEW: Define a darker color for contrast on the white background

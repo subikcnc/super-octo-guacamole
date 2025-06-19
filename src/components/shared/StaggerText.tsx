@@ -17,7 +17,6 @@ const StaggerText = ({
   const hasAnimatedRef = useRef(false); // Track animation state
 
   useEffect(() => {
-    console.log('This is the scroll progress now', scrollProgress);
     if (!textRef.current) return;
 
     const chars = textRef.current.querySelectorAll('.char');

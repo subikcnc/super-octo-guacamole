@@ -7,15 +7,19 @@ import CameraSetup from '@/components/shaderTest/CameraSetup';
 // import ParticlesMesh from '@/components/shaderTest/ParticlesMesh';
 interface Props {
   scrollProgress: number;
+  particlesCount: number;
 }
 
-const ShaderCanvas = ({ scrollProgress }: Props) => {
+const ShaderCanvas = ({ particlesCount, scrollProgress }: Props) => {
   return (
     <Canvas>
       <color attach="background" args={['#fff']} />
       <CameraSetup />
       {/* <ParticlesMesh /> */}
-      <PlexusSphere scrollProgress={scrollProgress} />
+      <PlexusSphere
+        scrollProgress={scrollProgress}
+        particlesCount={particlesCount}
+      />
     </Canvas>
   );
 };

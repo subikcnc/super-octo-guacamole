@@ -32,7 +32,7 @@ const Section2 = () => {
         scrollProgress={scrollProgress}
       />
 
-      <ShaderCanvas scrollProgress={scrollProgress} />
+      <ShaderCanvas scrollProgress={scrollProgress} particlesCount={100} />
     </div>
   );
 };

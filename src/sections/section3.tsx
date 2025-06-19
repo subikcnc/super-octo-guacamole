@@ -39,7 +39,7 @@ const Section3 = () => {
       gsap.fromTo(
         img,
         {
-          top: '20%', // start lower (or use any default)
+          top: '', // start lower (or use any default)
           autoAlpha: 0, // fully hidden initially
         },
         {
@@ -50,7 +50,7 @@ const Section3 = () => {
             trigger: section,
             start: 'top center', // start when section comes to center
             end: 'bottom center', // end when section is about to leave
-            scrub: true,
+            scrub: 1.5,
             markers: true,
             toggleActions: 'play reverse play reverse',
           },

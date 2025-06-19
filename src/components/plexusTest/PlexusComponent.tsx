@@ -7,6 +7,7 @@ import * as THREE from 'three';
 
 interface Props {
   scrollProgress: number;
+  particlesCount?: number;
 }
 interface ParticleData {
   initial: THREE.Vector3;
@@ -18,9 +19,9 @@ interface ParticleData {
 const circleDataUri =
   'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PGNpcmNsZSBjeD0iMTIiIGN5PSIxMiIgcj0iMTEiIGZpbGw9IiNmZmYiLz48L3N2Zz4=';
 
-const PlexusSphere = ({ scrollProgress }: Props) => {
+const PlexusSphere = ({ particlesCount = 400, scrollProgress }: Props) => {
   // --- CONFIGURATION ---
-  const PARTICLE_COUNT = 400;
+  const PARTICLE_COUNT = particlesCount;
   const PLEXUS_THRESHOLD = 0.5;
   const SPHERE_RADIUS = 2.7;
   // NEW: Define a darker color for contrast on the white background

@@ -8,7 +8,7 @@ gsap.registerPlugin(ScrollTrigger);
 
 const Section3 = () => {
   const pillarsSectionRef = useRef<HTMLDivElement>(null);
-  const topValues = [38, 40, 46];
+  const topValues = [38, 40, 45];
   useEffect(() => {
     ScrollTrigger.create({
       trigger: '#pillars-section',
@@ -39,7 +39,7 @@ const Section3 = () => {
       gsap.fromTo(
         img,
         {
-          top: '', // start lower (or use any default)
+          top: '30%', // start lower (or use any default)
           autoAlpha: 0, // fully hidden initially
         },
         {
@@ -57,46 +57,11 @@ const Section3 = () => {
         }
       );
     });
-
-    // innerSections.forEach((section, index) => {
-    //   ScrollTrigger.create({
-    //     trigger: section,
-    //     start: 'top top',
-    //     end: 'bottom bottom',
-    //     scrub: true,
-    //     markers: true,
-    //     pinSpacing: true,
-    //     onEnter: () => {
-    //       gsap.to(images[index], {
-    //         top: `${topValues[index]}%`,
-    //         autoAlpha: 1,
-    //         duration: 1,
-    //         ease: 'elastic.inOut',
-    //       });
-    //     },
-    //     onUpdate: (self) => {
-    //       console.log(`Progress for index ${index}`, self.progress);
-    //     },
-    //   });
-    // });
-    // const durationInPixels = 500;
-    // const tl = gsap.timeline();
-    // tl.to('.content h1', { y: -100, opacity: 0, duration: 1 });
-    // tl.to('.content p', { x: -200, opacity: 1, duration: 3 });
-    // ScrollTrigger.create({
-    //   trigger: '#pillars-section',
-    //   start: 'top top',
-    //   end: `+=${tl.duration() * durationInPixels}`,
-    //   pin: true,
-    //   scrub: true,
-    //   markers: true,
-    //   animation: tl,
-    // });
   });
   return (
     <div
       id="pillars-section"
-      className="relative flex h-[100vh] w-full flex-col bg-transparent"
+      className="relative w-full bg-transparent"
       ref={pillarsSectionRef}
     >
       <div className="mb-6 flex w-full justify-center">
@@ -150,15 +115,17 @@ const Section3 = () => {
         />
       </div>
       <div
-        className="pillars-inner-section flex-1 bg-neutral-300"
+        className="pillars-inner-section h-[300px] w-full flex-1 bg-neutral-300"
         data-step="1"
-      ></div>
+      >
+        &nbsp;
+      </div>
       <div
-        className="pillars-inner-section flex-1 bg-neutral-500"
+        className="pillars-inner-section h-[300px] flex-1 bg-neutral-500"
         data-step="2"
       ></div>
       <div
-        className="pillars-inner-section flex-1 bg-neutral-700"
+        className="pillars-inner-section h-[300px] flex-1 bg-neutral-700"
         data-step="3"
       ></div>
     </div>

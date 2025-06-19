@@ -8,7 +8,7 @@ const RootLayout = ({ children }: { children: ReactNode }) => {
       <header className="w-full bg-transparent">
         <Navbar />
       </header>
-      <div className="pt-[63px] md:pt-[156px]">{children}</div>
+      <div className="">{children}</div>
     </main>
   );
 };

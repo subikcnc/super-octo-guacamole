@@ -8,10 +8,12 @@ const StaggerText = ({
   text,
   otherClasses,
   scrollProgress,
+  animationThreshold = 0.85,
 }: {
   text: string;
   otherClasses?: string;
   scrollProgress?: number;
+  animationThreshold?: number;
 }) => {
   const textRef = useRef<HTMLDivElement>(null);
   const hasAnimatedRef = useRef(false); // Track animation state
@@ -20,7 +22,11 @@ const StaggerText = ({
     if (!textRef.current) return;
 
     const chars = textRef.current.querySelectorAll('.char');
-    if (scrollProgress && scrollProgress >= 0.85 && !hasAnimatedRef.current) {
+    if (
+      scrollProgress &&
+      scrollProgress >= animationThreshold &&
+      !hasAnimatedRef.current
+    ) {
       gsap.to(chars, {
         opacity: 1,
         stagger: 0.03,
@@ -30,7 +36,7 @@ const StaggerText = ({
       hasAnimatedRef.current = true;
     } else if (
       scrollProgress &&
-      scrollProgress < 0.85 &&
+      scrollProgress < animationThreshold &&
       hasAnimatedRef.current
     ) {
       gsap.to(chars, {
@@ -42,7 +48,7 @@ const StaggerText = ({
       });
       hasAnimatedRef.current = false;
     }
-  }, [scrollProgress]);
+  }, [scrollProgress, animationThreshold]);
 
   return (
     <div

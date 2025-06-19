@@ -8,15 +8,30 @@ gsap.registerPlugin(ScrollTrigger);
 
 const Section3 = () => {
   const pillarsSectionRef = useRef<HTMLDivElement>(null);
+  const pillarsSectionTitleRef = useRef<HTMLHeadingElement>(null);
+
   const topValues = [38, 40, 45];
   useEffect(() => {
-    ScrollTrigger.create({
+    const mainTrigger = ScrollTrigger.create({
       trigger: '#pillars-section',
       pin: true,
       start: 'top top',
+      markers: true,
       end: 'bottom top',
-      onEnter: () => console.log('Entered animation section'),
-      onLeave: () => console.log('Left animation section'),
+      onEnter: () => {
+        if (!pillarsSectionTitleRef.current) return;
+        gsap.set(pillarsSectionTitleRef.current, { position: 'absolute' });
+        gsap.to(pillarsSectionTitleRef.current, {
+          left: 120,
+          top: 164,
+          width: 580,
+          color: '#620002',
+          duration: 0.5,
+          ease: 'power2',
+        });
+        // gsap.to()
+      },
+      onLeave: () => mainTrigger.kill(),
     });
 
     if (!pillarsSectionRef.current) return;
@@ -46,10 +61,11 @@ const Section3 = () => {
         start: 'top center', // start when section comes to center
         end: 'bottom center', // end when section is about to leave
         scrub: 2.5,
-        markers: true,
-        onLeave: () => {
-          imagesTrigger.kill();
-        },
+        markers: false,
+        toggleActions: 'play reverse play reverse',
+        // onLeave: () => {
+        //   imagesTrigger.kill();
+        // },
       });
 
       const cardsTrigger = ScrollTrigger.create({
@@ -57,12 +73,12 @@ const Section3 = () => {
         start: 'top center', // start when section comes to center
         end: 'bottom center', // end when section is about to leave
         scrub: 2.5,
-        markers: true,
+        markers: false,
         // toggleActions: 'play none none none',
-        // toggleActions: 'play reverse play reverse',
-        onLeave: () => {
-          cardsTrigger.kill();
-        },
+        toggleActions: 'play reverse play reverse',
+        // onLeave: () => {
+        //   cardsTrigger.kill();
+        // },
       });
 
       gsap.fromTo(
@@ -96,7 +112,11 @@ const Section3 = () => {
       ref={pillarsSectionRef}
     >
       <div className="mb-6 flex w-full justify-center">
-        <h2 className="h2_regular_56 text-neutral-900">
+        <h2
+          ref={pillarsSectionTitleRef}
+          id="pillars-section-title"
+          className="h2_regular_56 text-neutral-900"
+        >
           By building the foundation of
           <br /> Research, Education, and Industry.
         </h2>
@@ -118,7 +138,7 @@ const Section3 = () => {
         />
         <div
           className="pillars-animated-card absolute max-w-[500px] rounded-[40px] bg-white p-5"
-          style={{ right: '120px', top: '10%', opacity: '0' }}
+          style={{ right: '120px', top: '15%', opacity: '0' }}
         >
           <h3 className="text-primary-700 h3_bold_36 mb-4">Research</h3>
           <p className="text-neutral-700">
@@ -181,17 +201,17 @@ const Section3 = () => {
       </div>
 
       <div
-        className="pillars-inner-section h-[300px] w-full flex-1 bg-neutral-300"
+        className="pillars-inner-section h-[300px] w-full flex-1"
         data-step="1"
       >
         &nbsp;
       </div>
       <div
-        className="pillars-inner-section h-[300px] flex-1 bg-neutral-500"
+        className="pillars-inner-section h-[300px] flex-1"
         data-step="2"
       ></div>
       <div
-        className="pillars-inner-section h-[300px] flex-1 bg-neutral-700"
+        className="pillars-inner-section h-[300px] flex-1"
         data-step="3"
       ></div>
     </div>

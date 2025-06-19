@@ -118,6 +118,15 @@
   --color-primary-900: oklch(0.3118 0.1276 28.34);
   --color-primary-700: oklch(0.561 0.2284 29.06);
   --color-primary-500: oklch(0.697 0.157 20.58);
+  --color-primary-300: oklch(0.8468 0.0839 18.05);
+  --color-primary-100: oklch(0.9528 0.0245 5.09);
+
+  --color-neutral-900: oklch(0.4194 0.0215 264.31);
+  --color-neutral-700: oklch(0.612 0.0181 262.72);
+  --color-neutral-500: oklch(0.8163 0.0151 264.48);
+  --color-neutral-300: oklch(0.9642 0 0);
+  --color-neutral-100: oklch(1 0 0);
+
   --shadow-nav: 0 2px 0 0 rgba(0, 0, 0, 0.15);
 }
 
@@ -133,5 +142,9 @@
 @layer utilities {
   .h3_medium_64 {
     @apply text-[64px] leading-[125%] font-medium tracking-[-3.2px];
+  }
+
+  .h2_regular_56 {
+    @apply text-[56px] leading-[125%] font-normal;
   }
 }

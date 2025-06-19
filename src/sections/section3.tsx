@@ -41,6 +41,30 @@ const Section3 = () => {
       if (!img || !card) return;
 
       // Animate one image per section with scroll
+      const imagesTrigger = ScrollTrigger.create({
+        trigger: section,
+        start: 'top center', // start when section comes to center
+        end: 'bottom center', // end when section is about to leave
+        scrub: 2.5,
+        markers: true,
+        onLeave: () => {
+          imagesTrigger.kill();
+        },
+      });
+
+      const cardsTrigger = ScrollTrigger.create({
+        trigger: section,
+        start: 'top center', // start when section comes to center
+        end: 'bottom center', // end when section is about to leave
+        scrub: 2.5,
+        markers: true,
+        // toggleActions: 'play none none none',
+        // toggleActions: 'play reverse play reverse',
+        onLeave: () => {
+          cardsTrigger.kill();
+        },
+      });
+
       gsap.fromTo(
         img,
         {
@@ -51,14 +75,7 @@ const Section3 = () => {
           top: `${topValues[index]}%`, // target top
           autoAlpha: 1,
           ease: 'none',
-          scrollTrigger: {
-            trigger: section,
-            start: 'top center', // start when section comes to center
-            end: 'bottom center', // end when section is about to leave
-            scrub: 2.5,
-            markers: true,
-            toggleActions: 'play none none none',
-          },
+          scrollTrigger: imagesTrigger,
         }
       );
 
@@ -67,15 +84,7 @@ const Section3 = () => {
         { autoAlpha: 0 },
         {
           autoAlpha: 1,
-          scrollTrigger: {
-            trigger: section,
-            start: 'top center', // start when section comes to center
-            end: 'bottom center', // end when section is about to leave
-            scrub: 2.5,
-            markers: true,
-            toggleActions: 'play none none none',
-            // toggleActions: 'play reverse play reverse',
-          },
+          scrollTrigger: cardsTrigger,
         }
       );
     });

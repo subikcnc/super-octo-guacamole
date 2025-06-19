@@ -27,13 +27,18 @@ const Section3 = () => {
     const images = pillarsSectionRef.current
       .querySelector('.pillars-animated-content')
       ?.querySelectorAll('img');
-    console.log('all images', images);
 
-    if (!images) return;
+    const cards = pillarsSectionRef.current
+      .querySelector('.pillars-animated-content')
+      ?.querySelectorAll('.pillars-animated-card');
+
+    if (!images || !cards) return;
 
     innerSections.forEach((section, index) => {
       const img = images[index];
-      if (!img) return;
+      const card = cards[index];
+
+      if (!img || !card) return;
 
       // Animate one image per section with scroll
       gsap.fromTo(
@@ -50,9 +55,26 @@ const Section3 = () => {
             trigger: section,
             start: 'top center', // start when section comes to center
             end: 'bottom center', // end when section is about to leave
-            scrub: 1.5,
+            scrub: 2.5,
             markers: true,
-            toggleActions: 'play reverse play reverse',
+            toggleActions: 'play none none none',
+          },
+        }
+      );
+
+      gsap.fromTo(
+        card,
+        { autoAlpha: 0 },
+        {
+          autoAlpha: 1,
+          scrollTrigger: {
+            trigger: section,
+            start: 'top center', // start when section comes to center
+            end: 'bottom center', // end when section is about to leave
+            scrub: 2.5,
+            markers: true,
+            toggleActions: 'play none none none',
+            // toggleActions: 'play reverse play reverse',
           },
         }
       );
@@ -66,8 +88,8 @@ const Section3 = () => {
     >
       <div className="mb-6 flex w-full justify-center">
         <h2 className="h2_regular_56 text-neutral-900">
-          That Connects Research,
-          <br /> Education, and Industry.
+          By building the foundation of
+          <br /> Research, Education, and Industry.
         </h2>
       </div>
       <div className="pillars-animated-content absolute top-0 left-0 flex h-full w-full items-center justify-center">
@@ -85,6 +107,18 @@ const Section3 = () => {
           }}
           // Target top: 38%
         />
+        <div
+          className="pillars-animated-card absolute max-w-[500px] rounded-[40px] bg-white p-5"
+          style={{ right: '120px', top: '10%', opacity: '0' }}
+        >
+          <h3 className="text-primary-700 h3_bold_36 mb-4">Research</h3>
+          <p className="text-neutral-700">
+            We pursue AI research to expand the horizons of human knowledge. Our
+            work addresses urgent challenges spanning diverse sectors with bold
+            ideas, rigorous methods, and a deep commitment to turn insights into
+            impact.
+          </p>
+        </div>
         <Image
           src="/images/pillars/pillar-2.png"
           width={222}
@@ -99,6 +133,17 @@ const Section3 = () => {
           }}
           // Target top: 40%;
         />
+        <div
+          className="pillars-animated-card absolute max-w-[500px] rounded-[40px] bg-white p-5"
+          style={{ left: '120px', top: '70%', opacity: '0' }}
+        >
+          <h3 className="text-primary-700 h3_bold_36 mb-4">Education</h3>
+          <p className="text-neutral-700">
+            We unite curious minds to co-create globally competitive startups
+            and deep tech spin-offs, giving ideas a path to grow into
+            practically relevant, purpose-driven products.
+          </p>
+        </div>
         <Image
           src="/images/pillars/pillar-3.png"
           width={317}
@@ -113,7 +158,19 @@ const Section3 = () => {
           }}
           // Target top: 46%;
         />
+        <div
+          className="pillars-animated-card absolute max-w-[500px] rounded-[40px] bg-white p-5"
+          style={{ right: '120px', top: '70%', opacity: '0' }}
+        >
+          <h3 className="text-primary-700 h3_bold_36 mb-4">Industry</h3>
+          <p className="text-neutral-700">
+            Through practical learning programs, we disseminate our knowledge to
+            build the capabilities across individuals, organizations, and
+            institutions, so they can innovate with AI.
+          </p>
+        </div>
       </div>
+
       <div
         className="pillars-inner-section h-[300px] w-full flex-1 bg-neutral-300"
         data-step="1"

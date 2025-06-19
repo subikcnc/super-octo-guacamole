@@ -147,4 +147,8 @@
   .h2_regular_56 {
     @apply text-[56px] leading-[125%] font-normal;
   }
+
+  .h3_bold_36 {
+    @apply text-[36px] leading-[125%] font-medium;
+  }
 }

@@ -24,7 +24,7 @@ const Section2 = () => {
     });
   }, []);
   return (
-    <div id="particles-canvas" className="relative mt-[-75vh] h-screen w-full">
+    <div id="particles-canvas" className="relative mt-[-70vh] h-screen w-full">
       {/* Text Animation using GSAP */}
       <StaggerText
         text="Building an ecosystem of research and innovation in the Global South"

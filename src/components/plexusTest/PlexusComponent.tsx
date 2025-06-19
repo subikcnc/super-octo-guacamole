@@ -31,6 +31,18 @@ const PlexusSphere = ({ particlesCount = 400, scrollProgress }: Props) => {
   // --- REFS & STATE ---
   const particleGeoRef = useRef<THREE.BufferGeometry>(null);
   const lineGeoRef = useRef<THREE.BufferGeometry>(null);
+  const groupRef = useRef<THREE.Group>(null);
+  // Stores the scrollProgress from the previous frame to calculate the delta
+  // const lastScrollProgress = useRef<number>(0);
+  // Stores the current rotation velocity, which we will dampen over time
+  // const scrollVelocity = useRef<number>(0);
+
+  // --- TWEAKABLE PARAMETERS ---
+  // How much to multiply the scroll speed. Higher means faster rotation.
+  // const VELOCITY_MULTIPLIER = 2.5;
+  // How quickly the rotation slows down. 1 = no damping, 0 = instant stop.
+  // const DAMPING_FACTOR = 0.95;
+
   const particlesData = useRef<ParticleData[]>([]);
   // const [scrollPercent] = useState<number>(0);
 
@@ -120,7 +132,40 @@ const PlexusSphere = ({ particlesCount = 400, scrollProgress }: Props) => {
       );
       p.current.lerp(targetPos, 0.1);
       particlePositions.set([p.current.x, p.current.y, p.current.z], i * 3);
+
+      // Rotating the whole group
+      if (!groupRef.current) return;
+
+      // 1. Define the target rotation based on the scroll progress
+      const targetRotationY = scrollProgress * (Math.PI * 2);
+
+      // 2. Use LERP to smoothly move the current rotation towards the target
+      // The third argument (0.1) is the "lerp factor". A smaller number
+      // means slower, smoother animation. A larger number is faster.
+      groupRef.current.rotation.y = THREE.MathUtils.lerp(
+        groupRef.current.rotation.y,
+        targetRotationY,
+        0.1
+      );
+
+      // Continuous rotation
+      // 1. Calculate the change in scroll progress since the last frame
+      // const deltaProgress = scrollProgress - lastScrollProgress.current;
+
+      // // 2. Update the velocity. If the user is scrolling, this will be non-zero.
+      // // We add the change to the existing velocity.
+      // scrollVelocity.current += deltaProgress * VELOCITY_MULTIPLIER;
+
+      // // 3. Add the current velocity to the group's rotation
+      // // We multiply by delta to make the rotation frame-rate independent.
+      // groupRef.current.rotation.y += scrollVelocity.current * delta;
+
+      // // 4. Apply damping (friction) to the velocity
+      // // This makes the rotation smoothly slow down when the user stops scrolling.
+      // scrollVelocity.current *= DAMPING_FACTOR;
     }
+    // 5. At the end of the frame, update the last scroll progress for the next frame
+    // lastScrollProgress.current = scrollProgress;
 
     // NEW: Use the new dark color for the lines
     const color = new THREE.Color(PARTICLE_COLOR);
@@ -151,7 +196,7 @@ const PlexusSphere = ({ particlesCount = 400, scrollProgress }: Props) => {
 
   // --- RENDER ---
   return (
-    <group position={[0, -0.1, 0]}>
+    <group ref={groupRef} position={[0, -0.1, 0]}>
       {/* NEW: Set the scene's background color to white */}
       {/* <color attach="background" args={['#ffffff']} /> */}
 

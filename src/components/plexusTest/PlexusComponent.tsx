@@ -1,6 +1,6 @@
 // src/PlexusSphere.tsx
 import { useTexture } from '@react-three/drei';
-import { useFrame } from '@react-three/fiber';
+import { useFrame, useThree } from '@react-three/fiber';
 // NEW: Import useTexture from drei
 import { useMemo, useRef } from 'react';
 import * as THREE from 'three';
@@ -20,6 +20,8 @@ const circleDataUri =
   'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PGNpcmNsZSBjeD0iMTIiIGN5PSIxMiIgcj0iMTEiIGZpbGw9IiNmZmYiLz48L3N2Zz4=';
 
 const PlexusSphere = ({ particlesCount = 400, scrollProgress }: Props) => {
+  const { camera } = useThree();
+  console.log('this is the camera', camera);
   // --- CONFIGURATION ---
   const PARTICLE_COUNT = particlesCount;
   const PLEXUS_THRESHOLD = 0.5;

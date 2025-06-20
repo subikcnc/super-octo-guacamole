@@ -33,7 +33,7 @@ const Section2 = () => {
         animationThreshold={0.5}
       />
 
-      <ShaderCanvas scrollProgress={scrollProgress} particlesCount={100} />
+      <ShaderCanvas scrollProgress={scrollProgress} particlesCount={200} />
     </div>
   );
 };

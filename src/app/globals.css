@@ -127,7 +127,7 @@
   --color-neutral-300: oklch(0.9642 0 0);
   --color-neutral-100: oklch(1 0 0);
 
-  --shadow-nav: 0 2px 0 0 rgba(0, 0, 0, 0.15);
+  --shadow-nav: 0 2px 0 rgba(0, 0, 0, 0.15);
 }
 
 @layer base {
@@ -150,5 +150,11 @@
 
   .h3_bold_36 {
     @apply text-[36px] leading-[125%] font-medium;
+  }
+
+  .pillars-animated-card {
+    clip-path: path(
+      'M 0 0 H 100% V calc(100% - 40px) A 40 40 0 0 1 calc(100% - 40px) 100% H 0 Z'
+    );
   }
 }

@@ -135,21 +135,6 @@ const PlexusSphere = ({ particlesCount = 400, scrollProgress }: Props) => {
       p.current.lerp(targetPos, 0.1);
       particlePositions.set([p.current.x, p.current.y, p.current.z], i * 3);
 
-      // Rotating the whole group
-      if (!groupRef.current) return;
-
-      // 1. Define the target rotation based on the scroll progress
-      const targetRotationY = scrollProgress * (Math.PI * 2);
-
-      // 2. Use LERP to smoothly move the current rotation towards the target
-      // The third argument (0.1) is the "lerp factor". A smaller number
-      // means slower, smoother animation. A larger number is faster.
-      groupRef.current.rotation.y = THREE.MathUtils.lerp(
-        groupRef.current.rotation.y,
-        targetRotationY,
-        0.1
-      );
-
       // Continuous rotation
       // 1. Calculate the change in scroll progress since the last frame
       // const deltaProgress = scrollProgress - lastScrollProgress.current;
@@ -166,6 +151,23 @@ const PlexusSphere = ({ particlesCount = 400, scrollProgress }: Props) => {
       // // This makes the rotation smoothly slow down when the user stops scrolling.
       // scrollVelocity.current *= DAMPING_FACTOR;
     }
+
+    // Rotating the whole group
+    // if (!groupRef.current) return;
+
+    // // 1. Define the target rotation based on the scroll progress
+    // const targetRotationY = scrollProgress * (Math.PI * 2);
+
+    // // 2. Use LERP to smoothly move the current rotation towards the target
+    // // The third argument (0.1) is the "lerp factor". A smaller number
+    // // means slower, smoother animation. A larger number is faster.
+    // if (scrollProgress > 0.8) {
+    //   groupRef.current.rotation.y = THREE.MathUtils.lerp(
+    //     groupRef.current.rotation.y,
+    //     targetRotationY,
+    //     0.1
+    //   );
+    // }
     // 5. At the end of the frame, update the last scroll progress for the next frame
     // lastScrollProgress.current = scrollProgress;
 

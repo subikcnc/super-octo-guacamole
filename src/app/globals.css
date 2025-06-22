@@ -54,7 +54,7 @@
   --primary-900: oklch(0.3118 0.1276 28.34);
   --primary-700: oklch(0.561 0.2284 29.06);
   --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
+  --secondary: #f3f3f3;
   --secondary-foreground: oklch(1 0 0);
   --muted: oklch(0.97 0 0);
   --muted-foreground: oklch(0.556 0 0);
@@ -152,6 +152,9 @@
     @apply text-[36px] leading-[125%] font-medium;
   }
 
+  .h4_regular_32 {
+    @apply text-[32px] leading-[140%] font-normal;
+  }
   .pillars-animated-card {
     clip-path: path(
       'M 0 0 H 100% V calc(100% - 40px) A 40 40 0 0 1 calc(100% - 40px) 100% H 0 Z'

@@ -12,7 +12,7 @@ interface Props {
 
 const ShaderCanvas = ({ particlesCount, scrollProgress }: Props) => {
   return (
-    <Canvas>
+    <Canvas camera={{ position: [0, 0, 6], fov: 75 }}>
       <color attach="background" args={['#fff']} />
       <CameraSetup />
       {/* <ParticlesMesh /> */}

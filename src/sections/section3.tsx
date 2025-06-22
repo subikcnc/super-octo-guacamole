@@ -4,9 +4,13 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Image from 'next/image';
 import { useEffect, useRef } from 'react';
 
+import PillarsCard from '@/components/shared/PillarsCard';
+// import { cn } from '@/lib/utils';
+
 gsap.registerPlugin(ScrollTrigger);
 
 const Section3 = () => {
+  // const [hoveredCardIndex, setHoveredCardIndex] = useState<number | null>(null);
   const pillarsSectionRef = useRef<HTMLDivElement>(null);
   const pillarsSectionTitleRef = useRef<HTMLHeadingElement>(null);
 
@@ -16,7 +20,7 @@ const Section3 = () => {
       trigger: '#pillars-section',
       pin: true,
       start: 'top top',
-      markers: true,
+      markers: false,
       end: 'bottom top',
       onEnter: () => {
         if (!pillarsSectionTitleRef.current) return;
@@ -41,7 +45,9 @@ const Section3 = () => {
     );
     const images = pillarsSectionRef.current
       .querySelector('.pillars-animated-content')
-      ?.querySelectorAll('img');
+      ?.querySelectorAll('.pillars-block-image');
+
+    console.log('These are the image', images);
 
     const cards = pillarsSectionRef.current
       .querySelector('.pillars-animated-content')
@@ -112,7 +118,13 @@ const Section3 = () => {
       ref={pillarsSectionRef}
     >
       {/* SVG for clipping path */}
-
+      <svg width="0" height="0" style={{ position: 'absolute' }}>
+        <defs>
+          <clipPath id="dynamic-shape" clipPathUnits="objectBoundingBox">
+            <path d="M1 0 H0 V0.8198 C0 0.9193, 0.0133 1, 0.0298 1 H0.774 C0.7853 1, 0.7957 0.9614, 0.8007 0.8998 L0.8522 0.2797 C0.8572 0.2187, 0.8676 0.179, 0.8789 0.179 H0.9701 C0.9866 0.179, 1 0.0995, 1 0 Z" />
+          </clipPath>
+        </defs>
+      </svg>
       {/* SVG for clipping path */}
       <div className="mb-6 flex w-full justify-center">
         <h2
@@ -130,7 +142,13 @@ const Section3 = () => {
           width={362}
           height={199}
           alt="animated block"
-          className="absolute"
+          className="pillars-block-image absolute"
+          // className={cn(
+          //   'pillars-block-image absolute',
+          //   hoveredCardIndex !== null && hoveredCardIndex === 0
+          //     ? 'opacity-0'
+          //     : ''
+          // )}
           style={{
             top: '0',
             left: '40%',
@@ -139,44 +157,25 @@ const Section3 = () => {
           }}
           // Target top: 38%
         />
-        <div
-          className="pillars-animated-card shadow-nav absolute max-w-[500px] rounded-[40px] bg-white"
-          style={{
-            width: '532px',
-            height: '332px',
-            overflow: 'hidden',
-            right: '120px',
-            top: '15%',
-            opacity: '0',
-            boxShadow: '0 2px 8px 0 rgba(0,0,0,0.15)',
-            clipPath: 'url(#card-shape)',
-          }}
+        {/* Pillar Card Research */}
+        <PillarsCard
+          title="Research"
+          right="120px"
+          top="15%"
+          // handleCardMouseOver={() => setHoveredCardIndex(0)}
+          // handleCardMouseOut={() => setHoveredCardIndex(null)}
         >
-          <svg width="0" height="0">
-            <defs>
-              <clipPath id="card-shape" clipPathUnits="userSpaceOnUse">
-                <path d="M16 54C16 31.9086 33.9086 14 56 14H476C498.091 14 516 31.9086 516 54V223H16V54Z" />
-                <path d="M516 223H16V297.604C16 306.659 22.6823 314 30.9254 314H403.046C408.699 314 413.866 310.492 416.395 304.938L442.11 248.458C444.64 242.904 449.807 239.396 455.459 239.396H501.075C509.318 239.396 516 232.055 516 223Z" />
-              </clipPath>
-            </defs>
-          </svg>
-          <div className="p-5">
-            <h3 className="text-primary-700 h3_bold_36 mb-4">Research</h3>
-            <p className="text-neutral-700">
-              We pursue AI research to expand the horizons of human knowledge.
-              Our work addresses urgent challenges spanning diverse sectors with
-              bold ideas, rigorous methods, and a deep commitment to turn
-              insights into impact.
-            </p>
-          </div>
-          <div className="px-6 py-8">Learn More</div>
-        </div>
+          We pursue AI research to expand the horizons of human knowledge. Our
+          work addresses urgent challenges spanning diverse sectors with bold
+          ideas, rigorous methods, and a deep commitment to turn insights into
+          impact.
+        </PillarsCard>
         <Image
           src="/images/pillars/pillar-2.png"
           width={222}
           height={258}
           alt="animated block"
-          className="absolute"
+          className="pillars-block-image absolute"
           style={{
             top: '0',
             left: '35%',
@@ -185,31 +184,24 @@ const Section3 = () => {
           }}
           // Target top: 40%;
         />
-        <div
-          className="pillars-animated-card absolute max-w-[500px] rounded-[40px] bg-white"
-          style={{
-            left: '120px',
-            top: '60%',
-            opacity: '0',
-            boxShadow: '0 2px 8px 0 rgba(0,0,0,0.15)',
-          }}
+        {/* Pillar Card Education */}
+        <PillarsCard
+          title="Education"
+          left="120px"
+          top="60%"
+          // handleCardMouseOver={() => setHoveredCardIndex(1)}
+          // handleCardMouseOut={() => setHoveredCardIndex(null)}
         >
-          <div className="p-5 pb-0">
-            <h3 className="text-primary-700 h3_bold_36 mb-4">Education</h3>
-            <p className="text-neutral-700">
-              We unite curious minds to co-create globally competitive startups
-              and deep tech spin-offs, giving ideas a path to grow into
-              practically relevant, purpose-driven products.
-            </p>
-          </div>
-          <div className="px-5 py-8">Learn more</div>
-        </div>
+          We unite curious minds to co-create globally competitive startups and
+          deep tech spin-offs, giving ideas a path to grow into practically
+          relevant, purpose-driven products.
+        </PillarsCard>
         <Image
           src="/images/pillars/pillar-3.png"
           width={317}
           height={208}
           alt="animated block"
-          className="absolute"
+          className="pillars-block-image absolute"
           style={{
             top: '0',
             left: '42.5%',
@@ -218,25 +210,18 @@ const Section3 = () => {
           }}
           // Target top: 46%;
         />
-        <div
-          className="pillars-animated-card absolute max-w-[500px] rounded-[40px] bg-white"
-          style={{
-            right: '120px',
-            top: '60%',
-            opacity: '0',
-            boxShadow: '0 2px 8px 0 rgba(0,0,0,0.15)',
-          }}
+        {/* Pillar Card Industry */}
+        <PillarsCard
+          title="Industry"
+          right="120px"
+          top="60%"
+          // handleCardMouseOver={() => setHoveredCardIndex(2)}
+          // handleCardMouseOut={() => setHoveredCardIndex(null)}
         >
-          <div className="p-5 pb-0">
-            <h3 className="text-primary-700 h3_bold_36 mb-4">Industry</h3>
-            <p className="text-neutral-700">
-              Through practical learning programs, we disseminate our knowledge
-              to build the capabilities across individuals, organizations, and
-              institutions, so they can innovate with AI.
-            </p>
-          </div>
-          <div className="px-5 py-8">Learn More</div>
-        </div>
+          Through practical learning programs, we disseminate our knowledge to
+          build the capabilities across individuals, organizations, and
+          institutions, so they can innovate with AI.
+        </PillarsCard>
       </div>
 
       <div

@@ -17,8 +17,8 @@ extend({ OrbitControls });
 const ParticlesMesh = () => {
   const materialRef = useRef<THREE.ShaderMaterial>(null);
   // const { camera, gl, size } = useThree();
-  const { camera, size } = useThree();
-  console.log('this is the camera', camera);
+  const { size } = useThree();
+  // console.log('this is the camera', camera);
   const particlesCount = 3000;
   const targetParticlesCount = 3000;
 

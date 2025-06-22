@@ -62,19 +62,19 @@ export const news = [
     title:
       'News Commentary: As AI ecosystem overwhelms world, Nepal needs to augment pace',
     type: 'Media Coverage  ',
-    imgSrc: '',
+    imgSrc: '/images/news/news-1.png',
   },
   {
     date: '1 April, 2024',
     title: 'Google and UNFPA Team visit at NAAMII',
     type: 'Event',
-    imgSrc: '',
+    imgSrc: '/images/news/news-2.png',
   },
   {
     date: '1 April, 2024',
     title:
       'Talk Delivered by Dr. Bishesh Khanal at “AI Conference for Prosperous Nepal"',
     type: 'Event',
-    imgSrc: '',
+    imgSrc: '/images/news/news-3.png',
   },
 ];

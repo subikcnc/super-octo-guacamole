@@ -1,20 +1,31 @@
 'use client';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import Image from 'next/image';
 import { useEffect, useRef } from 'react';
 
 import PillarsCard from '@/components/shared/PillarsCard';
-// import { cn } from '@/lib/utils';
 
 gsap.registerPlugin(ScrollTrigger);
 
 const Section3 = () => {
-  // const [hoveredCardIndex, setHoveredCardIndex] = useState<number | null>(null);
   const pillarsSectionRef = useRef<HTMLDivElement>(null);
   const pillarsSectionTitleRef = useRef<HTMLHeadingElement>(null);
 
   const topValues = [38, 40, 45];
+  const hoverTopValues = [34, 36, 41];
+
+  const pillarImageInitialSrc = [
+    '/images/pillars/pillar-1.png',
+    '/images/pillars/pillar-2.png',
+    '/images/pillars/pillar-3.png',
+  ];
+
+  const pillarImageHoveredSrc = [
+    '/images/pillars/pillar-inactive-1.png',
+    '/images/pillars/pillar-inactive-2.png',
+    '/images/pillars/pillar-inactive-3.png',
+  ];
+
   useEffect(() => {
     const mainTrigger = ScrollTrigger.create({
       trigger: '#pillars-section',
@@ -111,6 +122,34 @@ const Section3 = () => {
       );
     });
   });
+
+  const handleCardMouseOver = (index: number) => {
+    if (!pillarsSectionRef.current) return;
+
+    const images = pillarsSectionRef.current.querySelectorAll(
+      '.pillars-block-image'
+    );
+    gsap.to(images[index], { top: `${hoverTopValues[index]}%` });
+    images.forEach((img, i) => {
+      if (i !== index) {
+        console.log('img src to set', `${pillarImageHoveredSrc[i]}`);
+        img.setAttribute('src', `${pillarImageHoveredSrc[i]}`);
+      }
+    });
+  };
+
+  const handleCardMouseOut = (index: number) => {
+    if (!pillarsSectionRef.current) return;
+
+    const images = pillarsSectionRef.current.querySelectorAll(
+      '.pillars-block-image'
+    );
+    gsap.to(images[index], { top: `${topValues[index]}%` });
+
+    images.forEach((img, i) => {
+      img.setAttribute('src', `${pillarImageInitialSrc[i]}`);
+    });
+  };
   return (
     <div
       id="pillars-section"
@@ -137,18 +176,12 @@ const Section3 = () => {
         </h2>
       </div>
       <div className="pillars-animated-content absolute top-0 left-0 flex h-full w-full items-center justify-center">
-        <Image
+        <img
           src="/images/pillars/pillar-1.png"
-          width={362}
-          height={199}
+          // width={362}
+          // height={199}
           alt="animated block"
           className="pillars-block-image absolute"
-          // className={cn(
-          //   'pillars-block-image absolute',
-          //   hoveredCardIndex !== null && hoveredCardIndex === 0
-          //     ? 'opacity-0'
-          //     : ''
-          // )}
           style={{
             top: '0',
             left: '40%',
@@ -162,15 +195,15 @@ const Section3 = () => {
           title="Research"
           right="120px"
           top="15%"
-          // handleCardMouseOver={() => setHoveredCardIndex(0)}
-          // handleCardMouseOut={() => setHoveredCardIndex(null)}
+          handleCardMouseOver={() => handleCardMouseOver(0)}
+          handleCardMouseOut={() => handleCardMouseOut(0)}
         >
           We pursue AI research to expand the horizons of human knowledge. Our
           work addresses urgent challenges spanning diverse sectors with bold
           ideas, rigorous methods, and a deep commitment to turn insights into
           impact.
         </PillarsCard>
-        <Image
+        <img
           src="/images/pillars/pillar-2.png"
           width={222}
           height={258}
@@ -189,14 +222,14 @@ const Section3 = () => {
           title="Education"
           left="120px"
           top="60%"
-          // handleCardMouseOver={() => setHoveredCardIndex(1)}
-          // handleCardMouseOut={() => setHoveredCardIndex(null)}
+          handleCardMouseOver={() => handleCardMouseOver(1)}
+          handleCardMouseOut={() => handleCardMouseOut(1)}
         >
           We unite curious minds to co-create globally competitive startups and
           deep tech spin-offs, giving ideas a path to grow into practically
           relevant, purpose-driven products.
         </PillarsCard>
-        <Image
+        <img
           src="/images/pillars/pillar-3.png"
           width={317}
           height={208}
@@ -215,8 +248,8 @@ const Section3 = () => {
           title="Industry"
           right="120px"
           top="60%"
-          // handleCardMouseOver={() => setHoveredCardIndex(2)}
-          // handleCardMouseOut={() => setHoveredCardIndex(null)}
+          handleCardMouseOver={() => handleCardMouseOver(2)}
+          handleCardMouseOut={() => handleCardMouseOut(2)}
         >
           Through practical learning programs, we disseminate our knowledge to
           build the capabilities across individuals, organizations, and

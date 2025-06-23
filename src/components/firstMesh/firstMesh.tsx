@@ -1,6 +1,6 @@
 'use client';
 
-import { extend, useFrame, useThree } from '@react-three/fiber';
+import { extend, useFrame } from '@react-three/fiber';
 import { useRef } from 'react';
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
@@ -10,7 +10,7 @@ import CustomObject from '@/components/firstMesh/CustomObject';
 extend({ OrbitControls });
 const FirstMesh = () => {
   //   Retreive the camera
-  const { camera, gl } = useThree();
+  // const { camera, gl } = useThree();
 
   const cubeRef = useRef<THREE.Mesh>(null);
   const groupRef = useRef<THREE.Group>(null);
@@ -24,7 +24,7 @@ const FirstMesh = () => {
 
   return (
     <>
-      <orbitControls args={[camera, gl.domElement]} />
+      {/* <orbitControls args={[camera, gl.domElement]} /> */}
       {/* The default light comes from straight above */}
       <directionalLight position={[1, 2, 3]} intensity={1.5} />
       <ambientLight intensity={0.5} />

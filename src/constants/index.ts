@@ -78,3 +78,12 @@ export const news = [
     imgSrc: '/images/news/news-3.png',
   },
 ];
+
+export const marqueeList = [
+  'Research',
+  'Education',
+  'Innovation',
+  'Research',
+  'Education',
+  'Innovation',
+];

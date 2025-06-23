@@ -48,6 +48,7 @@ const eslintConfig = [
         },
       ],
       'no-undef': 'off', // Needed if using TypeScript
+      '@next/next/no-img-element': 'off',
     },
   },
 ];

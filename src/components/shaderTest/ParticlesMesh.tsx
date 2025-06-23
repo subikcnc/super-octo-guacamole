@@ -1,5 +1,7 @@
 import { extend, useThree } from '@react-three/fiber';
-import GUI from 'lil-gui';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+// import GUI from 'lil-gui';
 import { useEffect, useMemo, useRef } from 'react';
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
@@ -9,12 +11,16 @@ import vertexShader from './vertex.glsl';
 const vShader = vertexShader;
 const fShader = fragmentShader;
 
+gsap.registerPlugin(ScrollTrigger);
+
 extend({ OrbitControls });
 const ParticlesMesh = () => {
   const materialRef = useRef<THREE.ShaderMaterial>(null);
-  const { camera, gl, size } = useThree();
-  const particlesCount = 2700;
-  const targetParticlesCount = 800;
+  // const { camera, gl, size } = useThree();
+  const { size } = useThree();
+  // console.log('this is the camera', camera);
+  const particlesCount = 3000;
+  const targetParticlesCount = 3000;
 
   // Current particles positions
   const particlesPositions = useMemo(() => {
@@ -31,7 +37,7 @@ const ParticlesMesh = () => {
   // Target particles positions
   const targetPositions = useMemo(() => {
     const positions = new Float32Array(targetParticlesCount * 3);
-    const radius = 5;
+    const radius = 2;
 
     for (let i = 0; i < targetParticlesCount; i++) {
       const i3 = i * 3;
@@ -53,24 +59,49 @@ const ParticlesMesh = () => {
   }, [targetParticlesCount]);
 
   // Adding a GUI using useEffect
+  // useEffect(() => {
+  //   const gui = new GUI();
+  //   if (!materialRef.current) return;
+
+  //   const settings = {
+  //     uColor: '#ffaa00', // Initial hex color
+  //   };
+
+  //   gui.addColor(settings, 'uColor').onChange((value) => {
+  //     materialRef.current!.uniforms.uColor.value.set(value);
+  //   });
+
+  //   return () => gui.destroy();
+  // }, []);
+
+  // GSAP scroll animation
   useEffect(() => {
-    const gui = new GUI();
     if (!materialRef.current) return;
 
-    const settings = {
-      uColor: '#ffaa00', // Initial hex color
-    };
-
-    gui.addColor(settings, 'uColor').onChange((value) => {
-      materialRef.current!.uniforms.uColor.value.set(value);
+    gsap.to(materialRef.current.uniforms.uProgress, {
+      value: 1,
+      scrollTrigger: {
+        trigger: '#scroll-container',
+        start: 'top top',
+        markers: true,
+        end: 'bottom bottom',
+        scrub: 1.5,
+      },
     });
 
-    return () => gui.destroy();
+    return () => ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
   }, []);
+
+  // useFrame((state) => {
+  //   if (!materialRef.current) return;
+
+  //   materialRef.current.uniforms.uProgress.value =
+  //     Math.sin(state.clock.elapsedTime * 0.5) * 0.5 + 0.5;
+  // });
 
   return (
     <>
-      <orbitControls args={[camera, gl.domElement]} />
+      {/* <orbitControls args={[camera, gl.domElement]} /> */}
       <points position={[0, -0.07, 0]}>
         <bufferGeometry>
           <bufferAttribute
@@ -91,10 +122,11 @@ const ParticlesMesh = () => {
             uSize: { value: 0.01 },
             uResolution: { value: new THREE.Vector2(size.width, size.height) },
             uProgress: { value: 0 },
-            uColor: { value: new THREE.Color('orange') },
+            uColor: { value: new THREE.Color().setRGB(98 / 255, 0, 2 / 255) },
           }}
           transparent
-          blending={THREE.AdditiveBlending}
+          // blending={THREE.AdditiveBlending}
+          blending={THREE.NormalBlending}
           depthWrite={false}
         />
       </points>

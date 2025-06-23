@@ -2,13 +2,24 @@
 import { Canvas } from '@react-three/fiber';
 import React from 'react';
 
-import ParticlesMesh from '@/components/shaderTest/ParticlesMesh';
+import PlexusSphere from '@/components/plexusTest/PlexusComponent';
+import CameraSetup from '@/components/shaderTest/CameraSetup';
+// import ParticlesMesh from '@/components/shaderTest/ParticlesMesh';
+interface Props {
+  scrollProgress: number;
+  particlesCount: number;
+}
 
-const ShaderCanvas = () => {
+const ShaderCanvas = ({ particlesCount, scrollProgress }: Props) => {
   return (
-    <Canvas>
-      <color attach="background" args={['#443433']} />
-      <ParticlesMesh />
+    <Canvas camera={{ position: [0, 0, 6], fov: 75 }}>
+      <color attach="background" args={['#fff']} />
+      <CameraSetup />
+      {/* <ParticlesMesh /> */}
+      <PlexusSphere
+        scrollProgress={scrollProgress}
+        particlesCount={particlesCount}
+      />
     </Canvas>
   );
 };

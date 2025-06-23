@@ -46,6 +46,18 @@ const Section3 = () => {
         });
         // gsap.to()
       },
+      // onLeave: () => {
+      //   if (!pillarsSectionTitleRef.current) return;
+      //   gsap.to(pillarsSectionRef.current, {
+      //     left: 'unset',
+      //     top: 'unset',
+      //     width: 840,
+      //     color: '#474d59',
+      //     duration: 0.5,
+      //     ease: 'power2',
+      //   });
+      //   gsap.set(pillarsSectionTitleRef.current, { position: 'relative' });
+      // },
       // onLeave: () => mainTrigger.kill(),
     });
 
@@ -73,53 +85,98 @@ const Section3 = () => {
       if (!img || !card) return;
 
       // Animate one image per section with scroll
-      const imagesTrigger = ScrollTrigger.create({
+      ScrollTrigger.create({
         trigger: section,
-        start: 'bottom center', // start when section comes to center
-        end: 'bottom center', // end when section is about to leave
+        start: 'bottom center',
+        end: 'bottom center',
         scrub: 2.5,
         markers: false,
-        toggleActions: 'play reverse play reverse',
-        // onLeave: () => {
-        //   imagesTrigger.kill();
-        // },
-      });
+        onEnter: () => {
+          gsap.fromTo(
+            img,
+            {
+              top: '30%', // start lower (or use any default)
+              autoAlpha: 0, // fully hidden initially
+            },
+            {
+              top: `${topValues[index]}%`, // target top
+              autoAlpha: 1,
+              ease: 'none',
+              // scrollTrigger: imagesTrigger,
+            }
+          );
 
-      const cardsTrigger = ScrollTrigger.create({
-        trigger: section,
-        start: 'bottom center', // start when section comes to center
-        end: 'bottom center', // end when section is about to leave
-        scrub: 2.5,
-        markers: false,
-        // toggleActions: 'play none none none',
-        toggleActions: 'play reverse play reverse',
-        // onLeave: () => {
-        //   cardsTrigger.kill();
-        // },
-      });
-
-      gsap.fromTo(
-        img,
-        {
-          top: '30%', // start lower (or use any default)
-          autoAlpha: 0, // fully hidden initially
+          // Cards Animation
+          gsap.fromTo(
+            card,
+            { autoAlpha: 0 },
+            {
+              autoAlpha: 1,
+            }
+          );
         },
-        {
-          top: `${topValues[index]}%`, // target top
-          autoAlpha: 1,
-          ease: 'none',
-          scrollTrigger: imagesTrigger,
-        }
-      );
+        onEnterBack: () => {
+          gsap.fromTo(
+            img,
+            {
+              top: `${topValues[index]}%`, // target top
+              autoAlpha: 1,
+              // scrollTrigger: imagesTrigger,
+            },
+            { top: '30%', autoAlpha: '0' }
+          );
 
-      gsap.fromTo(
-        card,
-        { autoAlpha: 0 },
-        {
-          autoAlpha: 1,
-          scrollTrigger: cardsTrigger,
-        }
-      );
+          gsap.fromTo(
+            card,
+            { autoAlpha: 1 },
+            {
+              autoAlpha: 0,
+            }
+          );
+        },
+      });
+      // const imagesTrigger = ScrollTrigger.create({
+      //   trigger: section,
+      //   start: 'bottom center', // start when section comes to center
+      //   end: 'bottom center', // end when section is about to leave
+      //   scrub: 2.5,
+      //   markers: true,
+      //   // toggleActions: 'play reverse play reverse',
+      //   // onLeave: () => {
+      //   //   imagesTrigger.kill();
+      //   // },
+      // });
+
+      // const cardsTrigger = ScrollTrigger.create({
+      //   trigger: section,
+      //   start: 'bottom center', // start when section comes to center
+      //   end: 'bottom center', // end when section is about to leave
+      //   scrub: 2.5,
+      //   markers: false,
+      // });
+
+      // gsap.fromTo(
+      //   img,
+      //   {
+      //     top: '30%', // start lower (or use any default)
+      //     autoAlpha: 0, // fully hidden initially
+      //   },
+      //   {
+      //     top: `${topValues[index]}%`, // target top
+      //     autoAlpha: 1,
+      //     ease: 'none',
+      //     scrollTrigger: imagesTrigger,
+      //   }
+      // );
+
+      // gsap.fromTo(
+      //   card,
+      //   { autoAlpha: 0 },
+      //   {
+      //     autoAlpha: 1,
+      //     scrollTrigger: cardsTrigger,
+      //   }
+      // );
     });
   });
 

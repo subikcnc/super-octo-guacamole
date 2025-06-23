@@ -144,6 +144,10 @@
     @apply text-[64px] leading-[125%] font-medium tracking-[-3.2px];
   }
 
+  .h2_regular_64 {
+    @apply text-[64px] leading-[100%] font-normal;
+  }
+
   .h2_medium_80 {
     @apply text-[80px] leading-[125%] font-medium;
   }

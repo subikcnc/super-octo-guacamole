@@ -19,7 +19,7 @@ const Section4 = () => {
     <div className="px-20 py-[164px]">
       <div>
         {/* Badge */}
-        <Badge variant="secondary">Featured Highlights</Badge>
+        <Badge variant="muted">Featured Highlights</Badge>
       </div>
       <div className="mb-20 flex items-end justify-between">
         <h2 className="h3_medium_64 text-primary-900">Innovation in Motion</h2>
@@ -48,11 +48,11 @@ const Section4 = () => {
         <Button
           className="flex rounded-full px-2"
           size="lg"
-          variant="secondary"
+          variant="default"
           asChild
         >
-          <span className="flex">
-            <Link href="/">All Projects</Link>
+          <Link href="/" className="inline-flex">
+            All Projects
             <span className="bg-primary-500 inline-flex size-10 items-center justify-center rounded-full">
               <Image
                 src="/icons/arrow-up.svg"
@@ -61,7 +61,7 @@ const Section4 = () => {
                 alt="icon arrow up"
               />
             </span>
-          </span>
+          </Link>
         </Button>
       </div>
       {/* <ClippedCard /> */}

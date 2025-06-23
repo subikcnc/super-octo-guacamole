@@ -26,14 +26,9 @@ const RightNavbar = () => {
           />
         </Link>
       ))}
-      <Button
-        className="flex rounded-full px-2"
-        size="lg"
-        variant="secondary"
-        asChild
-      >
-        <span className="flex">
-          <Link href="/">Get Involved</Link>
+      <Button className="flex rounded-full px-2" size="lg" asChild>
+        <Link href="/" className="inline-flex">
+          Get Involved
           <span className="bg-primary-500 inline-flex size-10 items-center justify-center rounded-full">
             <Image
               src="/icons/arrow-up.svg"
@@ -42,7 +37,7 @@ const RightNavbar = () => {
               alt="icon arrow up"
             />
           </span>
-        </span>
+        </Link>
       </Button>
     </div>
   );

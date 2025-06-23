@@ -11,7 +11,7 @@ const Section6 = () => {
     <div className="px-20 lg:py-[164px]">
       <div>
         {/* Badge */}
-        <Badge variant="secondary">Featured Highlights</Badge>
+        <Badge variant="muted">Featured Highlights</Badge>
       </div>
       <div className="mb-20 flex items-end justify-between">
         <h2 className="h3_medium_64 text-primary-900 uppercase">
@@ -32,10 +32,12 @@ const Section6 = () => {
               height={234}
               alt="news image"
             />
-            <div className="text-neutral-700">{item.type}</div>
+            <div className="font-medium text-neutral-700 uppercase">
+              {item.type}
+            </div>
             <div className="flex flex-col gap-9">
-              <div>{item.date}</div>
-              <p className="text-2xl leading-[150%] font-medium">
+              <div className="font-medium text-neutral-900">{item.date}</div>
+              <p className="text-2xl leading-[150%] font-medium text-neutral-900">
                 {item.title}
               </p>
             </div>
@@ -43,14 +45,9 @@ const Section6 = () => {
         ))}
       </div>
       <div className="flex justify-center">
-        <Button
-          className="flex rounded-full px-2"
-          size="lg"
-          variant="secondary"
-          asChild
-        >
-          <span className="flex">
-            <Link href="/">Explore All News & Insights</Link>
+        <Button className="flex rounded-full px-2" size="lg" asChild>
+          <Link className="inline-flex" href="/">
+            Explore All News & Insights
             <span className="bg-primary-500 inline-flex size-10 items-center justify-center rounded-full">
               <Image
                 src="/icons/arrow-up.svg"
@@ -59,7 +56,7 @@ const Section6 = () => {
                 alt="icon arrow up"
               />
             </span>
-          </span>
+          </Link>
         </Button>
       </div>
     </div>

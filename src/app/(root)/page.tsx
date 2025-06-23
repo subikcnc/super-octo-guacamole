@@ -5,6 +5,7 @@ import Section4 from '@/sections/section4';
 import Section5 from '@/sections/section5';
 import Section6 from '@/sections/section6';
 import Section7 from '@/sections/section7';
+import Section8 from '@/sections/section8';
 
 export default function Home() {
   return (
@@ -16,6 +17,7 @@ export default function Home() {
       <Section5 />
       <Section6 />
       <Section7 />
+      <Section8 />
       {/* <div
         id="scroll-container"
         className="fixed bottom-0 left-0 h-[200vh] w-full"

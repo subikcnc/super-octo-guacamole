@@ -27,7 +27,7 @@ const Section3 = () => {
   ];
 
   useEffect(() => {
-    const mainTrigger = ScrollTrigger.create({
+    ScrollTrigger.create({
       trigger: '#pillars-section',
       pin: true,
       start: 'top top',
@@ -46,7 +46,7 @@ const Section3 = () => {
         });
         // gsap.to()
       },
-      onLeave: () => mainTrigger.kill(),
+      // onLeave: () => mainTrigger.kill(),
     });
 
     if (!pillarsSectionRef.current) return;

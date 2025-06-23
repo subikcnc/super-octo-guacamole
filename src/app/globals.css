@@ -54,10 +54,10 @@
   --primary-900: oklch(0.3118 0.1276 28.34);
   --primary-700: oklch(0.561 0.2284 29.06);
   --primary-foreground: oklch(0.985 0 0);
-  --secondary: #f3f3f3;
+  --secondary: #474d59;
   --secondary-foreground: oklch(1 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
+  --muted: #f3f3f3;
+  --muted-foreground: oklch(1 0 0);
   --accent: oklch(0.97 0 0);
   --accent-foreground: oklch(0.205 0 0);
   --destructive: oklch(0.577 0.245 27.325);
@@ -146,6 +146,10 @@
 
   .h2_regular_64 {
     @apply text-[64px] leading-[100%] font-normal;
+  }
+
+  .h2_medium_64 {
+    @apply text-[64px] leading-[100%] font-medium;
   }
 
   .h2_medium_80 {

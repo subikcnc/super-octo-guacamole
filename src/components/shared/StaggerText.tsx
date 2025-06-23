@@ -42,7 +42,6 @@ const StaggerText = ({
       gsap.to(chars, {
         opacity: 0,
         y: 10,
-        stagger: 0.03,
         ease: 'power2.in',
         duration: 0.1,
       });

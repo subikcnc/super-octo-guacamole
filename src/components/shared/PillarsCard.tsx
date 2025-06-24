@@ -91,7 +91,7 @@ const PillarsCard = ({
         </defs>
       </svg>
       <div className="apply-light-shadow">
-        <div className="rounded-t-[40px] bg-white">
+        <div className="rounded-t-[20px] bg-white">
           <div className="p-5 pb-0">
             <h3 className="text-primary-700 h3_bold_36 mb-4">{title}</h3>
             <p className="text-neutral-700">{children}</p>

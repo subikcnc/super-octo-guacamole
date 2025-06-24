@@ -10,9 +10,36 @@ gsap.registerPlugin(ScrollTrigger);
 const Section3 = () => {
   const pillarsSectionRef = useRef<HTMLDivElement>(null);
   const pillarsSectionTitleRef = useRef<HTMLHeadingElement>(null);
+  const pillarsCanvasRef = useRef<HTMLCanvasElement>(null);
 
   const topValues = [38, 40, 45];
-  const hoverTopValues = [34, 36, 41];
+  const lineValues = [
+    {
+      startX: 0.66,
+      startY: 0.3,
+      midX: 0.585,
+      midY: 0.3,
+      endX: 0.5,
+      endY: 0.37,
+    },
+    {
+      startX: 0.66,
+      startY: 0.3,
+      midX: 0.585,
+      midY: 0.3,
+      endX: 0.5,
+      endY: 0.37,
+    },
+    {
+      startX: 0.66,
+      startY: 0.3,
+      midX: 0.585,
+      midY: 0.3,
+      endX: 0.5,
+      endY: 0.37,
+    },
+  ];
+  const hoverTopValues = [36, 38, 43];
 
   const pillarImageInitialSrc = [
     '/images/pillars/pillar-1.png',
@@ -26,7 +53,47 @@ const Section3 = () => {
     '/images/pillars/pillar-inactive-3.png',
   ];
 
+  // useEffect(() => {
+  //   if (!pillarsCanvasRef.current) return;
+  //   const canvas = pillarsCanvasRef.current;
+  //   const ctx = pillarsCanvasRef.current.getContext('2d');
+
+  //   if (!ctx) return;
+
+  //   pillarsCanvasRef.current.width = pillarsCanvasRef.current.clientWidth;
+  //   pillarsCanvasRef.current.height = pillarsCanvasRef.current.clientHeight;
+  //   const canvasWidth = canvas.width;
+  //   const canvasHeight = canvas.height;
+  //   console.log('canvaswidth and heights ', canvasWidth, canvasHeight);
+
+  //   ctx?.beginPath();
+  //   ctx?.moveTo(0.5 * canvasWidth, 0.37 * canvasHeight);
+  //   // ctx.lineTo(900, 600);
+  //   // ctx?.lineTo(0.67 * canvasWidth, 0.15 * canvasHeight);
+  //   ctx?.lineTo(0.585 * canvasWidth, 0.3 * canvasHeight);
+  //   ctx.strokeStyle = '#EF7073';
+  //   ctx.lineWidth = 2;
+  //   ctx.stroke();
+
+  //   ctx.moveTo(0.585 * canvasWidth, 0.3 * canvasHeight);
+  //   ctx.lineTo(0.66 * canvasWidth, 0.3 * canvasHeight);
+  //   ctx.strokeStyle = '#EF7073';
+  //   ctx.lineWidth = 2;
+  //   ctx.stroke();
+  // }, []);
+
   useEffect(() => {
+    if (!pillarsCanvasRef.current) return;
+    const canvas = pillarsCanvasRef.current;
+    const ctx = pillarsCanvasRef.current.getContext('2d');
+
+    if (!ctx) return;
+
+    pillarsCanvasRef.current.width = pillarsCanvasRef.current.clientWidth;
+    pillarsCanvasRef.current.height = pillarsCanvasRef.current.clientHeight;
+    const canvasWidth = canvas.width;
+    const canvasHeight = canvas.height;
+
     ScrollTrigger.create({
       trigger: '#pillars-section',
       pin: true,
@@ -105,6 +172,79 @@ const Section3 = () => {
               // scrollTrigger: imagesTrigger,
             }
           );
+
+          // Animate the lines
+          const totalFrames = 30; // ~1 second at 60fps
+          let frame = 0;
+
+          const draw = () => {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            const t = frame / totalFrames;
+
+            const { startX, startY, midX, midY, endX, endY } =
+              lineValues[index];
+
+            // Segment A
+            ctx.beginPath();
+            // Make a circle
+            ctx.arc(
+              startX * canvasWidth,
+              startY * canvasHeight,
+              2,
+              0,
+              Math.PI * 2
+            );
+            ctx.fillStyle = '#EF7073';
+            ctx.fill();
+
+            ctx.beginPath();
+            ctx.arc(
+              startX * canvasWidth,
+              startY * canvasHeight,
+              5,
+              0,
+              Math.PI * 2
+            );
+            ctx.strokeStyle = '#EF7073';
+            ctx.lineWidth = 2;
+            ctx.stroke();
+
+            ctx.moveTo(startX * canvasWidth, startY * canvasHeight);
+            ctx.lineTo(
+              // Interpolating from START -> MID
+              startX * canvasWidth +
+                (midX - startX) * canvasWidth * Math.min(t, 1),
+              startY * canvasHeight +
+                (midY - startY) * canvasHeight * Math.min(t, 1)
+            );
+            ctx.strokeStyle = '#EF7073';
+            ctx.lineWidth = 2;
+            ctx.stroke();
+
+            // Segment B (start drawing after first segment finishes)
+            if (t > 1) {
+              const t2 = t - 1;
+
+              ctx.beginPath();
+              ctx.moveTo(midX * canvasWidth, midY * canvasHeight);
+              ctx.lineTo(
+                midX * canvasWidth +
+                  (endX - midX) * canvasWidth * Math.min(t2, 1),
+                midY * canvasHeight +
+                  (endY - midY) * canvasHeight * Math.min(t2, 1)
+              );
+              ctx.stroke();
+            }
+
+            // Continue until both segments are fully drawn
+            if (t < 2) {
+              frame++;
+              requestAnimationFrame(draw);
+            }
+          };
+
+          draw();
+          // Animate the lines
 
           // Cards Animation
           gsap.fromTo(
@@ -213,6 +353,10 @@ const Section3 = () => {
       className="relative w-full bg-transparent"
       ref={pillarsSectionRef}
     >
+      <canvas
+        className="absolute h-full w-full"
+        ref={pillarsCanvasRef}
+      ></canvas>
       {/* SVG for clipping path */}
       <svg width="0" height="0" style={{ position: 'absolute' }}>
         <defs>

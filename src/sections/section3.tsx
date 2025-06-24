@@ -1,7 +1,7 @@
 'use client';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { useEffect, useRef } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 
 import PillarsCard from '@/components/shared/PillarsCard';
 
@@ -12,33 +12,36 @@ const Section3 = () => {
   const pillarsSectionTitleRef = useRef<HTMLHeadingElement>(null);
   const pillarsCanvasRef = useRef<HTMLCanvasElement>(null);
 
-  const topValues = [38, 40, 45];
-  const lineValues = [
-    {
-      startX: 0.66,
-      startY: 0.3,
-      midX: 0.585,
-      midY: 0.3,
-      endX: 0.5,
-      endY: 0.37,
-    },
-    {
-      startX: 0.2,
-      startY: 0.58,
-      midX: 0.26,
-      midY: 0.5,
-      endX: 0.34,
-      endY: 0.5,
-    },
-    {
-      startX: 0.8,
-      startY: 0.58,
-      midX: 0.7,
-      midY: 0.5,
-      endX: 0.6,
-      endY: 0.5,
-    },
-  ];
+  const topValues = useMemo(() => [38, 40, 45], []);
+  const lineValues = useMemo(
+    () => [
+      {
+        startX: 0.66,
+        startY: 0.26,
+        midX: 0.585,
+        midY: 0.26,
+        endX: 0.5,
+        endY: 0.35,
+      },
+      {
+        startX: 0.2,
+        startY: 0.58,
+        midX: 0.26,
+        midY: 0.5,
+        endX: 0.34,
+        endY: 0.5,
+      },
+      {
+        startX: 0.8,
+        startY: 0.58,
+        midX: 0.7,
+        midY: 0.5,
+        endX: 0.6,
+        endY: 0.5,
+      },
+    ],
+    []
+  );
   const hoverTopValues = [36, 38, 43];
 
   const pillarImageInitialSrc = [
@@ -303,7 +306,7 @@ const Section3 = () => {
         <h2
           ref={pillarsSectionTitleRef}
           id="pillars-section-title"
-          className="h2_regular_56 text-neutral-900"
+          className="h2_regular_56 font_body text-neutral-900"
         >
           By building the foundation of
           <br /> Research, Education, and Industry.

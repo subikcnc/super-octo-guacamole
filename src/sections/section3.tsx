@@ -146,6 +146,20 @@ const Section3 = () => {
       }
     };
 
+    const titleTimeline = gsap.timeline({
+      paused: true,
+      defaults: { duration: 0.5, ease: 'power2' },
+    });
+
+    titleTimeline
+      .set(pillarsSectionTitleRef.current, { position: 'absolute' })
+      .to(pillarsSectionTitleRef.current, {
+        left: 120,
+        top: 164,
+        width: 580,
+        color: '#620002',
+      });
+
     // Main ScrollTrigger
     ScrollTrigger.create({
       trigger: '#pillars-section',
@@ -154,17 +168,34 @@ const Section3 = () => {
       end: 'bottom top',
       markers: false,
       onEnter: () => {
-        if (!pillarsSectionTitleRef.current) return;
+        titleTimeline.play();
+        // if (!pillarsSectionTitleRef.current) return;
 
-        gsap.set(pillarsSectionTitleRef.current, { position: 'absolute' });
-        gsap.to(pillarsSectionTitleRef.current, {
-          left: 120,
-          top: 164,
-          width: 580,
-          color: '#620002',
-          duration: 0.5,
-          ease: 'power2',
-        });
+        // gsap.set(pillarsSectionTitleRef.current, { position: 'absolute' });
+        // gsap.to(pillarsSectionTitleRef.current, {
+        //   left: 120,
+        //   top: 164,
+        //   width: 580,
+        //   color: '#620002',
+        //   duration: 0.5,
+        //   ease: 'power2',
+        // });
+      },
+      onLeaveBack: () => {
+        titleTimeline.reverse();
+        // if (!pillarsSectionTitleRef.current) return;
+
+        // gsap.to(pillarsSectionTitleRef.current, {
+        //   left: '', // resets to original
+        //   top: '', // resets to original
+        //   width: 868, // resets to original
+        //   color: '#474d59', // resets to original
+        //   duration: 0.5,
+        //   ease: 'power2',
+        //   onComplete: () => {
+        //     gsap.set(pillarsSectionTitleRef.current, { position: 'relative' }); // restore positioning
+        //   },
+        // });
       },
     });
 
@@ -306,10 +337,9 @@ const Section3 = () => {
         <h2
           ref={pillarsSectionTitleRef}
           id="pillars-section-title"
-          className="h2_regular_56 font_body text-neutral-900"
+          className="h2_regular_56 font_body max-w-[868px] text-neutral-900"
         >
-          By building the foundation of
-          <br /> Research, Education, and Industry.
+          By building the foundation of Research, Education, and Industry.
         </h2>
       </div>
       <div className="pillars-animated-content absolute top-0 left-0 flex h-full w-full items-center justify-center">

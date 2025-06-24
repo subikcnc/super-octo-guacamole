@@ -50,6 +50,9 @@ const PillarsCard = ({
         opacity: '0',
       }}
     >
+      <div className="absolute bottom-[55px] left-5 z-10 text-[18px] font-medium text-neutral-900">
+        Learn More
+      </div>
       <style>{`
         .apply-light-shadow {
           filter: url(#shadow-md-filter);
@@ -139,7 +142,7 @@ const PillarsCard = ({
       <Link
         href={'/'}
         ref={buttonRef}
-        className="bg-primary-700 hover:bg-primary-700 absolute right-0 bottom-[24px] inline-flex size-[57px] cursor-pointer items-center justify-center rounded-full p-0"
+        className="bg-primary-700 hover:bg-primary-700 absolute right-0 bottom-[28px] inline-flex size-[57px] cursor-pointer items-center justify-center rounded-full p-0"
         onMouseOver={handleMouseOver}
         onMouseOut={handleMosueOut}
       >

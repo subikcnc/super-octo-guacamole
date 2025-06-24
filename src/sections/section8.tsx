@@ -9,7 +9,7 @@ const Section8 = () => {
       <Marquee>
         {marqueeList.map((item, index) => (
           <h2
-            className="mx-5 flex items-center gap-10 text-[86px] font-light text-neutral-700"
+            className="font_body mx-5 flex items-center gap-10 text-[86px] font-light text-neutral-700"
             key={`${item}${index}`}
           >
             {item}

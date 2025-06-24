@@ -1,7 +1,7 @@
 'use client';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { useEffect, useRef } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 
 import PillarsCard from '@/components/shared/PillarsCard';
 
@@ -10,9 +10,39 @@ gsap.registerPlugin(ScrollTrigger);
 const Section3 = () => {
   const pillarsSectionRef = useRef<HTMLDivElement>(null);
   const pillarsSectionTitleRef = useRef<HTMLHeadingElement>(null);
+  const pillarsCanvasRef = useRef<HTMLCanvasElement>(null);
 
-  const topValues = [38, 40, 45];
-  const hoverTopValues = [34, 36, 41];
+  const topValues = useMemo(() => [38, 40, 45], []);
+  const lineValues = useMemo(
+    () => [
+      {
+        startX: 0.66,
+        startY: 0.26,
+        midX: 0.585,
+        midY: 0.26,
+        endX: 0.5,
+        endY: 0.35,
+      },
+      {
+        startX: 0.2,
+        startY: 0.58,
+        midX: 0.26,
+        midY: 0.5,
+        endX: 0.34,
+        endY: 0.5,
+      },
+      {
+        startX: 0.8,
+        startY: 0.58,
+        midX: 0.7,
+        midY: 0.5,
+        endX: 0.6,
+        endY: 0.5,
+      },
+    ],
+    []
+  );
+  const hoverTopValues = [36, 38, 43];
 
   const pillarImageInitialSrc = [
     '/images/pillars/pillar-1.png',
@@ -26,15 +56,106 @@ const Section3 = () => {
     '/images/pillars/pillar-inactive-3.png',
   ];
 
+  // useEffect(() => {
+  //   if (!pillarsCanvasRef.current) return;
+  //   const canvas = pillarsCanvasRef.current;
+  //   const ctx = pillarsCanvasRef.current.getContext('2d');
+
+  //   if (!ctx) return;
+
+  //   pillarsCanvasRef.current.width = pillarsCanvasRef.current.clientWidth;
+  //   pillarsCanvasRef.current.height = pillarsCanvasRef.current.clientHeight;
+  //   const canvasWidth = canvas.width;
+  //   const canvasHeight = canvas.height;
+  //   console.log('canvaswidth and heights ', canvasWidth, canvasHeight);
+
+  //   ctx?.beginPath();
+  //   ctx?.moveTo(0.5 * canvasWidth, 0.37 * canvasHeight);
+  //   // ctx.lineTo(900, 600);
+  //   // ctx?.lineTo(0.67 * canvasWidth, 0.15 * canvasHeight);
+  //   ctx?.lineTo(0.585 * canvasWidth, 0.3 * canvasHeight);
+  //   ctx.strokeStyle = '#EF7073';
+  //   ctx.lineWidth = 2;
+  //   ctx.stroke();
+
+  //   ctx.moveTo(0.585 * canvasWidth, 0.3 * canvasHeight);
+  //   ctx.lineTo(0.66 * canvasWidth, 0.3 * canvasHeight);
+  //   ctx.strokeStyle = '#EF7073';
+  //   ctx.lineWidth = 2;
+  //   ctx.stroke();
+  // }, []);
+
   useEffect(() => {
+    if (!pillarsCanvasRef.current) return;
+
+    const canvas = pillarsCanvasRef.current;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    canvas.width = canvas.clientWidth;
+    canvas.height = canvas.clientHeight;
+
+    const canvasWidth = canvas.width;
+    const canvasHeight = canvas.height;
+
+    const totalFrames = 30;
+
+    const drawAllLines = (progressArray: number[]) => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      for (let i = 0; i < lineValues.length; i++) {
+        const { startX, startY, midX, midY, endX, endY } = lineValues[i];
+        const t = progressArray[i];
+        if (t <= 0) continue;
+
+        // Segment A
+        ctx.beginPath();
+        ctx.moveTo(startX * canvasWidth, startY * canvasHeight);
+        ctx.lineTo(
+          startX * canvasWidth + (midX - startX) * canvasWidth * Math.min(t, 1),
+          startY * canvasHeight +
+            (midY - startY) * canvasHeight * Math.min(t, 1)
+        );
+        ctx.strokeStyle = '#EF7073';
+        ctx.lineWidth = 1;
+        ctx.stroke();
+
+        // Segment B
+        if (t > 1) {
+          const t2 = t - 1;
+          ctx.beginPath();
+          ctx.moveTo(midX * canvasWidth, midY * canvasHeight);
+          ctx.lineTo(
+            midX * canvasWidth + (endX - midX) * canvasWidth * Math.min(t2, 1),
+            midY * canvasHeight + (endY - midY) * canvasHeight * Math.min(t2, 1)
+          );
+          ctx.stroke();
+        }
+
+        // Circles
+        ctx.beginPath();
+        ctx.arc(startX * canvasWidth, startY * canvasHeight, 2, 0, Math.PI * 2);
+        ctx.fillStyle = '#EF7073';
+        ctx.fill();
+
+        ctx.beginPath();
+        ctx.arc(startX * canvasWidth, startY * canvasHeight, 5, 0, Math.PI * 2);
+        ctx.strokeStyle = '#EF7073';
+        ctx.lineWidth = 1;
+        ctx.stroke();
+      }
+    };
+
+    // Main ScrollTrigger
     ScrollTrigger.create({
       trigger: '#pillars-section',
       pin: true,
       start: 'top top',
-      markers: false,
       end: 'bottom top',
+      markers: false,
       onEnter: () => {
         if (!pillarsSectionTitleRef.current) return;
+
         gsap.set(pillarsSectionTitleRef.current, { position: 'absolute' });
         gsap.to(pillarsSectionTitleRef.current, {
           left: 120,
@@ -44,21 +165,7 @@ const Section3 = () => {
           duration: 0.5,
           ease: 'power2',
         });
-        // gsap.to()
       },
-      // onLeave: () => {
-      //   if (!pillarsSectionTitleRef.current) return;
-      //   gsap.to(pillarsSectionRef.current, {
-      //     left: 'unset',
-      //     top: 'unset',
-      //     width: 840,
-      //     color: '#474d59',
-      //     duration: 0.5,
-      //     ease: 'power2',
-      //   });
-      //   gsap.set(pillarsSectionTitleRef.current, { position: 'relative' });
-      // },
-      // onLeave: () => mainTrigger.kill(),
     });
 
     if (!pillarsSectionRef.current) return;
@@ -69,9 +176,6 @@ const Section3 = () => {
     const images = pillarsSectionRef.current
       .querySelector('.pillars-animated-content')
       ?.querySelectorAll('.pillars-block-image');
-
-    console.log('These are the image', images);
-
     const cards = pillarsSectionRef.current
       .querySelector('.pillars-animated-content')
       ?.querySelectorAll('.pillars-animated-card');
@@ -81,10 +185,8 @@ const Section3 = () => {
     innerSections.forEach((section, index) => {
       const img = images[index];
       const card = cards[index];
-
       if (!img || !card) return;
 
-      // Animate one image per section with scroll
       ScrollTrigger.create({
         trigger: section,
         start: 'bottom center',
@@ -94,91 +196,65 @@ const Section3 = () => {
         onEnter: () => {
           gsap.fromTo(
             img,
-            {
-              top: '30%', // start lower (or use any default)
-              autoAlpha: 0, // fully hidden initially
-            },
-            {
-              top: `${topValues[index]}%`, // target top
-              autoAlpha: 1,
-              ease: 'none',
-              // scrollTrigger: imagesTrigger,
-            }
+            { top: '30%', autoAlpha: 0 },
+            { top: `${topValues[index]}%`, autoAlpha: 1, ease: 'none' }
           );
+          gsap.fromTo(card, { autoAlpha: 0 }, { autoAlpha: 1 });
 
-          // Cards Animation
-          gsap.fromTo(
-            card,
-            { autoAlpha: 0 },
-            {
-              autoAlpha: 1,
+          const progressArray = new Array(lineValues.length).fill(0);
+          let frame = 0;
+
+          const draw = () => {
+            // Setup line progress
+            for (let i = 0; i <= lineValues.length - 1; i++) {
+              if (i < index) {
+                progressArray[i] = 2;
+              } else if (i === index) {
+                progressArray[i] = (frame / totalFrames) * 2;
+              }
             }
-          );
+            drawAllLines(progressArray);
+
+            if (frame < totalFrames) {
+              frame++;
+              requestAnimationFrame(draw);
+            }
+          };
+          draw();
         },
         onEnterBack: () => {
           gsap.fromTo(
             img,
-            {
-              top: `${topValues[index]}%`, // target top
-              autoAlpha: 1,
-              // scrollTrigger: imagesTrigger,
-            },
-            { top: '30%', autoAlpha: '0' }
+            { top: `${topValues[index]}%`, autoAlpha: 1 },
+            { top: '30%', autoAlpha: 0 }
           );
+          gsap.fromTo(card, { autoAlpha: 1 }, { autoAlpha: 0 });
 
-          gsap.fromTo(
-            card,
-            { autoAlpha: 1 },
-            {
-              autoAlpha: 0,
+          const progressArrayReverse = new Array(lineValues.length).fill(0);
+          let reverseFrame = totalFrames;
+
+          const reverseDraw = () => {
+            for (let i = 0; i <= lineValues.length - 1; i++) {
+              if (i < index) {
+                progressArrayReverse[i] = 2;
+              } else if (i === index) {
+                progressArrayReverse[i] = (reverseFrame / totalFrames) * 2;
+              } else {
+                progressArrayReverse[i] = 0;
+              }
             }
-          );
+            drawAllLines(progressArrayReverse);
+
+            if (reverseFrame > 0) {
+              reverseFrame--;
+              requestAnimationFrame(reverseDraw);
+            }
+          };
+          reverseDraw();
         },
       });
-      // const imagesTrigger = ScrollTrigger.create({
-      //   trigger: section,
-      //   start: 'bottom center', // start when section comes to center
-      //   end: 'bottom center', // end when section is about to leave
-      //   scrub: 2.5,
-      //   markers: true,
-      //   // toggleActions: 'play reverse play reverse',
-      //   // onLeave: () => {
-      //   //   imagesTrigger.kill();
-      //   // },
-      // });
-
-      // const cardsTrigger = ScrollTrigger.create({
-      //   trigger: section,
-      //   start: 'bottom center', // start when section comes to center
-      //   end: 'bottom center', // end when section is about to leave
-      //   scrub: 2.5,
-      //   markers: false,
-      // });
-
-      // gsap.fromTo(
-      //   img,
-      //   {
-      //     top: '30%', // start lower (or use any default)
-      //     autoAlpha: 0, // fully hidden initially
-      //   },
-      //   {
-      //     top: `${topValues[index]}%`, // target top
-      //     autoAlpha: 1,
-      //     ease: 'none',
-      //     scrollTrigger: imagesTrigger,
-      //   }
-      // );
-
-      // gsap.fromTo(
-      //   card,
-      //   { autoAlpha: 0 },
-      //   {
-      //     autoAlpha: 1,
-      //     scrollTrigger: cardsTrigger,
-      //   }
-      // );
     });
-  });
+  }, [lineValues, topValues]);
 
   const handleCardMouseOver = (index: number) => {
     if (!pillarsSectionRef.current) return;
@@ -213,6 +289,10 @@ const Section3 = () => {
       className="relative w-full bg-transparent"
       ref={pillarsSectionRef}
     >
+      <canvas
+        className="absolute h-full w-full"
+        ref={pillarsCanvasRef}
+      ></canvas>
       {/* SVG for clipping path */}
       <svg width="0" height="0" style={{ position: 'absolute' }}>
         <defs>
@@ -226,7 +306,7 @@ const Section3 = () => {
         <h2
           ref={pillarsSectionTitleRef}
           id="pillars-section-title"
-          className="h2_regular_56 text-neutral-900"
+          className="h2_regular_56 font_body text-neutral-900"
         >
           By building the foundation of
           <br /> Research, Education, and Industry.

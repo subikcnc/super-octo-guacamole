@@ -23,20 +23,20 @@ const Section3 = () => {
       endY: 0.37,
     },
     {
-      startX: 0.66,
-      startY: 0.3,
-      midX: 0.585,
-      midY: 0.3,
-      endX: 0.5,
-      endY: 0.37,
+      startX: 0.2,
+      startY: 0.58,
+      midX: 0.26,
+      midY: 0.5,
+      endX: 0.34,
+      endY: 0.5,
     },
     {
-      startX: 0.66,
-      startY: 0.3,
-      midX: 0.585,
-      midY: 0.3,
-      endX: 0.5,
-      endY: 0.37,
+      startX: 0.8,
+      startY: 0.58,
+      midX: 0.7,
+      midY: 0.5,
+      endX: 0.6,
+      endY: 0.5,
     },
   ];
   const hoverTopValues = [36, 38, 43];
@@ -174,76 +174,105 @@ const Section3 = () => {
           );
 
           // Animate the lines
-          const totalFrames = 30; // ~1 second at 60fps
-          let frame = 0;
+          const totalFrames = 30;
+          const progressArray = new Array(lineValues.length).fill(0); // progress per line 0-2
+          let currentFrame = 0;
+          const currentLineIndex = index; // the line currently animating
 
-          const draw = () => {
+          const drawAllLines = () => {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-            const t = frame / totalFrames;
 
-            const { startX, startY, midX, midY, endX, endY } =
-              lineValues[index];
+            for (let i = 0; i <= currentLineIndex; i++) {
+              let t = progressArray[i];
 
-            // Segment A
-            ctx.beginPath();
-            // Make a circle
-            ctx.arc(
-              startX * canvasWidth,
-              startY * canvasHeight,
-              2,
-              0,
-              Math.PI * 2
-            );
-            ctx.fillStyle = '#EF7073';
-            ctx.fill();
+              // If this is the current line animating, progress goes from 0 -> 2 via frames
+              if (i === currentLineIndex && currentFrame <= totalFrames) {
+                t = (currentFrame / totalFrames) * 2; // 0 to 2 for two segments
+                progressArray[i] = t;
+              } else if (i < currentLineIndex) {
+                t = 2; // fully drawn
+              }
 
-            ctx.beginPath();
-            ctx.arc(
-              startX * canvasWidth,
-              startY * canvasHeight,
-              5,
-              0,
-              Math.PI * 2
-            );
-            ctx.strokeStyle = '#EF7073';
-            ctx.lineWidth = 2;
-            ctx.stroke();
+              const { startX, startY, midX, midY, endX, endY } = lineValues[i];
 
-            ctx.moveTo(startX * canvasWidth, startY * canvasHeight);
-            ctx.lineTo(
-              // Interpolating from START -> MID
-              startX * canvasWidth +
-                (midX - startX) * canvasWidth * Math.min(t, 1),
-              startY * canvasHeight +
-                (midY - startY) * canvasHeight * Math.min(t, 1)
-            );
-            ctx.strokeStyle = '#EF7073';
-            ctx.lineWidth = 2;
-            ctx.stroke();
+              // Draw segment A
+              ctx.beginPath();
+              ctx.moveTo(startX * canvasWidth, startY * canvasHeight);
+              ctx.lineTo(
+                startX * canvasWidth +
+                  (midX - startX) * canvasWidth * Math.min(t, 1),
+                startY * canvasHeight +
+                  (midY - startY) * canvasHeight * Math.min(t, 1)
+              );
+              ctx.strokeStyle = '#EF7073';
+              ctx.lineWidth = 1;
+              ctx.stroke();
 
-            // Segment B (start drawing after first segment finishes)
-            if (t > 1) {
-              const t2 = t - 1;
+              // Draw segment B
+              if (t > 1) {
+                const t2 = t - 1;
+                ctx.beginPath();
+                ctx.moveTo(midX * canvasWidth, midY * canvasHeight);
+                ctx.lineTo(
+                  midX * canvasWidth +
+                    (endX - midX) * canvasWidth * Math.min(t2, 1),
+                  midY * canvasHeight +
+                    (endY - midY) * canvasHeight * Math.min(t2, 1)
+                );
+                ctx.stroke();
+              }
+
+              // Draw circles at start point
+              ctx.beginPath();
+              ctx.arc(
+                startX * canvasWidth,
+                startY * canvasHeight,
+                2,
+                0,
+                Math.PI * 2
+              );
+              ctx.fillStyle = '#EF7073';
+              ctx.fill();
 
               ctx.beginPath();
-              ctx.moveTo(midX * canvasWidth, midY * canvasHeight);
-              ctx.lineTo(
-                midX * canvasWidth +
-                  (endX - midX) * canvasWidth * Math.min(t2, 1),
-                midY * canvasHeight +
-                  (endY - midY) * canvasHeight * Math.min(t2, 1)
+              ctx.arc(
+                startX * canvasWidth,
+                startY * canvasHeight,
+                5,
+                0,
+                Math.PI * 2
               );
+              ctx.strokeStyle = '#EF7073';
+              ctx.lineWidth = 1;
               ctx.stroke();
-            }
 
-            // Continue until both segments are fully drawn
-            if (t < 2) {
-              frame++;
+              // Draw circle at endpoint only if fully drawn
+              // if (t >= 2) {
+              //   ctx.beginPath();
+              //   ctx.arc(
+              //     endX * canvasWidth,
+              //     endY * canvasHeight,
+              //     4,
+              //     0,
+              //     Math.PI * 2
+              //   );
+              //   ctx.fillStyle = '#EF7073';
+              //   ctx.fill();
+              // }
+            }
+          };
+
+          const draw = () => {
+            drawAllLines();
+
+            if (currentFrame < totalFrames) {
+              currentFrame++;
               requestAnimationFrame(draw);
             }
           };
 
           draw();
+
           // Animate the lines
 
           // Cards Animation

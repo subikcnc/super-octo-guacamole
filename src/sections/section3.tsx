@@ -304,48 +304,6 @@ const Section3 = () => {
           );
         },
       });
-      // const imagesTrigger = ScrollTrigger.create({
-      //   trigger: section,
-      //   start: 'bottom center', // start when section comes to center
-      //   end: 'bottom center', // end when section is about to leave
-      //   scrub: 2.5,
-      //   markers: true,
-      //   // toggleActions: 'play reverse play reverse',
-      //   // onLeave: () => {
-      //   //   imagesTrigger.kill();
-      //   // },
-      // });
-
-      // const cardsTrigger = ScrollTrigger.create({
-      //   trigger: section,
-      //   start: 'bottom center', // start when section comes to center
-      //   end: 'bottom center', // end when section is about to leave
-      //   scrub: 2.5,
-      //   markers: false,
-      // });
-
-      // gsap.fromTo(
-      //   img,
-      //   {
-      //     top: '30%', // start lower (or use any default)
-      //     autoAlpha: 0, // fully hidden initially
-      //   },
-      //   {
-      //     top: `${topValues[index]}%`, // target top
-      //     autoAlpha: 1,
-      //     ease: 'none',
-      //     scrollTrigger: imagesTrigger,
-      //   }
-      // );
-
-      // gsap.fromTo(
-      //   card,
-      //   { autoAlpha: 0 },
-      //   {
-      //     autoAlpha: 1,
-      //     scrollTrigger: cardsTrigger,
-      //   }
-      // );
     });
   });
 

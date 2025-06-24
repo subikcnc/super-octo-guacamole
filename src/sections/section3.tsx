@@ -220,8 +220,8 @@ const Section3 = () => {
 
       ScrollTrigger.create({
         trigger: section,
-        start: 'bottom center',
-        end: 'bottom center',
+        start: 'bottom+=200 center',
+        end: 'bottom+=200 center',
         scrub: 2.5,
         markers: false,
         onEnter: () => {

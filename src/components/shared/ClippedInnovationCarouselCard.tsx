@@ -1,6 +1,7 @@
+'use client';
 import Image from 'next/image';
 import Link from 'next/link';
-import React from 'react';
+import React, { useRef } from 'react';
 
 interface Props {
   imgSrc: string;
@@ -9,6 +10,23 @@ interface Props {
 }
 
 const ClippedInnovationCarouselCard = ({ imgSrc, title, link }: Props) => {
+  const buttonRef = useRef<HTMLAnchorElement>(null);
+
+  const handleMouseOver = () => {
+    if (!buttonRef.current) return;
+
+    const image = buttonRef.current.querySelector('img');
+    if (!image) return;
+    image.style.rotate = '45deg';
+  };
+
+  const handleMosueOut = () => {
+    if (!buttonRef.current) return;
+
+    const image = buttonRef.current.querySelector('img');
+    if (!image) return;
+    image.style.rotate = '0deg';
+  };
   return (
     <>
       {/* 
@@ -58,6 +76,9 @@ const ClippedInnovationCarouselCard = ({ imgSrc, title, link }: Props) => {
       `}</style>
 
       <div className="relative">
+        <div className="absolute bottom-[55px] left-5 z-10 text-[18px] font-medium text-neutral-900">
+          Learn More
+        </div>
         {/* 
             This wrapper now gets the new, lighter shadow filter applied.
           */}
@@ -93,8 +114,11 @@ const ClippedInnovationCarouselCard = ({ imgSrc, title, link }: Props) => {
           </svg>
         </div>
         <Link
+          ref={buttonRef}
+          onMouseOver={handleMouseOver}
+          onMouseOut={handleMosueOut}
           href={link}
-          className="bg-primary-700 hover:bg-primary-700 absolute right-0 bottom-[24px] inline-flex size-[57px] cursor-pointer items-center justify-center rounded-full p-0"
+          className="bg-primary-700 hover:bg-primary-700 absolute right-0 bottom-[28px] inline-flex size-[57px] cursor-pointer items-center justify-center rounded-full p-0"
         >
           <Image
             src="/icons/arrow-up-light.svg"

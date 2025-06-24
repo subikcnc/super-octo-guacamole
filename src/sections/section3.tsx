@@ -84,24 +84,75 @@ const Section3 = () => {
 
   useEffect(() => {
     if (!pillarsCanvasRef.current) return;
-    const canvas = pillarsCanvasRef.current;
-    const ctx = pillarsCanvasRef.current.getContext('2d');
 
+    const canvas = pillarsCanvasRef.current;
+    const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    pillarsCanvasRef.current.width = pillarsCanvasRef.current.clientWidth;
-    pillarsCanvasRef.current.height = pillarsCanvasRef.current.clientHeight;
+    canvas.width = canvas.clientWidth;
+    canvas.height = canvas.clientHeight;
+
     const canvasWidth = canvas.width;
     const canvasHeight = canvas.height;
 
+    const totalFrames = 30;
+
+    const drawAllLines = (progressArray: number[]) => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      for (let i = 0; i < lineValues.length; i++) {
+        const { startX, startY, midX, midY, endX, endY } = lineValues[i];
+        const t = progressArray[i];
+        if (t <= 0) continue;
+
+        // Segment A
+        ctx.beginPath();
+        ctx.moveTo(startX * canvasWidth, startY * canvasHeight);
+        ctx.lineTo(
+          startX * canvasWidth + (midX - startX) * canvasWidth * Math.min(t, 1),
+          startY * canvasHeight +
+            (midY - startY) * canvasHeight * Math.min(t, 1)
+        );
+        ctx.strokeStyle = '#EF7073';
+        ctx.lineWidth = 1;
+        ctx.stroke();
+
+        // Segment B
+        if (t > 1) {
+          const t2 = t - 1;
+          ctx.beginPath();
+          ctx.moveTo(midX * canvasWidth, midY * canvasHeight);
+          ctx.lineTo(
+            midX * canvasWidth + (endX - midX) * canvasWidth * Math.min(t2, 1),
+            midY * canvasHeight + (endY - midY) * canvasHeight * Math.min(t2, 1)
+          );
+          ctx.stroke();
+        }
+
+        // Circles
+        ctx.beginPath();
+        ctx.arc(startX * canvasWidth, startY * canvasHeight, 2, 0, Math.PI * 2);
+        ctx.fillStyle = '#EF7073';
+        ctx.fill();
+
+        ctx.beginPath();
+        ctx.arc(startX * canvasWidth, startY * canvasHeight, 5, 0, Math.PI * 2);
+        ctx.strokeStyle = '#EF7073';
+        ctx.lineWidth = 1;
+        ctx.stroke();
+      }
+    };
+
+    // Main ScrollTrigger
     ScrollTrigger.create({
       trigger: '#pillars-section',
       pin: true,
       start: 'top top',
-      markers: false,
       end: 'bottom top',
+      markers: false,
       onEnter: () => {
         if (!pillarsSectionTitleRef.current) return;
+
         gsap.set(pillarsSectionTitleRef.current, { position: 'absolute' });
         gsap.to(pillarsSectionTitleRef.current, {
           left: 120,
@@ -111,21 +162,7 @@ const Section3 = () => {
           duration: 0.5,
           ease: 'power2',
         });
-        // gsap.to()
       },
-      // onLeave: () => {
-      //   if (!pillarsSectionTitleRef.current) return;
-      //   gsap.to(pillarsSectionRef.current, {
-      //     left: 'unset',
-      //     top: 'unset',
-      //     width: 840,
-      //     color: '#474d59',
-      //     duration: 0.5,
-      //     ease: 'power2',
-      //   });
-      //   gsap.set(pillarsSectionTitleRef.current, { position: 'relative' });
-      // },
-      // onLeave: () => mainTrigger.kill(),
     });
 
     if (!pillarsSectionRef.current) return;
@@ -136,9 +173,6 @@ const Section3 = () => {
     const images = pillarsSectionRef.current
       .querySelector('.pillars-animated-content')
       ?.querySelectorAll('.pillars-block-image');
-
-    console.log('These are the image', images);
-
     const cards = pillarsSectionRef.current
       .querySelector('.pillars-animated-content')
       ?.querySelectorAll('.pillars-animated-card');
@@ -148,10 +182,8 @@ const Section3 = () => {
     innerSections.forEach((section, index) => {
       const img = images[index];
       const card = cards[index];
-
       if (!img || !card) return;
 
-      // Animate one image per section with scroll
       ScrollTrigger.create({
         trigger: section,
         start: 'bottom center',
@@ -161,151 +193,65 @@ const Section3 = () => {
         onEnter: () => {
           gsap.fromTo(
             img,
-            {
-              top: '30%', // start lower (or use any default)
-              autoAlpha: 0, // fully hidden initially
-            },
-            {
-              top: `${topValues[index]}%`, // target top
-              autoAlpha: 1,
-              ease: 'none',
-              // scrollTrigger: imagesTrigger,
-            }
+            { top: '30%', autoAlpha: 0 },
+            { top: `${topValues[index]}%`, autoAlpha: 1, ease: 'none' }
           );
+          gsap.fromTo(card, { autoAlpha: 0 }, { autoAlpha: 1 });
 
-          // Animate the lines
-          const totalFrames = 30;
-          const progressArray = new Array(lineValues.length).fill(0); // progress per line 0-2
-          let currentFrame = 0;
-          const currentLineIndex = index; // the line currently animating
-
-          const drawAllLines = () => {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-            for (let i = 0; i <= currentLineIndex; i++) {
-              let t = progressArray[i];
-
-              // If this is the current line animating, progress goes from 0 -> 2 via frames
-              if (i === currentLineIndex && currentFrame <= totalFrames) {
-                t = (currentFrame / totalFrames) * 2; // 0 to 2 for two segments
-                progressArray[i] = t;
-              } else if (i < currentLineIndex) {
-                t = 2; // fully drawn
-              }
-
-              const { startX, startY, midX, midY, endX, endY } = lineValues[i];
-
-              // Draw segment A
-              ctx.beginPath();
-              ctx.moveTo(startX * canvasWidth, startY * canvasHeight);
-              ctx.lineTo(
-                startX * canvasWidth +
-                  (midX - startX) * canvasWidth * Math.min(t, 1),
-                startY * canvasHeight +
-                  (midY - startY) * canvasHeight * Math.min(t, 1)
-              );
-              ctx.strokeStyle = '#EF7073';
-              ctx.lineWidth = 1;
-              ctx.stroke();
-
-              // Draw segment B
-              if (t > 1) {
-                const t2 = t - 1;
-                ctx.beginPath();
-                ctx.moveTo(midX * canvasWidth, midY * canvasHeight);
-                ctx.lineTo(
-                  midX * canvasWidth +
-                    (endX - midX) * canvasWidth * Math.min(t2, 1),
-                  midY * canvasHeight +
-                    (endY - midY) * canvasHeight * Math.min(t2, 1)
-                );
-                ctx.stroke();
-              }
-
-              // Draw circles at start point
-              ctx.beginPath();
-              ctx.arc(
-                startX * canvasWidth,
-                startY * canvasHeight,
-                2,
-                0,
-                Math.PI * 2
-              );
-              ctx.fillStyle = '#EF7073';
-              ctx.fill();
-
-              ctx.beginPath();
-              ctx.arc(
-                startX * canvasWidth,
-                startY * canvasHeight,
-                5,
-                0,
-                Math.PI * 2
-              );
-              ctx.strokeStyle = '#EF7073';
-              ctx.lineWidth = 1;
-              ctx.stroke();
-
-              // Draw circle at endpoint only if fully drawn
-              // if (t >= 2) {
-              //   ctx.beginPath();
-              //   ctx.arc(
-              //     endX * canvasWidth,
-              //     endY * canvasHeight,
-              //     4,
-              //     0,
-              //     Math.PI * 2
-              //   );
-              //   ctx.fillStyle = '#EF7073';
-              //   ctx.fill();
-              // }
-            }
-          };
+          const progressArray = new Array(lineValues.length).fill(0);
+          let frame = 0;
 
           const draw = () => {
-            drawAllLines();
+            // Setup line progress
+            for (let i = 0; i <= lineValues.length - 1; i++) {
+              if (i < index) {
+                progressArray[i] = 2;
+              } else if (i === index) {
+                progressArray[i] = (frame / totalFrames) * 2;
+              }
+            }
+            drawAllLines(progressArray);
 
-            if (currentFrame < totalFrames) {
-              currentFrame++;
+            if (frame < totalFrames) {
+              frame++;
               requestAnimationFrame(draw);
             }
           };
-
           draw();
-
-          // Animate the lines
-
-          // Cards Animation
-          gsap.fromTo(
-            card,
-            { autoAlpha: 0 },
-            {
-              autoAlpha: 1,
-            }
-          );
         },
         onEnterBack: () => {
           gsap.fromTo(
             img,
-            {
-              top: `${topValues[index]}%`, // target top
-              autoAlpha: 1,
-              // scrollTrigger: imagesTrigger,
-            },
-            { top: '30%', autoAlpha: '0' }
+            { top: `${topValues[index]}%`, autoAlpha: 1 },
+            { top: '30%', autoAlpha: 0 }
           );
+          gsap.fromTo(card, { autoAlpha: 1 }, { autoAlpha: 0 });
 
-          gsap.fromTo(
-            card,
-            { autoAlpha: 1 },
-            {
-              autoAlpha: 0,
+          const progressArrayReverse = new Array(lineValues.length).fill(0);
+          let reverseFrame = totalFrames;
+
+          const reverseDraw = () => {
+            for (let i = 0; i <= lineValues.length - 1; i++) {
+              if (i < index) {
+                progressArrayReverse[i] = 2;
+              } else if (i === index) {
+                progressArrayReverse[i] = (reverseFrame / totalFrames) * 2;
+              } else {
+                progressArrayReverse[i] = 0;
+              }
             }
-          );
+            drawAllLines(progressArrayReverse);
+
+            if (reverseFrame > 0) {
+              reverseFrame--;
+              requestAnimationFrame(reverseDraw);
+            }
+          };
+          reverseDraw();
         },
       });
     });
-  });
+  }, [lineValues, topValues]);
 
   const handleCardMouseOver = (index: number) => {
     if (!pillarsSectionRef.current) return;

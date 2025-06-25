@@ -148,8 +148,10 @@
   * {
     @apply border-border outline-ring/50;
   }
+
   body {
     @apply bg-background text-foreground;
+
     font-family: var(--font-generalSans), sans-serif;
   }
 }
@@ -172,32 +174,34 @@
     font-family: var(--font-geist-sans), sans-serif;
   }
   .h3_medium_64 {
-    @apply text-[64px] leading-[125%] font-medium tracking-[-3.2px];
+    @apply text-[4rem] leading-[125%] font-medium tracking-[-3.2px];
     @apply dpi125:text-[40px] /* font-family: var(--font-generalSans), sans-serif; */;
   }
 
   .h2_regular_64 {
-    @apply text-[64px] leading-[100%] font-normal;
+    @apply text-[4rem] leading-[100%] font-normal;
   }
 
   .h2_medium_64 {
-    @apply text-[64px] leading-[100%] font-medium;
+    @apply text-[4rem] leading-[100%] font-medium;
   }
 
   .h2_medium_80 {
-    @apply text-[80px] leading-[125%] font-medium;
+    @apply text-[5rem] leading-[125%] font-medium;
   }
 
   .h2_regular_56 {
-    @apply text-[56px] leading-[125%] font-normal;
+    @apply text-[3.5rem] leading-[125%] font-normal;
+    @apply dpi125:text-[32px];
   }
 
   .h3_bold_36 {
-    @apply text-[36px] leading-[125%] font-medium;
+    @apply text-[2.25rem] leading-[125%] font-medium;
+    @apply dpi125:text-[24px];
   }
 
   .h4_regular_32 {
-    @apply text-[32px] leading-[140%] font-normal;
+    @apply text-[2rem] leading-[140%] font-normal;
   }
   .pillars-animated-card {
     clip-path: path(
@@ -211,11 +215,11 @@
     }
   } */
 
-  /* @media (min-resolution: 120dpi) {
-    .h3_medium_64 {
-      font-size: 40px;
+  @media (min-resolution: 120dpi) {
+    html {
+      font-size: 80%;
     }
-  } */
+  }
 
   /* @media (min-resolution: 144dpi) {
     .h3_medium_64 {

@@ -317,7 +317,7 @@ const Section3 = () => {
   return (
     <div
       id="pillars-section"
-      className="relative w-full bg-transparent"
+      className="relative flex h-[100vh] w-full flex-col bg-transparent"
       ref={pillarsSectionRef}
     >
       <canvas
@@ -337,13 +337,36 @@ const Section3 = () => {
         <h2
           ref={pillarsSectionTitleRef}
           id="pillars-section-title"
-          className="h2_regular_56 font_body max-w-[868px] text-neutral-900"
+          className="h2_regular_56 font_body dpi125:max-w-[400px] max-w-[868px] text-neutral-900"
         >
           By building the foundation of Research, Education, and Industry.
         </h2>
       </div>
       <div className="pillars-animated-content absolute top-0 left-0 flex h-full w-full items-center justify-center">
-        <img
+        <div
+          className="pillars-block-image dpi125:w-[181px] absolute w-[362px]"
+          style={{
+            top: '0',
+            left: '40%',
+            opacity: '0',
+          }}
+        >
+          <div style={{ width: '100%', paddingTop: '54.97%' }}>
+            <img
+              src="/images/pillars/pillar-1.png"
+              alt="animated blocks"
+              style={{
+                position: 'absolute',
+                top: '0',
+                left: '0',
+                width: '100%',
+                height: '100%',
+                objectFit: 'cover',
+              }}
+            />
+          </div>
+        </div>
+        {/* <img
           src="/images/pillars/pillar-1.png"
           // width={362}
           // height={199}
@@ -356,7 +379,7 @@ const Section3 = () => {
             visibility: 'hidden',
           }}
           // Target top: 38%
-        />
+        /> */}
         {/* Pillar Card Research */}
         <PillarsCard
           title="Research"
@@ -370,10 +393,37 @@ const Section3 = () => {
           ideas, rigorous methods, and a deep commitment to turn insights into
           impact.
         </PillarsCard>
-        <img
+        <div
+          className="pillars-block-image dpi125:w-[111px] absolute w-[222px]"
+          style={{
+            top: '0',
+            left: '35%',
+            opacity: '0',
+          }}
+        >
+          <div style={{ width: '100%', paddingTop: '116.212%' }}>
+            <img
+              src="/images/pillars/pillar-2.png"
+              // width={222}
+              // height={258}
+              alt="animated block"
+              className="absolute"
+              style={{
+                position: 'absolute',
+                top: '0',
+                left: '0',
+                width: '100%',
+                height: '100%',
+                objectFit: 'cover',
+              }}
+              // Target top: 40%;
+            />
+          </div>
+        </div>
+        {/* <img
           src="/images/pillars/pillar-2.png"
-          width={222}
-          height={258}
+          // width={222}
+          // height={258}
           alt="animated block"
           className="pillars-block-image absolute"
           style={{
@@ -383,7 +433,7 @@ const Section3 = () => {
             visibility: 'hidden',
           }}
           // Target top: 40%;
-        />
+        /> */}
         {/* Pillar Card Education */}
         <PillarsCard
           title="Education"
@@ -396,7 +446,34 @@ const Section3 = () => {
           deep tech spin-offs, giving ideas a path to grow into practically
           relevant, purpose-driven products.
         </PillarsCard>
-        <img
+        <div
+          className="pillars-block-image dpi125:w-[158.5px] absolute w-[317px]"
+          style={{
+            top: '0',
+            left: '42.5%',
+            opacity: '0',
+          }}
+        >
+          <div style={{ width: '100%', paddingTop: '65.615%' }}>
+            <img
+              src="/images/pillars/pillar-3.png"
+              // width={222}
+              // height={258}
+              alt="animated block"
+              className="absolute"
+              style={{
+                position: 'absolute',
+                top: '0',
+                left: '0',
+                width: '100%',
+                height: '100%',
+                objectFit: 'cover',
+              }}
+              // Target top: 40%;
+            />
+          </div>
+        </div>
+        {/* <img
           src="/images/pillars/pillar-3.png"
           width={317}
           height={208}
@@ -409,7 +486,7 @@ const Section3 = () => {
             visibility: 'hidden',
           }}
           // Target top: 46%;
-        />
+        /> */}
         {/* Pillar Card Industry */}
         <PillarsCard
           title="Industry"
@@ -425,17 +502,17 @@ const Section3 = () => {
       </div>
 
       <div
-        className="pillars-inner-section h-[300px] w-full flex-1"
+        className="pillars-inner-section w-full flex-1 bg-amber-200"
         data-step="1"
       >
         &nbsp;
       </div>
       <div
-        className="pillars-inner-section h-[300px] flex-1"
+        className="pillars-inner-section flex-1 bg-purple-200"
         data-step="2"
       ></div>
       <div
-        className="pillars-inner-section h-[300px] flex-1"
+        className="pillars-inner-section flex-1 bg-blue-200"
         data-step="3"
       ></div>
     </div>

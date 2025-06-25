@@ -23,7 +23,7 @@ const Section6 = () => {
           features, and insights into our AI initiatives.
         </p>
       </div>
-      <div className="mx-auto mt-20 mb-8 max-w-[1200px]">
+      <div className="mx-auto mt-20 mb-8 max-w-[75rem]">
         {news.map((item) => (
           <div key={item.title} className="grid grid-cols-3 not-last:mb-[92px]">
             <Image

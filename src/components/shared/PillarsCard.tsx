@@ -40,7 +40,7 @@ const PillarsCard = ({
   };
   return (
     <div
-      className="pillars-animated-card absolute max-w-[500px]"
+      className="pillars-animated-card absolute max-w-[26%]"
       onMouseOver={handleCardMouseOver}
       onMouseOut={handleCardMouseOut}
       style={{

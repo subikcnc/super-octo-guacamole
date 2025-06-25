@@ -8,7 +8,7 @@ import { navbarLinks } from '@/constants';
 const RightNavbar = () => {
   return (
     <div
-      className="fixed top-6 right-[100px] z-10 flex items-center gap-8 rounded-full bg-white px-6 py-2"
+      className="dpi125:gap-4 fixed top-6 right-[40px] z-10 flex items-center gap-8 rounded-full bg-white px-6 py-2"
       style={{ boxShadow: '0 2px 8px 0 rgba(0,0,0,0.15)' }}
     >
       {navbarLinks.map((item) => (

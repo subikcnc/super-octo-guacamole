@@ -3,6 +3,20 @@
 
 @custom-variant dark (&:is(.dark *));
 
+@variant dpi125 {
+  @media (-webkit-min-device-pixel-ratio: 1.25), (min-resolution: 120dpi) {
+    @slot;
+  }
+}
+
+@variant dpi150 {
+  @media (-webkit-min-device-pixel-ratio: 1.5), (min-resolution: 144dpi) {
+    @slot;
+  }
+}
+
+/* @custom-variant  */
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -159,7 +173,7 @@
   }
   .h3_medium_64 {
     @apply text-[64px] leading-[125%] font-medium tracking-[-3.2px];
-    /* font-family: var(--font-generalSans), sans-serif; */
+    @apply dpi125:text-[40px] /* font-family: var(--font-generalSans), sans-serif; */;
   }
 
   .h2_regular_64 {
@@ -190,4 +204,22 @@
       'M 0 0 H 100% V calc(100% - 40px) A 40 40 0 0 1 calc(100% - 40px) 100% H 0 Z'
     );
   }
+
+  /* @media (-webkit-device-pixel-ratio: 1.25) {
+    .h3_medium_64 {
+      font-size: 20px;
+    }
+  } */
+
+  /* @media (min-resolution: 120dpi) {
+    .h3_medium_64 {
+      font-size: 40px;
+    }
+  } */
+
+  /* @media (min-resolution: 144dpi) {
+    .h3_medium_64 {
+      font-size: 20px;
+    }
+  } */
 }

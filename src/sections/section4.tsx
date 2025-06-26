@@ -16,7 +16,7 @@ import { innovationCarouselItems } from '@/constants';
 
 const Section4 = () => {
   return (
-    <div className="px-20 py-[164px]">
+    <div className="dpi125:px-10 px-20 py-[10.25rem]">
       <div>
         {/* Badge */}
         <Badge variant="muted">Featured Highlights</Badge>

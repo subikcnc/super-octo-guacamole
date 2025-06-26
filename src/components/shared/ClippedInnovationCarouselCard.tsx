@@ -76,7 +76,7 @@ const ClippedInnovationCarouselCard = ({ imgSrc, title, link }: Props) => {
       `}</style>
 
       <div className="relative">
-        <div className="absolute bottom-[55px] left-5 z-10 text-[18px] font-medium text-neutral-900">
+        <div className="absolute bottom-[55px] left-5 z-10 text-lg font-medium text-neutral-900">
           Learn More
         </div>
         {/* 
@@ -118,15 +118,16 @@ const ClippedInnovationCarouselCard = ({ imgSrc, title, link }: Props) => {
           onMouseOver={handleMouseOver}
           onMouseOut={handleMosueOut}
           href={link}
-          className="bg-primary-700 hover:bg-primary-700 absolute right-0 bottom-[28px] inline-flex size-[57px] cursor-pointer items-center justify-center rounded-full p-0"
+          className="bg-primary-700 hover:bg-primary-700 absolute right-0 bottom-[1.75rem] inline-flex size-[3.5625rem] cursor-pointer items-center justify-center rounded-full p-0"
         >
-          <Image
-            src="/icons/arrow-up-light.svg"
-            className="transition-all"
-            width={16}
-            height={16}
-            alt="arrow icon up"
-          />
+          <span className="relative inline-flex size-4">
+            <Image
+              src="/icons/arrow-up-light.svg"
+              className="object-cover transition-all"
+              fill
+              alt="arrow icon up"
+            />
+          </span>
         </Link>
       </div>
     </>

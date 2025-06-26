@@ -6,7 +6,7 @@ import { collaboratorsCarousel } from '@/constants';
 
 const Section5 = () => {
   return (
-    <div className="bg-muted px-20 lg:py-[164px]">
+    <div className="bg-muted dpi125:px-10 px-20 lg:py-[164px]">
       <h2 className="h2_medium_80 text-primary-900 mb-36 text-center">
         Built In Collaboration With
         <br /> Leading Minds and Institutions

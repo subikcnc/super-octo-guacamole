@@ -49,7 +49,7 @@ const Section3 = () => {
     ],
     []
   );
-  const hoverTopValues = [36, 38, 43];
+  const hoverTopValues = [36, dpr >= 1.25 ? 37 : 38, dpr >= 1.25 ? 40 : 43];
 
   const pillarImageInitialSrc = [
     '/images/pillars/pillar-1.png',
@@ -395,7 +395,7 @@ const Section3 = () => {
           impact.
         </PillarsCard>
         <div
-          className="pillars-block-image dpi150:left-[39.5%] dpi125:left-[40%] dpi125:w-[6.94rem] absolute top-0 left-[35%] w-[13.875rem] opacity-0"
+          className="pillars-block-image dpi150:left-[39.5%] dpi125:left-[40.3%] dpi125:w-[6.94rem] absolute top-0 left-[35%] w-[13.875rem] opacity-0"
           // style={{
           //   top: '0',
           //   left: '35%',

@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 
 const Footer = () => {
   return (
-    <footer className="bg-secondary text-secondary-foreground grid grid-cols-[1fr_3fr] p-20 lg:gap-[264px]">
+    <footer className="bg-secondary text-secondary-foreground dpi125:px-10 dpi125:py-20 grid grid-cols-[1fr_3fr] p-20 lg:gap-[16.5rem]">
       <div className="">
         <div>
           <Image
@@ -51,7 +51,7 @@ const Footer = () => {
             </Link>
           </Button>
         </div>
-        <div className="mt-[145px] grid grid-cols-3 gap-y-20">
+        <div className="mt-[9.0625rem] grid grid-cols-3 gap-y-20">
           <div className="">
             <h3 className="mb-6 font-medium text-neutral-500 uppercase">
               Research
@@ -141,10 +141,10 @@ const Footer = () => {
               Connect
             </h3>
             <div className="flex gap-3">
-              <Button variant="secondary" className="size-[72px] p-0" asChild>
+              <Button variant="secondary" className="size-[4.5rem] p-0" asChild>
                 <Link
                   href="/"
-                  className="flex size-[72px] items-center justify-center rounded-full bg-neutral-700"
+                  className="flex size-[4.5rem] items-center justify-center rounded-full bg-neutral-700"
                 >
                   <Image
                     src="/images/icon-twitter.svg"
@@ -154,10 +154,10 @@ const Footer = () => {
                   />
                 </Link>
               </Button>
-              <Button variant="secondary" className="size-[72px] p-0" asChild>
+              <Button variant="secondary" className="size-[4.5rem] p-0" asChild>
                 <Link
                   href="/"
-                  className="flex size-[72px] items-center justify-center rounded-full bg-neutral-700"
+                  className="flex size-[4.5rem] items-center justify-center rounded-full bg-neutral-700"
                 >
                   <Image
                     src="/images/icon-linkedin.svg"
@@ -167,10 +167,10 @@ const Footer = () => {
                   />
                 </Link>
               </Button>
-              <Button variant="secondary" className="size-[72px] p-0" asChild>
+              <Button variant="secondary" className="size-[4.5rem] p-0" asChild>
                 <Link
                   href="/"
-                  className="flex size-[72px] items-center justify-center rounded-full bg-neutral-700"
+                  className="flex size-[4.5rem] items-center justify-center rounded-full bg-neutral-700"
                 >
                   <Image
                     src="/images/icon-youtube.svg"

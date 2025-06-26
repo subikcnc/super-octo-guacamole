@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 
 const Section7 = () => {
   return (
-    <div className="grid grid-cols-2 gap-4 px-[100px] py-20">
+    <div className="dpi125:px-10 grid grid-cols-2 gap-4 px-[6.25rem] py-20">
       <div className="flex flex-col">
         <h2 className="h2_regular_64 text-primary-900">
           Help shape an AI

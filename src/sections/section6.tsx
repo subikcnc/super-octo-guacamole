@@ -8,7 +8,7 @@ import { news } from '@/constants';
 
 const Section6 = () => {
   return (
-    <div className="px-20 lg:py-[164px]">
+    <div className="dpi125:px-10 px-20 lg:py-[164px]">
       <div>
         {/* Badge */}
         <Badge variant="muted">Featured Highlights</Badge>

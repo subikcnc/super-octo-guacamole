@@ -16,7 +16,10 @@ const Section3 = () => {
   const dpr = useDevicePixelRatio();
   console.log('dpr is', dpr);
 
-  const topValues = useMemo(() => [38, 40, 45], []);
+  const topValues = useMemo(
+    () => [38, dpr >= 1.25 ? 39 : 40, dpr >= 1.25 ? 42.5 : 45],
+    [dpr]
+  );
   const lineValues = useMemo(
     () => [
       {
@@ -31,9 +34,9 @@ const Section3 = () => {
         startX: 0.2,
         startY: 0.58,
         midX: 0.26,
-        midY: 0.5,
-        endX: 0.34,
-        endY: 0.5,
+        midY: dpr >= 1.25 ? 0.47 : 0.5,
+        endX: dpr >= 1.25 ? 0.38 : 0.34,
+        endY: dpr >= 1.25 ? 0.47 : 0.5,
       },
       {
         startX: 0.8,
@@ -289,7 +292,7 @@ const Section3 = () => {
         },
       });
     });
-  }, [lineValues, topValues]);
+  }, [lineValues, topValues, dpr]);
 
   const handleCardMouseOver = (index: number) => {
     if (!pillarsSectionRef.current) return;
@@ -348,7 +351,7 @@ const Section3 = () => {
       </div>
       <div className="pillars-animated-content absolute top-0 left-0 flex h-full w-full items-center justify-center">
         <div
-          className="pillars-block-image dpi125:w-[11.3125rem] absolute top-0 left-[40%] w-[22.625rem] opacity-0"
+          className="pillars-block-image dpi150:left-[43%] dpi125:w-[11.3125rem] dpi125:left-[43%] absolute top-0 left-[40%] w-[22.625rem] opacity-0"
           // style={{
           //   top: '0',
           //   left: '40%',
@@ -392,12 +395,12 @@ const Section3 = () => {
           impact.
         </PillarsCard>
         <div
-          className="pillars-block-image dpi125:w-[111px] absolute w-[222px]"
-          style={{
-            top: '0',
-            left: '35%',
-            opacity: '0',
-          }}
+          className="pillars-block-image dpi150:left-[39.5%] dpi125:left-[40%] dpi125:w-[6.94rem] absolute top-0 left-[35%] w-[13.875rem] opacity-0"
+          // style={{
+          //   top: '0',
+          //   left: '35%',
+          //   opacity: '0',
+          // }}
         >
           <div style={{ width: '100%', paddingTop: '116.212%' }}>
             <img
@@ -446,12 +449,12 @@ const Section3 = () => {
           relevant, purpose-driven products.
         </PillarsCard>
         <div
-          className="pillars-block-image dpi125:w-[158.5px] absolute w-[317px]"
-          style={{
-            top: '0',
-            left: '42.5%',
-            opacity: '0',
-          }}
+          className="pillars-block-image dpi125:w-[9.9rem] dpi150:left-[44.5%] dpi125:left-[44%] absolute top-0 left-[42.5%] w-[19.8125rem] opacity-0"
+          // style={{
+          //   top: '0',
+          //   left: '42.5%',
+          //   opacity: '0',
+          // }}
         >
           <div style={{ width: '100%', paddingTop: '65.615%' }}>
             <img
@@ -501,20 +504,11 @@ const Section3 = () => {
         </PillarsCard>
       </div>
 
-      <div
-        className="pillars-inner-section w-full flex-1 bg-amber-200"
-        data-step="1"
-      >
+      <div className="pillars-inner-section w-full flex-1" data-step="1">
         &nbsp;
       </div>
-      <div
-        className="pillars-inner-section flex-1 bg-purple-200"
-        data-step="2"
-      ></div>
-      <div
-        className="pillars-inner-section flex-1 bg-blue-200"
-        data-step="3"
-      ></div>
+      <div className="pillars-inner-section flex-1" data-step="2"></div>
+      <div className="pillars-inner-section flex-1" data-step="3"></div>
     </div>
   );
 };

@@ -4,6 +4,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useEffect, useMemo, useRef } from 'react';
 
 import PillarsCard from '@/components/shared/PillarsCard';
+import { useDevicePixelRatio } from '@/hooks/useDevicePixelRatio';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -11,6 +12,9 @@ const Section3 = () => {
   const pillarsSectionRef = useRef<HTMLDivElement>(null);
   const pillarsSectionTitleRef = useRef<HTMLHeadingElement>(null);
   const pillarsCanvasRef = useRef<HTMLCanvasElement>(null);
+
+  const dpr = useDevicePixelRatio();
+  console.log('dpr is', dpr);
 
   const topValues = useMemo(() => [38, 40, 45], []);
   const lineValues = useMemo(
@@ -154,7 +158,7 @@ const Section3 = () => {
     titleTimeline
       .set(pillarsSectionTitleRef.current, { position: 'absolute' })
       .to(pillarsSectionTitleRef.current, {
-        left: 120,
+        left: `${dpr >= 1.25 ? '40' : '120'}`,
         top: 164,
         width: 580,
         color: '#620002',
@@ -375,9 +379,10 @@ const Section3 = () => {
         /> */}
         {/* Pillar Card Research */}
         <PillarsCard
+          containerClasses="dpi125:right-[2.5rem] right-[7.5rem] top-[15%]"
           title="Research"
-          right="120px"
-          top="15%"
+          // right="120px"
+          // top="15%"
           handleCardMouseOver={() => handleCardMouseOver(0)}
           handleCardMouseOut={() => handleCardMouseOut(0)}
         >
@@ -429,9 +434,10 @@ const Section3 = () => {
         /> */}
         {/* Pillar Card Education */}
         <PillarsCard
+          containerClasses="dpi125:left-[2.5rem] left-[7.5rem] top-[60%]"
           title="Education"
-          left="120px"
-          top="60%"
+          // left="120px"
+          // top="60%"
           handleCardMouseOver={() => handleCardMouseOver(1)}
           handleCardMouseOut={() => handleCardMouseOut(1)}
         >
@@ -482,9 +488,10 @@ const Section3 = () => {
         /> */}
         {/* Pillar Card Industry */}
         <PillarsCard
+          containerClasses="dpi125:right-[2.5rem] right-[7.5rem] top-[60%]"
           title="Industry"
-          right="120px"
-          top="60%"
+          // right="120px"
+          // top="60%"
           handleCardMouseOver={() => handleCardMouseOver(2)}
           handleCardMouseOut={() => handleCardMouseOut(2)}
         >

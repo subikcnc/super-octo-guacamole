@@ -2,22 +2,26 @@ import Image from 'next/image';
 import Link from 'next/link';
 import React, { useRef } from 'react';
 
+import { cn } from '@/lib/utils';
+
 interface Props {
   title: string;
-  left?: string;
-  right?: string;
-  top?: string;
+  // left?: string;
+  // right?: string;
+  // top?: string;
   children: React.ReactNode;
+  containerClasses?: string;
   handleCardMouseOver?: () => void;
   handleCardMouseOut?: () => void;
 }
 
 const PillarsCard = ({
   title,
-  left = 'unset',
-  right = 'unset',
-  top = 'unset',
+  // left = 'unset',
+  // right = 'unset',
+  // top = 'unset',
   children,
+  containerClasses,
   handleCardMouseOver,
   handleCardMouseOut,
 }: Props) => {
@@ -40,15 +44,17 @@ const PillarsCard = ({
   };
   return (
     <div
-      className="pillars-animated-card absolute max-w-[26%]"
+      className={cn(
+        containerClasses,
+        'pillars-animated-card absolute max-w-[24.5%] opacity-0'
+      )}
       onMouseOver={handleCardMouseOver}
       onMouseOut={handleCardMouseOut}
-      style={{
-        left,
-        right,
-        top,
-        opacity: '0',
-      }}
+      // style={{
+      //   left,
+      //   right,
+      //   top,
+      // }}
     >
       <div className="dpi125:bottom-[35px] absolute bottom-[55px] left-5 z-10 text-[18px] font-medium text-neutral-900">
         Learn More

@@ -49,7 +49,7 @@ const Section3 = () => {
     ],
     []
   );
-  const hoverTopValues = [36, 38, 43];
+  const hoverTopValues = [36, dpr >= 1.25 ? 37 : 38, dpr >= 1.25 ? 40 : 43];
 
   const pillarImageInitialSrc = [
     '/images/pillars/pillar-1.png',
@@ -162,7 +162,7 @@ const Section3 = () => {
       .set(pillarsSectionTitleRef.current, { position: 'absolute' })
       .to(pillarsSectionTitleRef.current, {
         left: `${dpr >= 1.25 ? '40' : '120'}`,
-        top: 164,
+        top: `${dpr >= 1.25 ? '16' : '164'}`,
         width: 580,
         color: '#620002',
       });
@@ -344,7 +344,7 @@ const Section3 = () => {
         <h2
           ref={pillarsSectionTitleRef}
           id="pillars-section-title"
-          className="h2_regular_56 font_body dpi125:max-w-[400px] max-w-[868px] text-neutral-900"
+          className="h2_regular_56 font_body dpi125:max-w-100 max-w-[54.25rem] text-neutral-900"
         >
           By building the foundation of Research, Education, and Industry.
         </h2>
@@ -395,7 +395,7 @@ const Section3 = () => {
           impact.
         </PillarsCard>
         <div
-          className="pillars-block-image dpi150:left-[39.5%] dpi125:left-[40%] dpi125:w-[6.94rem] absolute top-0 left-[35%] w-[13.875rem] opacity-0"
+          className="pillars-block-image dpi150:left-[39.5%] dpi125:left-[40.3%] dpi125:w-[6.94rem] absolute top-0 left-[35%] w-[13.875rem] opacity-0"
           // style={{
           //   top: '0',
           //   left: '35%',

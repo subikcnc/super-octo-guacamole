@@ -6,9 +6,6 @@ import { cn } from '@/lib/utils';
 
 interface Props {
   title: string;
-  // left?: string;
-  // right?: string;
-  // top?: string;
   children: React.ReactNode;
   containerClasses?: string;
   handleCardMouseOver?: () => void;
@@ -17,9 +14,6 @@ interface Props {
 
 const PillarsCard = ({
   title,
-  // left = 'unset',
-  // right = 'unset',
-  // top = 'unset',
   children,
   containerClasses,
   handleCardMouseOver,
@@ -107,7 +101,7 @@ const PillarsCard = ({
           </div>
         </div>
         <svg
-          className="dpi125:h-[80px] h-[120px] w-full"
+          className="dpi125:h-[80px] h-[7.5rem] w-full"
           viewBox="0 0 500 120"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
@@ -148,7 +142,7 @@ const PillarsCard = ({
       <Link
         href={'/'}
         ref={buttonRef}
-        className="bg-primary-700 hover:bg-primary-700 dpi125:bottom-[18px] dpi125:size-[42px] absolute right-0 bottom-[28px] inline-flex size-[3.5625rem] cursor-pointer items-center justify-center rounded-full p-0"
+        className="bg-primary-700 hover:bg-primary-700 dpi125:bottom-[18px] dpi125:size-[2.625rem] absolute right-0 bottom-[28px] inline-flex size-[3.5625rem] cursor-pointer items-center justify-center rounded-full p-0"
         onMouseOver={handleMouseOver}
         onMouseOut={handleMosueOut}
       >

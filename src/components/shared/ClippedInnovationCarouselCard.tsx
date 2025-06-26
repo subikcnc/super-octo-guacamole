@@ -97,7 +97,7 @@ const ClippedInnovationCarouselCard = ({ imgSrc, title, link }: Props) => {
           </div>
 
           <svg
-            className="mb-10 h-[120px] w-full"
+            className="hdpi125:h-[80px] h-[7.5rem] w-full"
             viewBox="0 0 500 120"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
@@ -118,7 +118,7 @@ const ClippedInnovationCarouselCard = ({ imgSrc, title, link }: Props) => {
           onMouseOver={handleMouseOver}
           onMouseOut={handleMosueOut}
           href={link}
-          className="bg-primary-700 hover:bg-primary-700 absolute right-0 bottom-[1.75rem] inline-flex size-[3.5625rem] cursor-pointer items-center justify-center rounded-full p-0"
+          className="bg-primary-700 hover:bg-primary-700 dpi125:bottom-[18px] dpi125:size-[2.625rem] absolute right-0 bottom-[1.75rem] inline-flex size-[3.5625rem] cursor-pointer items-center justify-center rounded-full p-0"
         >
           <span className="relative inline-flex size-4">
             <Image

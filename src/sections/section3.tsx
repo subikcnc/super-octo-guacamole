@@ -344,25 +344,18 @@ const Section3 = () => {
       </div>
       <div className="pillars-animated-content absolute top-0 left-0 flex h-full w-full items-center justify-center">
         <div
-          className="pillars-block-image dpi125:w-[181px] absolute w-[362px]"
-          style={{
-            top: '0',
-            left: '40%',
-            opacity: '0',
-          }}
+          className="pillars-block-image dpi125:w-[11.3125rem] absolute top-0 left-[40%] w-[22.625rem] opacity-0"
+          // style={{
+          //   top: '0',
+          //   left: '40%',
+          //   opacity: '0',
+          // }}
         >
-          <div style={{ width: '100%', paddingTop: '54.97%' }}>
+          <div className="w-full pt-[54.97%]">
             <img
               src="/images/pillars/pillar-1.png"
               alt="animated blocks"
-              style={{
-                position: 'absolute',
-                top: '0',
-                left: '0',
-                width: '100%',
-                height: '100%',
-                objectFit: 'cover',
-              }}
+              className="absolute top-0 left-0 h-[100%] w-[100%] object-cover"
             />
           </div>
         </div>

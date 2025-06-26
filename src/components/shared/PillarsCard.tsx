@@ -146,13 +146,14 @@ const PillarsCard = ({
         onMouseOver={handleMouseOver}
         onMouseOut={handleMosueOut}
       >
-        <Image
-          src="/icons/arrow-up-light.svg"
-          className="transition-all"
-          width={16}
-          height={16}
-          alt="arrow icon up"
-        />
+        <span className="relative inline-flex size-4">
+          <Image
+            src="/icons/arrow-up-light.svg"
+            className="object-cover transition-all"
+            fill
+            alt="arrow icon up"
+          />
+        </span>
       </Link>
     </div>
   );

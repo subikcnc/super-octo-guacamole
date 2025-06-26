@@ -25,7 +25,10 @@ const Section6 = () => {
       </div>
       <div className="mx-auto mt-20 mb-8 max-w-[75rem]">
         {news.map((item) => (
-          <div key={item.title} className="grid grid-cols-3 not-last:mb-[92px]">
+          <div
+            key={item.title}
+            className="grid grid-cols-3 not-last:mb-[5.75rem]"
+          >
             <Image
               src={item.imgSrc}
               width={296}

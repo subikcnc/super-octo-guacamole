@@ -4,6 +4,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useEffect, useMemo, useRef } from 'react';
 
 import PillarsCard from '@/components/shared/PillarsCard';
+import { useDevicePixelRatio } from '@/hooks/useDevicePixelRatio';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -12,7 +13,13 @@ const Section3 = () => {
   const pillarsSectionTitleRef = useRef<HTMLHeadingElement>(null);
   const pillarsCanvasRef = useRef<HTMLCanvasElement>(null);
 
-  const topValues = useMemo(() => [38, 40, 45], []);
+  const dpr = useDevicePixelRatio();
+  console.log('dpr is', dpr);
+
+  const topValues = useMemo(
+    () => [38, dpr >= 1.25 ? 39 : 40, dpr >= 1.25 ? 42 : 45],
+    [dpr]
+  );
   const lineValues = useMemo(
     () => [
       {
@@ -27,17 +34,17 @@ const Section3 = () => {
         startX: 0.2,
         startY: 0.58,
         midX: 0.26,
-        midY: 0.5,
-        endX: 0.34,
-        endY: 0.5,
+        midY: dpr >= 1.25 ? 0.45 : 0.5,
+        endX: dpr >= 1.25 ? 0.38 : 0.34,
+        endY: dpr >= 1.25 ? 0.45 : 0.5,
       },
       {
         startX: 0.8,
         startY: 0.58,
         midX: 0.7,
-        midY: 0.5,
-        endX: 0.6,
-        endY: 0.5,
+        midY: dpr >= 1.25 ? 0.45 : 0.5,
+        endX: dpr >= 1.25 ? 0.55 : 0.6,
+        endY: dpr >= 1.25 ? 0.45 : 0.5,
       },
     ],
     []
@@ -154,7 +161,7 @@ const Section3 = () => {
     titleTimeline
       .set(pillarsSectionTitleRef.current, { position: 'absolute' })
       .to(pillarsSectionTitleRef.current, {
-        left: 120,
+        left: `${dpr >= 1.25 ? '40' : '120'}`,
         top: 164,
         width: 580,
         color: '#620002',
@@ -285,7 +292,7 @@ const Section3 = () => {
         },
       });
     });
-  }, [lineValues, topValues]);
+  }, [lineValues, topValues, dpr]);
 
   const handleCardMouseOver = (index: number) => {
     if (!pillarsSectionRef.current) return;
@@ -317,7 +324,7 @@ const Section3 = () => {
   return (
     <div
       id="pillars-section"
-      className="relative w-full bg-transparent"
+      className="relative flex h-[100vh] w-full flex-col bg-transparent"
       ref={pillarsSectionRef}
     >
       <canvas
@@ -337,13 +344,29 @@ const Section3 = () => {
         <h2
           ref={pillarsSectionTitleRef}
           id="pillars-section-title"
-          className="h2_regular_56 font_body max-w-[868px] text-neutral-900"
+          className="h2_regular_56 font_body dpi125:max-w-[400px] max-w-[868px] text-neutral-900"
         >
           By building the foundation of Research, Education, and Industry.
         </h2>
       </div>
       <div className="pillars-animated-content absolute top-0 left-0 flex h-full w-full items-center justify-center">
-        <img
+        <div
+          className="pillars-block-image dpi150:left-[43%] dpi125:w-[11.3125rem] dpi125:left-[43%] absolute top-0 left-[40%] w-[22.625rem] opacity-0"
+          // style={{
+          //   top: '0',
+          //   left: '40%',
+          //   opacity: '0',
+          // }}
+        >
+          <div className="w-full pt-[54.97%]">
+            <img
+              src="/images/pillars/pillar-1.png"
+              alt="animated blocks"
+              className="absolute top-0 left-0 h-[100%] w-[100%] object-cover"
+            />
+          </div>
+        </div>
+        {/* <img
           src="/images/pillars/pillar-1.png"
           // width={362}
           // height={199}
@@ -356,12 +379,13 @@ const Section3 = () => {
             visibility: 'hidden',
           }}
           // Target top: 38%
-        />
+        /> */}
         {/* Pillar Card Research */}
         <PillarsCard
+          containerClasses="dpi125:right-[2.5rem] right-[7.5rem] top-[15%]"
           title="Research"
-          right="120px"
-          top="15%"
+          // right="120px"
+          // top="15%"
           handleCardMouseOver={() => handleCardMouseOver(0)}
           handleCardMouseOut={() => handleCardMouseOut(0)}
         >
@@ -370,10 +394,37 @@ const Section3 = () => {
           ideas, rigorous methods, and a deep commitment to turn insights into
           impact.
         </PillarsCard>
-        <img
+        <div
+          className="pillars-block-image dpi150:left-[39.5%] dpi125:left-[40%] dpi125:w-[6.94rem] absolute top-0 left-[35%] w-[13.875rem] opacity-0"
+          // style={{
+          //   top: '0',
+          //   left: '35%',
+          //   opacity: '0',
+          // }}
+        >
+          <div style={{ width: '100%', paddingTop: '116.212%' }}>
+            <img
+              src="/images/pillars/pillar-2.png"
+              // width={222}
+              // height={258}
+              alt="animated block"
+              className="absolute"
+              style={{
+                position: 'absolute',
+                top: '0',
+                left: '0',
+                width: '100%',
+                height: '100%',
+                objectFit: 'cover',
+              }}
+              // Target top: 40%;
+            />
+          </div>
+        </div>
+        {/* <img
           src="/images/pillars/pillar-2.png"
-          width={222}
-          height={258}
+          // width={222}
+          // height={258}
           alt="animated block"
           className="pillars-block-image absolute"
           style={{
@@ -383,12 +434,13 @@ const Section3 = () => {
             visibility: 'hidden',
           }}
           // Target top: 40%;
-        />
+        /> */}
         {/* Pillar Card Education */}
         <PillarsCard
+          containerClasses="dpi125:left-[2.5rem] left-[7.5rem] top-[60%]"
           title="Education"
-          left="120px"
-          top="60%"
+          // left="120px"
+          // top="60%"
           handleCardMouseOver={() => handleCardMouseOver(1)}
           handleCardMouseOut={() => handleCardMouseOut(1)}
         >
@@ -396,7 +448,34 @@ const Section3 = () => {
           deep tech spin-offs, giving ideas a path to grow into practically
           relevant, purpose-driven products.
         </PillarsCard>
-        <img
+        <div
+          className="pillars-block-image dpi125:w-[9.9rem] dpi150:left-[44.5%] dpi125:left-[44%] absolute top-0 left-[42.5%] w-[19.8125rem] opacity-0"
+          // style={{
+          //   top: '0',
+          //   left: '42.5%',
+          //   opacity: '0',
+          // }}
+        >
+          <div style={{ width: '100%', paddingTop: '65.615%' }}>
+            <img
+              src="/images/pillars/pillar-3.png"
+              // width={222}
+              // height={258}
+              alt="animated block"
+              className="absolute"
+              style={{
+                position: 'absolute',
+                top: '0',
+                left: '0',
+                width: '100%',
+                height: '100%',
+                objectFit: 'cover',
+              }}
+              // Target top: 40%;
+            />
+          </div>
+        </div>
+        {/* <img
           src="/images/pillars/pillar-3.png"
           width={317}
           height={208}
@@ -409,12 +488,13 @@ const Section3 = () => {
             visibility: 'hidden',
           }}
           // Target top: 46%;
-        />
+        /> */}
         {/* Pillar Card Industry */}
         <PillarsCard
+          containerClasses="dpi125:right-[2.5rem] right-[7.5rem] top-[60%]"
           title="Industry"
-          right="120px"
-          top="60%"
+          // right="120px"
+          // top="60%"
           handleCardMouseOver={() => handleCardMouseOver(2)}
           handleCardMouseOut={() => handleCardMouseOut(2)}
         >
@@ -424,20 +504,11 @@ const Section3 = () => {
         </PillarsCard>
       </div>
 
-      <div
-        className="pillars-inner-section h-[300px] w-full flex-1"
-        data-step="1"
-      >
+      <div className="pillars-inner-section w-full flex-1" data-step="1">
         &nbsp;
       </div>
-      <div
-        className="pillars-inner-section h-[300px] flex-1"
-        data-step="2"
-      ></div>
-      <div
-        className="pillars-inner-section h-[300px] flex-1"
-        data-step="3"
-      ></div>
+      <div className="pillars-inner-section flex-1" data-step="2"></div>
+      <div className="pillars-inner-section flex-1" data-step="3"></div>
     </div>
   );
 };

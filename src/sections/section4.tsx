@@ -21,7 +21,7 @@ const Section4 = () => {
         {/* Badge */}
         <Badge variant="muted">Featured Highlights</Badge>
       </div>
-      <div className="mb-20 flex items-end justify-between">
+      <div className="mb-20 flex items-end justify-between gap-4">
         <h2 className="h3_medium_64 text-primary-900">Innovation in Motion</h2>
         <p className="text-3xl leading-[150%] font-normal text-neutral-900">
           Knowledge, and action shaping the future
@@ -32,7 +32,10 @@ const Section4 = () => {
       <Carousel>
         <CarouselContent>
           {innovationCarouselItems.map((item) => (
-            <CarouselItem key={item.title} className="pl-10 md:basis-[31%]">
+            <CarouselItem
+              key={item.title}
+              className="basis-[33.33%] pl-10 2xl:basis-[31%]"
+            >
               <div className="p-1">
                 <ClippedInnovationCarouselCard
                   link={item.href}

@@ -53,7 +53,7 @@ const StaggerText = ({
   return (
     <div
       ref={textRef}
-      className={cn(otherClasses, 'hello')}
+      className={cn(otherClasses)}
       style={{
         left: '50%',
         top: '50%',

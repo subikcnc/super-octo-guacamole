@@ -2,22 +2,26 @@ import Image from 'next/image';
 import Link from 'next/link';
 import React, { useRef } from 'react';
 
+import { cn } from '@/lib/utils';
+
 interface Props {
   title: string;
-  left?: string;
-  right?: string;
-  top?: string;
+  // left?: string;
+  // right?: string;
+  // top?: string;
   children: React.ReactNode;
+  containerClasses?: string;
   handleCardMouseOver?: () => void;
   handleCardMouseOut?: () => void;
 }
 
 const PillarsCard = ({
   title,
-  left = 'unset',
-  right = 'unset',
-  top = 'unset',
+  // left = 'unset',
+  // right = 'unset',
+  // top = 'unset',
   children,
+  containerClasses,
   handleCardMouseOver,
   handleCardMouseOut,
 }: Props) => {
@@ -40,17 +44,19 @@ const PillarsCard = ({
   };
   return (
     <div
-      className="pillars-animated-card absolute max-w-[500px]"
+      className={cn(
+        containerClasses,
+        'pillars-animated-card absolute max-w-[24.5%] opacity-0'
+      )}
       onMouseOver={handleCardMouseOver}
       onMouseOut={handleCardMouseOut}
-      style={{
-        left,
-        right,
-        top,
-        opacity: '0',
-      }}
+      // style={{
+      //   left,
+      //   right,
+      //   top,
+      // }}
     >
-      <div className="absolute bottom-[55px] left-5 z-10 text-[18px] font-medium text-neutral-900">
+      <div className="dpi125:bottom-[35px] absolute bottom-[55px] left-5 z-10 text-[18px] font-medium text-neutral-900">
         Learn More
       </div>
       <style>{`
@@ -101,7 +107,7 @@ const PillarsCard = ({
           </div>
         </div>
         <svg
-          className="h-[120px] w-full"
+          className="dpi125:h-[80px] h-[120px] w-full"
           viewBox="0 0 500 120"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
@@ -142,17 +148,18 @@ const PillarsCard = ({
       <Link
         href={'/'}
         ref={buttonRef}
-        className="bg-primary-700 hover:bg-primary-700 absolute right-0 bottom-[28px] inline-flex size-[57px] cursor-pointer items-center justify-center rounded-full p-0"
+        className="bg-primary-700 hover:bg-primary-700 dpi125:bottom-[18px] dpi125:size-[42px] absolute right-0 bottom-[28px] inline-flex size-[57px] cursor-pointer items-center justify-center rounded-full p-0"
         onMouseOver={handleMouseOver}
         onMouseOut={handleMosueOut}
       >
-        <Image
-          src="/icons/arrow-up-light.svg"
-          className="transition-all"
-          width={16}
-          height={16}
-          alt="arrow icon up"
-        />
+        <span className="relative inline-flex size-4">
+          <Image
+            src="/icons/arrow-up-light.svg"
+            className="object-cover transition-all"
+            fill
+            alt="arrow icon up"
+          />
+        </span>
       </Link>
     </div>
   );

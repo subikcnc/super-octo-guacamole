@@ -36,7 +36,8 @@
     "react-dom": "^19.0.0",
     "react-fast-marquee": "^1.6.5",
     "tailwind-merge": "^3.3.1",
-    "three": "^0.177.0"
+    "three": "^0.177.0",
+    "use-device-pixel-ratio": "^1.1.2"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",

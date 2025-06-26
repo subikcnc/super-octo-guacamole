@@ -162,7 +162,7 @@ const Section3 = () => {
       .set(pillarsSectionTitleRef.current, { position: 'absolute' })
       .to(pillarsSectionTitleRef.current, {
         left: `${dpr >= 1.25 ? '40' : '120'}`,
-        top: 164,
+        top: `${dpr >= 1.25 ? '16' : '164'}`,
         width: 580,
         color: '#620002',
       });
@@ -344,7 +344,7 @@ const Section3 = () => {
         <h2
           ref={pillarsSectionTitleRef}
           id="pillars-section-title"
-          className="h2_regular_56 font_body dpi125:max-w-[400px] max-w-[868px] text-neutral-900"
+          className="h2_regular_56 font_body dpi125:max-w-100 max-w-[54.25rem] text-neutral-900"
         >
           By building the foundation of Research, Education, and Industry.
         </h2>

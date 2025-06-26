@@ -17,7 +17,7 @@ const Section3 = () => {
   console.log('dpr is', dpr);
 
   const topValues = useMemo(
-    () => [38, dpr >= 1.25 ? 39 : 40, dpr >= 1.25 ? 42.5 : 45],
+    () => [38, dpr >= 1.25 ? 39 : 40, dpr >= 1.25 ? 42 : 45],
     [dpr]
   );
   const lineValues = useMemo(
@@ -34,17 +34,17 @@ const Section3 = () => {
         startX: 0.2,
         startY: 0.58,
         midX: 0.26,
-        midY: dpr >= 1.25 ? 0.47 : 0.5,
+        midY: dpr >= 1.25 ? 0.45 : 0.5,
         endX: dpr >= 1.25 ? 0.38 : 0.34,
-        endY: dpr >= 1.25 ? 0.47 : 0.5,
+        endY: dpr >= 1.25 ? 0.45 : 0.5,
       },
       {
         startX: 0.8,
         startY: 0.58,
         midX: 0.7,
-        midY: 0.5,
-        endX: 0.6,
-        endY: 0.5,
+        midY: dpr >= 1.25 ? 0.45 : 0.5,
+        endX: dpr >= 1.25 ? 0.55 : 0.6,
+        endY: dpr >= 1.25 ? 0.45 : 0.5,
       },
     ],
     []

@@ -1,4 +1,5 @@
 'use client';
+
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useEffect, useMemo, useRef } from 'react';
@@ -47,7 +48,7 @@ const Section3 = () => {
         endY: dpr >= 1.25 ? 0.45 : 0.5,
       },
     ],
-    []
+    [dpr]
   );
   const hoverTopValues = [36, dpr >= 1.25 ? 37 : 38, dpr >= 1.25 ? 40 : 43];
 
@@ -166,6 +167,18 @@ const Section3 = () => {
         width: 580,
         color: '#620002',
       });
+    ScrollTrigger.create({
+      trigger: '#pillars-section-title',
+      start: 'top center',
+      end: 'bottom top',
+      markers: true,
+      onEnter: () => {
+        titleTimeline.play();
+      },
+      onLeaveBack: () => {
+        titleTimeline.reverse();
+      },
+    });
 
     // Main ScrollTrigger
     ScrollTrigger.create({
@@ -175,9 +188,8 @@ const Section3 = () => {
       end: 'bottom top',
       markers: false,
       onEnter: () => {
-        titleTimeline.play();
+        // titleTimeline.play();
         // if (!pillarsSectionTitleRef.current) return;
-
         // gsap.set(pillarsSectionTitleRef.current, { position: 'absolute' });
         // gsap.to(pillarsSectionTitleRef.current, {
         //   left: 120,
@@ -189,9 +201,8 @@ const Section3 = () => {
         // });
       },
       onLeaveBack: () => {
-        titleTimeline.reverse();
+        // titleTimeline.reverse();
         // if (!pillarsSectionTitleRef.current) return;
-
         // gsap.to(pillarsSectionTitleRef.current, {
         //   left: '', // resets to original
         //   top: '', // resets to original

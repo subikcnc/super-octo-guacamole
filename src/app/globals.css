@@ -2,8 +2,21 @@
 @import 'tw-animate-css';
 
 @custom-variant dark (&:is(.dark *));
-
 @variant dpi125 {
+  @media (min-width: 1024px) and (-webkit-min-device-pixel-ratio: 1.25),
+    (min-width: 1024px) and (min-resolution: 120dpi) {
+    @slot;
+  }
+}
+
+@variant dpi150 {
+  @media (min-width: 1024px) and (-webkit-min-device-pixel-ratio: 1.5),
+    (min-width: 1024px) and (min-resolution: 144dpi) {
+    @slot;
+  }
+}
+
+/* @variant dpi125 {
   @media (-webkit-min-device-pixel-ratio: 1.25), (min-resolution: 120dpi) {
     @slot;
   }
@@ -13,7 +26,7 @@
   @media (-webkit-min-device-pixel-ratio: 1.5), (min-resolution: 144dpi) {
     @slot;
   }
-}
+} */
 
 /* @custom-variant  */
 

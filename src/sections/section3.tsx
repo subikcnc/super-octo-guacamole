@@ -47,7 +47,7 @@ const Section3 = () => {
         endY: dpr >= 1.25 ? 0.45 : 0.5,
       },
     ],
-    []
+    [dpr]
   );
   const hoverTopValues = [36, dpr >= 1.25 ? 37 : 38, dpr >= 1.25 ? 40 : 43];
 
@@ -105,7 +105,7 @@ const Section3 = () => {
     const canvasWidth = canvas.width;
     const canvasHeight = canvas.height;
 
-    const totalFrames = 30;
+    // const totalFrames = 30;
 
     const drawAllLines = (progressArray: number[]) => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -167,50 +167,35 @@ const Section3 = () => {
         color: '#620002',
       });
 
-    // Main ScrollTrigger
     ScrollTrigger.create({
-      trigger: '#pillars-section',
-      pin: true,
-      start: 'top top',
+      trigger: '#pillars-section-title',
+      start: 'top center',
       end: 'bottom top',
       markers: false,
       onEnter: () => {
         titleTimeline.play();
-        // if (!pillarsSectionTitleRef.current) return;
-
-        // gsap.set(pillarsSectionTitleRef.current, { position: 'absolute' });
-        // gsap.to(pillarsSectionTitleRef.current, {
-        //   left: 120,
-        //   top: 164,
-        //   width: 580,
-        //   color: '#620002',
-        //   duration: 0.5,
-        //   ease: 'power2',
-        // });
       },
       onLeaveBack: () => {
         titleTimeline.reverse();
-        // if (!pillarsSectionTitleRef.current) return;
-
-        // gsap.to(pillarsSectionTitleRef.current, {
-        //   left: '', // resets to original
-        //   top: '', // resets to original
-        //   width: 868, // resets to original
-        //   color: '#474d59', // resets to original
-        //   duration: 0.5,
-        //   ease: 'power2',
-        //   onComplete: () => {
-        //     gsap.set(pillarsSectionTitleRef.current, { position: 'relative' }); // restore positioning
-        //   },
-        // });
       },
     });
 
+    // Main ScrollTrigger
+    const mainTimeline = gsap.timeline({
+      scrollTrigger: {
+        trigger: '#pillars-section',
+        pin: true,
+        scrub: true,
+        start: 'top top',
+        end: '+=3000',
+        markers: false,
+      },
+    });
     if (!pillarsSectionRef.current) return;
 
-    const innerSections = pillarsSectionRef.current.querySelectorAll(
-      '.pillars-inner-section'
-    );
+    // const innerSections = pillarsSectionRef.current.querySelectorAll(
+    //   '.pillars-inner-section'
+    // );
     const images = pillarsSectionRef.current
       .querySelector('.pillars-animated-content')
       ?.querySelectorAll('.pillars-block-image');
@@ -218,80 +203,189 @@ const Section3 = () => {
       .querySelector('.pillars-animated-content')
       ?.querySelectorAll('.pillars-animated-card');
 
+    const drawProgressArray = lineValues.map(() => ({ value: 0 }));
+
+    // const drawStep = (stepIndex: number) => ({
+    //   value: 1,
+    //   onUpdate: () => {
+    //     const progressArray = new Array(lineValues.length).fill(0);
+    //     for (let i = 0; i < lineValues.length; i++) {
+    //       if (i < stepIndex) {
+    //         progressArray[i] = 2;
+    //       } else if (i === stepIndex) {
+    //         progressArray[i] = drawProgress.value * 2;
+    //       }
+    //     }
+    //     drawAllLines(progressArray);
+    //   },
+    //   onStart: () => {
+    //     drawProgress.value = 0;
+    //   },
+    // });
+
     if (!images || !cards) return;
-
-    innerSections.forEach((section, index) => {
-      const img = images[index];
-      const card = cards[index];
-      if (!img || !card) return;
-
-      ScrollTrigger.create({
-        trigger: section,
-        start: 'bottom+=200 center',
-        end: 'bottom+=200 center',
-        scrub: 2.5,
-        markers: false,
-        onEnter: () => {
-          gsap.fromTo(
-            img,
-            { top: '30%', autoAlpha: 0 },
-            { top: `${topValues[index]}%`, autoAlpha: 1, ease: 'none' }
-          );
-          gsap.fromTo(card, { autoAlpha: 0 }, { autoAlpha: 1 });
-
-          const progressArray = new Array(lineValues.length).fill(0);
-          let frame = 0;
-
-          const draw = () => {
-            // Setup line progress
-            for (let i = 0; i <= lineValues.length - 1; i++) {
-              if (i < index) {
-                progressArray[i] = 2;
-              } else if (i === index) {
-                progressArray[i] = (frame / totalFrames) * 2;
-              }
-            }
+    mainTimeline
+      .addLabel('step1')
+      .to(images[0], { autoAlpha: 1, top: `${topValues[0]}%` }, 'step1')
+      .to(cards[0], { autoAlpha: 1 }, 'step1')
+      .to(
+        drawProgressArray[0],
+        {
+          value: 2, // 2 means full draw (both line segments)
+          duration: 0.5,
+          ease: 'power1.inOut',
+          onUpdate: () => {
+            const progressArray = drawProgressArray.map((p) => p.value);
             drawAllLines(progressArray);
-
-            if (frame < totalFrames) {
-              frame++;
-              requestAnimationFrame(draw);
-            }
-          };
-          draw();
+          },
         },
-        onEnterBack: () => {
-          gsap.fromTo(
-            img,
-            { top: `${topValues[index]}%`, autoAlpha: 1 },
-            { top: '30%', autoAlpha: 0 }
-          );
-          gsap.fromTo(card, { autoAlpha: 1 }, { autoAlpha: 0 });
-
-          const progressArrayReverse = new Array(lineValues.length).fill(0);
-          let reverseFrame = totalFrames;
-
-          const reverseDraw = () => {
-            for (let i = 0; i <= lineValues.length - 1; i++) {
-              if (i < index) {
-                progressArrayReverse[i] = 2;
-              } else if (i === index) {
-                progressArrayReverse[i] = (reverseFrame / totalFrames) * 2;
-              } else {
-                progressArrayReverse[i] = 0;
-              }
-            }
-            drawAllLines(progressArrayReverse);
-
-            if (reverseFrame > 0) {
-              reverseFrame--;
-              requestAnimationFrame(reverseDraw);
-            }
-          };
-          reverseDraw();
+        'step1+=0.3'
+      )
+      .addLabel('step2')
+      .to(images[1], { autoAlpha: 1, top: `${topValues[1]}%` }, 'step2')
+      .to(cards[1], { autoAlpha: 1 }, 'step2')
+      .to(
+        drawProgressArray[1],
+        {
+          value: 2, // 2 means full draw (both line segments)
+          duration: 0.5,
+          ease: 'power1.inOut',
+          onUpdate: () => {
+            const progressArray = drawProgressArray.map((p) => p.value);
+            drawAllLines(progressArray);
+          },
         },
-      });
-    });
+        'step2+=0.3'
+      )
+      .addLabel('step3')
+      .to(images[2], { autoAlpha: 1, top: `${topValues[2]}%` }, 'step3')
+      .to(cards[2], { autoAlpha: 1 }, 'step3')
+      .to(
+        drawProgressArray[2],
+        {
+          value: 2, // 2 means full draw (both line segments)
+          duration: 0.5,
+          ease: 'power1.inOut',
+          onUpdate: () => {
+            const progressArray = drawProgressArray.map((p) => p.value);
+            drawAllLines(progressArray);
+          },
+        },
+        'step3+=0.3'
+      );
+    // ScrollTrigger.create({
+    //   trigger: '#pillars-section',
+    //   pin: true,
+    //   start: 'top top',
+    //   end: '+=4000',
+    //   markers: false,
+    //   onEnter: () => {
+    //     // titleTimeline.play();
+    //     // if (!pillarsSectionTitleRef.current) return;
+    //     // gsap.set(pillarsSectionTitleRef.current, { position: 'absolute' });
+    //     // gsap.to(pillarsSectionTitleRef.current, {
+    //     //   left: 120,
+    //     //   top: 164,
+    //     //   width: 580,
+    //     //   color: '#620002',
+    //     //   duration: 0.5,
+    //     //   ease: 'power2',
+    //     // });
+    //   },
+    //   onLeaveBack: () => {
+    //     // titleTimeline.reverse();
+    //     // if (!pillarsSectionTitleRef.current) return;
+    //     // gsap.to(pillarsSectionTitleRef.current, {
+    //     //   left: '', // resets to original
+    //     //   top: '', // resets to original
+    //     //   width: 868, // resets to original
+    //     //   color: '#474d59', // resets to original
+    //     //   duration: 0.5,
+    //     //   ease: 'power2',
+    //     //   onComplete: () => {
+    //     //     gsap.set(pillarsSectionTitleRef.current, { position: 'relative' }); // restore positioning
+    //     //   },
+    //     // });
+    //   },
+    // });
+
+    // innerSections.forEach((section, index) => {
+    //   const img = images[index];
+    //   const card = cards[index];
+    //   if (!img || !card) return;
+
+    //   ScrollTrigger.create({
+    //     trigger: section,
+    //     start: 'bottom+=200 center',
+    //     end: 'bottom+=200 center',
+    //     scrub: 1,
+    //     snap: 1 / 3,
+    //     markers: true,
+    //     onEnter: () => {
+    //       // gsap.fromTo(
+    //       //   img,
+    //       //   { top: '30%', autoAlpha: 0 },
+    //       //   { top: `${topValues[index]}%`, autoAlpha: 1, ease: 'none' }
+    //       // );
+    //       // gsap.fromTo(card, { autoAlpha: 0 }, { autoAlpha: 1 });
+
+    //       const progressArray = new Array(lineValues.length).fill(0);
+    //       let frame = 0;
+
+    //       const draw = () => {
+    //         // Setup line progress
+    //         for (let i = 0; i <= lineValues.length - 1; i++) {
+    //           if (i < index) {
+    //             progressArray[i] = 2;
+    //           } else if (i === index) {
+    //             progressArray[i] = (frame / totalFrames) * 2;
+    //           }
+    //         }
+    //         drawAllLines(progressArray);
+
+    //         if (frame < totalFrames) {
+    //           frame++;
+    //           requestAnimationFrame(draw);
+    //         }
+    //       };
+    //       draw();
+    //     },
+    //     onEnterBack: () => {
+    //       // gsap.fromTo(
+    //       //   img,
+    //       //   { top: `${topValues[index]}%`, autoAlpha: 1 },
+    //       //   { top: '30%', autoAlpha: 0 }
+    //       // );
+    //       // gsap.fromTo(card, { autoAlpha: 1 }, { autoAlpha: 0 });
+
+    //       const progressArrayReverse = new Array(lineValues.length).fill(0);
+    //       let reverseFrame = totalFrames;
+
+    //       const reverseDraw = () => {
+    //         for (let i = 0; i <= lineValues.length - 1; i++) {
+    //           if (i < index) {
+    //             progressArrayReverse[i] = 2;
+    //           } else if (i === index) {
+    //             progressArrayReverse[i] = (reverseFrame / totalFrames) * 2;
+    //           } else {
+    //             progressArrayReverse[i] = 0;
+    //           }
+    //         }
+    //         drawAllLines(progressArrayReverse);
+
+    //         if (reverseFrame > 0) {
+    //           reverseFrame--;
+    //           requestAnimationFrame(reverseDraw);
+    //         }
+    //       };
+    //       reverseDraw();
+    //     },
+    //   });
+    // });
+    return () => {
+      ScrollTrigger.getAll().forEach((st) => st.kill());
+      // window.removeEventListener('resize', resizeCanvas);
+    };
   }, [lineValues, topValues, dpr]);
 
   const handleCardMouseOver = (index: number) => {
@@ -304,7 +398,9 @@ const Section3 = () => {
     images.forEach((img, i) => {
       if (i !== index) {
         console.log('img src to set', `${pillarImageHoveredSrc[i]}`);
-        img.setAttribute('src', `${pillarImageHoveredSrc[i]}`);
+        const innerImg = img.querySelector('img');
+        if (!innerImg) return;
+        innerImg.setAttribute('src', `${pillarImageHoveredSrc[i]}`);
       }
     });
   };
@@ -318,7 +414,9 @@ const Section3 = () => {
     gsap.to(images[index], { top: `${topValues[index]}%` });
 
     images.forEach((img, i) => {
-      img.setAttribute('src', `${pillarImageInitialSrc[i]}`);
+      const innerImg = img.querySelector('img');
+      if (!innerImg) return;
+      innerImg.setAttribute('src', `${pillarImageInitialSrc[i]}`);
     });
   };
   return (

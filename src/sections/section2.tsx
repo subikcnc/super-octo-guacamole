@@ -29,8 +29,8 @@ const Section2 = () => {
       <StaggerText
         text="Building an ecosystem of research and innovation in the Global South"
         otherClasses="h3_medium_64 inline-block w-[920px] dpi125:w-[600px] overflow-hidden text-center text-primary-900 absolute z-1"
-        scrollProgress={scrollProgress}
-        animationThreshold={0.5}
+        // scrollProgress={scrollProgress}
+        // animationThreshold={0.5}
       />
 
       <ShaderCanvas scrollProgress={scrollProgress} particlesCount={500} />

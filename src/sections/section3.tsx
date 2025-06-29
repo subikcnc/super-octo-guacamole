@@ -63,6 +63,57 @@ const Section3 = () => {
     '/images/pillars/pillar-inactive-3.png',
   ];
 
+  // Global Draw all lines function
+  const drawAllLinesGlobal = (
+    progressArray: number[],
+    ctx: CanvasRenderingContext2D,
+    canvas: HTMLCanvasElement,
+    canvasWidth: number,
+    canvasHeight: number
+  ) => {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    for (let i = 0; i < lineValues.length; i++) {
+      const { startX, startY, midX, midY, endX, endY } = lineValues[i];
+      const t = progressArray[i];
+      if (t <= 0) continue;
+
+      // Segment A
+      ctx.beginPath();
+      ctx.moveTo(startX * canvasWidth, startY * canvasHeight);
+      ctx.lineTo(
+        startX * canvasWidth + (midX - startX) * canvasWidth * Math.min(t, 1),
+        startY * canvasHeight + (midY - startY) * canvasHeight * Math.min(t, 1)
+      );
+      ctx.strokeStyle = '#EF7073';
+      ctx.lineWidth = 1;
+      ctx.stroke();
+
+      // Segment B
+      if (t > 1) {
+        const t2 = t - 1;
+        ctx.beginPath();
+        ctx.moveTo(midX * canvasWidth, midY * canvasHeight);
+        ctx.lineTo(
+          midX * canvasWidth + (endX - midX) * canvasWidth * Math.min(t2, 1),
+          midY * canvasHeight + (endY - midY) * canvasHeight * Math.min(t2, 1)
+        );
+        ctx.stroke();
+      }
+
+      // Circles
+      ctx.beginPath();
+      ctx.arc(startX * canvasWidth, startY * canvasHeight, 2, 0, Math.PI * 2);
+      ctx.fillStyle = '#EF7073';
+      ctx.fill();
+
+      ctx.beginPath();
+      ctx.arc(startX * canvasWidth, startY * canvasHeight, 5, 0, Math.PI * 2);
+      ctx.strokeStyle = '#EF7073';
+      ctx.lineWidth = 1;
+      ctx.stroke();
+    }
+  };
   // useEffect(() => {
   //   if (!pillarsCanvasRef.current) return;
   //   const canvas = pillarsCanvasRef.current;
@@ -204,7 +255,7 @@ const Section3 = () => {
       ?.querySelectorAll('.pillars-animated-card');
 
     const drawProgressArray = lineValues.map(() => ({ value: 0 }));
-
+    console.log('This is draw progress array', drawProgressArray);
     // const drawStep = (stepIndex: number) => ({
     //   value: 1,
     //   onUpdate: () => {
@@ -231,48 +282,56 @@ const Section3 = () => {
       .to(
         drawProgressArray[0],
         {
-          value: 2, // 2 means full draw (both line segments)
+          value: 2,
           duration: 0.5,
           ease: 'power1.inOut',
-          onUpdate: () => {
-            const progressArray = drawProgressArray.map((p) => p.value);
-            drawAllLines(progressArray);
-          },
+          onUpdate: () => drawAllLines(drawProgressArray.map((p) => p.value)),
         },
-        'step1+=0.3'
+        'step1+=0.2'
       )
+
       .addLabel('step2')
+      .add(() => {
+        drawProgressArray[0].value = 0;
+        drawAllLines(drawProgressArray.map((p) => p.value));
+      }, 'step2') // instantly clear line from step 1
+
       .to(images[1], { autoAlpha: 1, top: `${topValues[1]}%` }, 'step2')
       .to(cards[1], { autoAlpha: 1 }, 'step2')
       .to(
         drawProgressArray[1],
         {
-          value: 2, // 2 means full draw (both line segments)
+          value: 2,
           duration: 0.5,
           ease: 'power1.inOut',
-          onUpdate: () => {
-            const progressArray = drawProgressArray.map((p) => p.value);
-            drawAllLines(progressArray);
-          },
+          onUpdate: () => drawAllLines(drawProgressArray.map((p) => p.value)),
         },
-        'step2+=0.3'
+        'step2+=0.2'
       )
+
       .addLabel('step3')
+      .add(() => {
+        drawProgressArray[1].value = 0;
+        drawAllLines(drawProgressArray.map((p) => p.value));
+      }, 'step3') // instantly clear line from step 2
+
       .to(images[2], { autoAlpha: 1, top: `${topValues[2]}%` }, 'step3')
       .to(cards[2], { autoAlpha: 1 }, 'step3')
       .to(
         drawProgressArray[2],
         {
-          value: 2, // 2 means full draw (both line segments)
+          value: 2,
           duration: 0.5,
           ease: 'power1.inOut',
-          onUpdate: () => {
-            const progressArray = drawProgressArray.map((p) => p.value);
-            drawAllLines(progressArray);
-          },
+          onUpdate: () => drawAllLines(drawProgressArray.map((p) => p.value)),
         },
-        'step3+=0.3'
-      );
+        'step3+=0.2'
+      )
+      .add(() => {
+        drawProgressArray[2].value = 0;
+        drawAllLines(drawProgressArray.map((p) => p.value));
+      }, 'step3+=1');
+
     // ScrollTrigger.create({
     //   trigger: '#pillars-section',
     //   pin: true,
@@ -403,6 +462,38 @@ const Section3 = () => {
         innerImg.setAttribute('src', `${pillarImageHoveredSrc[i]}`);
       }
     });
+
+    // Animating the lines on hover
+
+    if (!pillarsCanvasRef.current) return;
+
+    const canvas = pillarsCanvasRef.current;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    canvas.width = canvas.clientWidth;
+    canvas.height = canvas.clientHeight;
+
+    const canvasWidth = canvas.width;
+    const canvasHeight = canvas.height;
+
+    const drawProgressArray = lineValues.map(() => ({ value: 0 }));
+    console.log('This is draw progress array', drawProgressArray);
+    gsap.to(drawProgressArray[index], {
+      value: 2,
+      duration: 0.5,
+      ease: 'power1.inOut',
+      onUpdate: () =>
+        drawAllLinesGlobal(
+          drawProgressArray.map((p) => p.value),
+          ctx,
+          canvas,
+          canvasWidth,
+          canvasHeight
+        ),
+    });
+
+    // gsap.to()
   };
 
   const handleCardMouseOut = (index: number) => {
@@ -417,6 +508,36 @@ const Section3 = () => {
       const innerImg = img.querySelector('img');
       if (!innerImg) return;
       innerImg.setAttribute('src', `${pillarImageInitialSrc[i]}`);
+    });
+
+    // Animating the lines on hover
+
+    if (!pillarsCanvasRef.current) return;
+
+    const canvas = pillarsCanvasRef.current;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    canvas.width = canvas.clientWidth;
+    canvas.height = canvas.clientHeight;
+
+    const canvasWidth = canvas.width;
+    const canvasHeight = canvas.height;
+
+    const drawProgressArray = lineValues.map(() => ({ value: 0 }));
+    console.log('This is draw progress array', drawProgressArray);
+    gsap.to(drawProgressArray[index], {
+      value: 0,
+      duration: 0.5,
+      ease: 'power1.inOut',
+      onUpdate: () =>
+        drawAllLinesGlobal(
+          drawProgressArray.map((p) => p.value),
+          ctx,
+          canvas,
+          canvasWidth,
+          canvasHeight
+        ),
     });
   };
   return (
@@ -449,7 +570,7 @@ const Section3 = () => {
       </div>
       <div className="pillars-animated-content absolute top-0 left-0 flex h-full w-full items-center justify-center">
         <div
-          className="pillars-block-image dpi150:left-[43%] dpi125:w-[11.3125rem] dpi125:left-[43%] absolute top-0 left-[40%] w-[22.625rem] opacity-0"
+          className="pillars-block-image dpi150:left-[43%] dpi125:w-[11.3125rem] dpi125:left-[43%] absolute top-[30%] left-[40%] w-[22.625rem] opacity-0"
           // style={{
           //   top: '0',
           //   left: '40%',
@@ -493,7 +614,7 @@ const Section3 = () => {
           impact.
         </PillarsCard>
         <div
-          className="pillars-block-image dpi150:left-[39.5%] dpi125:left-[40.3%] dpi125:w-[6.94rem] absolute top-0 left-[35%] w-[13.875rem] opacity-0"
+          className="pillars-block-image dpi150:left-[39.5%] dpi125:left-[40.3%] dpi125:w-[6.94rem] absolute top-[30%] left-[35%] w-[13.875rem] opacity-0"
           // style={{
           //   top: '0',
           //   left: '35%',
@@ -547,7 +668,7 @@ const Section3 = () => {
           relevant, purpose-driven products.
         </PillarsCard>
         <div
-          className="pillars-block-image dpi125:w-[9.9rem] dpi150:left-[44.5%] dpi125:left-[44%] absolute top-0 left-[42.5%] w-[19.8125rem] opacity-0"
+          className="pillars-block-image dpi125:w-[9.9rem] dpi150:left-[44.5%] dpi125:left-[44%] absolute top-[30%] left-[42.5%] w-[19.8125rem] opacity-0"
           // style={{
           //   top: '0',
           //   left: '42.5%',

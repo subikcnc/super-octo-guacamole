@@ -570,7 +570,7 @@ const Section3 = () => {
       </div>
       <div className="pillars-animated-content absolute top-0 left-0 flex h-full w-full items-center justify-center">
         <div
-          className="pillars-block-image dpi150:left-[43%] dpi125:w-[11.3125rem] dpi125:left-[43%] absolute top-0 left-[40%] w-[22.625rem] opacity-0"
+          className="pillars-block-image dpi150:left-[43%] dpi125:w-[11.3125rem] dpi125:left-[43%] absolute top-[30%] left-[40%] w-[22.625rem] opacity-0"
           // style={{
           //   top: '0',
           //   left: '40%',
@@ -614,7 +614,7 @@ const Section3 = () => {
           impact.
         </PillarsCard>
         <div
-          className="pillars-block-image dpi150:left-[39.5%] dpi125:left-[40.3%] dpi125:w-[6.94rem] absolute top-0 left-[35%] w-[13.875rem] opacity-0"
+          className="pillars-block-image dpi150:left-[39.5%] dpi125:left-[40.3%] dpi125:w-[6.94rem] absolute top-[30%] left-[35%] w-[13.875rem] opacity-0"
           // style={{
           //   top: '0',
           //   left: '35%',
@@ -668,7 +668,7 @@ const Section3 = () => {
           relevant, purpose-driven products.
         </PillarsCard>
         <div
-          className="pillars-block-image dpi125:w-[9.9rem] dpi150:left-[44.5%] dpi125:left-[44%] absolute top-0 left-[42.5%] w-[19.8125rem] opacity-0"
+          className="pillars-block-image dpi125:w-[9.9rem] dpi150:left-[44.5%] dpi125:left-[44%] absolute top-[30%] left-[42.5%] w-[19.8125rem] opacity-0"
           // style={{
           //   top: '0',
           //   left: '42.5%',

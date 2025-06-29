@@ -236,7 +236,7 @@ const Section3 = () => {
       scrollTrigger: {
         trigger: '#pillars-section',
         pin: true,
-        scrub: true,
+        scrub: 1.5,
         start: 'top top',
         end: '+=3000',
         markers: false,

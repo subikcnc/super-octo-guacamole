@@ -1,54 +1,49 @@
 'use client';
 import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useEffect, useRef } from 'react';
 
 import { cn } from '@/lib/utils';
 
+gsap.registerPlugin(ScrollTrigger);
+
 const StaggerText = ({
   text,
   otherClasses,
-  scrollProgress,
-  animationThreshold = 0.85,
 }: {
   text: string;
   otherClasses?: string;
-  scrollProgress?: number;
-  animationThreshold?: number;
 }) => {
   const textRef = useRef<HTMLDivElement>(null);
-  const hasAnimatedRef = useRef(false); // Track animation state
 
   useEffect(() => {
     if (!textRef.current) return;
 
     const chars = textRef.current.querySelectorAll('.char');
-    if (
-      scrollProgress &&
-      scrollProgress >= animationThreshold &&
-      !hasAnimatedRef.current
-    ) {
-      gsap.to(chars, {
-        opacity: 1,
-        stagger: 0.03,
-        ease: 'power2.out',
-        duration: 0.1,
-      });
-      hasAnimatedRef.current = true;
-    } else if (
-      scrollProgress &&
-      scrollProgress < animationThreshold &&
-      hasAnimatedRef.current
-    ) {
-      gsap.to(chars, {
-        opacity: 0,
-        y: 10,
-        stagger: 0.03,
-        ease: 'power2.in',
-        duration: 0.1,
-      });
-      hasAnimatedRef.current = false;
-    }
-  }, [scrollProgress, animationThreshold]);
+
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: textRef.current,
+        start: 'bottom top', // or adjust as needed
+        end: '+=1500',
+        scrub: 1.5,
+        markers: false,
+      },
+    });
+
+    tl.to(chars, {
+      opacity: 1,
+      y: 0,
+      stagger: 0.03,
+      ease: 'none', // no easing for scrub
+      duration: 0.5,
+    });
+
+    return () => {
+      tl.scrollTrigger?.kill();
+      tl.kill();
+    };
+  }, []);
 
   return (
     <div
@@ -61,7 +56,11 @@ const StaggerText = ({
       }}
     >
       {text.split('').map((char, i) => (
-        <span key={i} className="char inline-block" style={{ opacity: '0' }}>
+        <span
+          key={i}
+          className="char inline-block"
+          style={{ opacity: 0, transform: 'translateY(10px)' }}
+        >
           {char === ' ' ? '\u00A0' : char}
         </span>
       ))}

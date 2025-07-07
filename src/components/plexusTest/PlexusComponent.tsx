@@ -57,7 +57,7 @@ const PlexusSphere = ({ particlesCount = 400, scrollProgress }: Props) => {
     for (let i = 0; i < PARTICLE_COUNT; i++) {
       const initialPos = new THREE.Vector3(
         (Math.random() - 0.5) * 8,
-        (Math.random() - 0.5) * 0.4,
+        (Math.random() - 0.5) * 0.9,
         (Math.random() - 0.5) * 8
       );
       const phi = Math.acos(-1 + (2 * i) / PARTICLE_COUNT);
